@@ -287,6 +287,7 @@ class Customers extends CI_Controller {
 	}
 	
 	public function payment(){
+		
 		$insert_array=array();
 		$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
 		$insert_array['customer_id'] = $this->input->post('customer_id');
@@ -303,7 +304,7 @@ class Customers extends CI_Controller {
 		$insert_array['discount_total'] = $this->input->post('discount_total');
 		$insert_array['type']=			1;
 		if($this->input->post('month_of')){
-			$insert_array['month_of'] = date('m',strtotime($this->input->post('month_of')));
+			$insert_array['month_of'] = $this->input->post('month_of');
 		}
 		$payment_id = $this->common_model->tbl_insert(CBL_PAYMENT,$insert_array);
 		$c_array=array();

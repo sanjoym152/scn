@@ -138,8 +138,12 @@
 																	<td><?php echo @$row['mobile1'];?></td>	
 																	<td><?php echo @$row['balance'];?></td>	
 																	<td><?php echo @$row['payment_total'];?></td>	
-																	<td><?php echo @$row['payment_date'];?></td>	
-																	<td><?php echo date("F",strtotime($row['month_of']));?></td>
+																	<td><?php echo @$row['payment_date'];?></td>
+																	
+																	<td>
+																	<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+																	$monthName = $dateObj->format('F');
+																	echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
 																</tr>
 																<?php 
 																}
