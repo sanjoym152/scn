@@ -63,14 +63,14 @@
 						<li><a href="<?php echo base_url('cable/reports/get_all_customers_details');?>">All Customers List</a></li>
 						<li><a href="<?php echo base_url('cable/reports/collector_due');?>">Collector Wise Due</a></li>
 						<li><a href="<?php echo base_url('cable/reports/collector_payment');?>">Collector Wise Payment</a></li>
-						<li><a href="<?php echo base_url('cable/reports/deactive_customer');?>">Deactive Customers Reports</a></li>
-						<li><a href="<?php echo base_url('cable/reports/date_wise_payment');?>">Date Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/daily_collection');?>">Daily Collection</a></li>
+						<li><a href="<?php echo base_url('cable/reports/package_wise_customer');?>">Package Wise Customer</a></li>
+						<!--<li><a href="<?php echo base_url('cable/reports/deactive_customer');?>">Deactive Customers Reports</a></li>
+						<li><a href="<?php echo base_url('cable/reports/date_wise_payment');?>">Date Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/month_wise_payment');?>">Month Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/monthly_billing_report');?>">Monthly Billing Report</a></li>
-						<li><a href="<?php echo base_url('cable/reports/package_wise_customer');?>">Package Wise Customer</a></li>
 						<li><a href="<?php echo base_url('cable/reports/month_wise_payment');?>">Total Payment Report</a></li>
-						<li><a href="<?php echo base_url('cable/reports/yearly_payment_report');?>">Yearly Payment Report</a></li>
+						<li><a href="<?php echo base_url('cable/reports/yearly_payment_report');?>">Yearly Payment Report</a></li>-->
 					</ul>
 				</li>
 				
