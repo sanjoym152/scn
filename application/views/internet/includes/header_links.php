@@ -7,7 +7,7 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/core.css" rel="stylesheet" type="text/css">
 <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="cable_assets/css/font-awesome.min.css" rel="stylesheet">
 <link href="assets/css/components.css" rel="stylesheet" type="text/css">
 <link href="assets/css/pages.css" rel="stylesheet" type="text/css">
 <link href="assets/css/menu.css" rel="stylesheet" type="text/css">
