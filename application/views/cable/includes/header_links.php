@@ -7,6 +7,7 @@
 <link href="cable_assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="cable_assets/css/core.css" rel="stylesheet" type="text/css">
 <link href="cable_assets/css/icons.css" rel="stylesheet" type="text/css">
+<link href="cable_assets/css/jquery.fancybox.css" rel="stylesheet">
 <link href="cable_assets/css/font-awesome.min.css" rel="stylesheet">
 <link href="cable_assets/css/components.css" rel="stylesheet" type="text/css">
 <link href="cable_assets/css/pages.css" rel="stylesheet" type="text/css">

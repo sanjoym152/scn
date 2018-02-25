@@ -21,7 +21,6 @@
 				}
 			}
 		</style>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.css" />
 	</head>
 	<body class="fixed-left">
 		<!-- Begin page -->
@@ -777,7 +776,7 @@
 			});
 		</script>
 		
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.js"></script>
+		<script type="text/javascript" src="cable_assets/js/jquery.fancybox.js"></script>
 		<script type="text/javascript">
 			$("[data-fancybox='images']").fancybox({
 				// Options will go here
