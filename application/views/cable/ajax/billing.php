@@ -9,6 +9,7 @@
 		<th>OTHER</th>
 		<th>DISCOUNT</th>
 		<th>PAYMENT</th>
+		<th>MONTH OF</th>
 		<th>TOTAL</th>
 		<!--<th>Status</th>-->
 		<th>COLLECTOR</th>
@@ -29,7 +30,12 @@
 				<td><?php echo @$row['other_fees'];?></td>
 				<td><?php echo @$row['dis'];?></td>
 				<td><?php echo @$row['type']==1?@$row['payment_total']:'N/A';?></td>
+				<td>
+				<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+				$monthName = $dateObj->format('F');
+				echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
 				<td><?php echo @$row['payment_total'];?></td>
+				
 				<!--<td>Paid</td>-->
 				<td><?php echo @$row['staff_name']?$row['staff_name']:'Office';?></td>
 				<td>
