@@ -161,11 +161,11 @@
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; MOBILE: <?php echo @$userdata['mobile1'];?></td>
 										<!--<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; IP: <?php echo @$userdata['payment_id'];?></td>-->
-										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; IP: <?php echo @$userdata['ip_address'];?></td>
+										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; STB NO: <?php echo @$userdata['stb_no'];?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; COLLECTOR NAME: <?php echo @$userdata['staff_name'];?></td>
-										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; USERNAME: <?php echo @$userdata['username'];?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; ACCOUNT: <?php echo @$userdata['account'];?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; PACKAGE: <?php echo @$userdata['pakname'];?></td>
