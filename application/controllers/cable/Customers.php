@@ -354,7 +354,7 @@ class Customers extends CI_Controller {
 		$joins=array();
 		$joins[0]=array(
 			'table'=>CBL_CUSTOMERS,
-			'condition'=>CBL_CUSTOMERS.'.customer_id = '.PAYMENT.'.customer_id',
+			'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
 			'jointype'=>'inner'
 		);
 		$joins[1]=array(
@@ -364,7 +364,7 @@ class Customers extends CI_Controller {
 		);
 		$joins[2]=array(
 			'table'=>STAFF,
-			'condition'=>STAFF.'.staff_id = '.PAYMENT.'.staff_id',
+			'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
 			'jointype'=>'left'
 		);
 		$joins[3]=array(
@@ -372,11 +372,13 @@ class Customers extends CI_Controller {
 			'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 			'jointype'=>'left'
 		);
-		$data['userdata'] = $this->common_model->get_data_row(PAYMENT,array(PAYMENT.'.payment_id'=>$id),'*,'.PAYMENT.'.discount_total as p_discount,'.CBL_PACKAGE.'.staff_base as package_tax_type',$joins);
-		if($data['userdata']['package_tax_type']==2){
+		$data['userdata'] = $this->common_model->get_data_row(CBL_PAYMENT,array(CBL_PAYMENT.'.payment_id'=>$id),'*,'.CBL_PAYMENT.'.discount_total as p_discount',$joins);
+		/* if($data['userdata']['package_tax_type']==2){
 			$data['tax'] = $this->common_model->get_data_array(CBL_PACKAGE_TO_TAX,array('package_id'=>$data['userdata']['package_id']));
-		}
-		
+		} */
+		//echo $this->db->last_query();die;
+		/* echo "<pre>";
+		print_r($data);die; */
 		$data['pageTitle'] = "SCN | CABLE | Top Up Bill Print";
 		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('cable/includes/topbar',$data,true);

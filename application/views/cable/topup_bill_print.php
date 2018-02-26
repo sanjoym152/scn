@@ -152,7 +152,7 @@
 									</tr>
 									<tr>
 										<hr />
-										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['payment_total'];?> &nbsp;&nbsp;&nbsp;</td>
+										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['pakren'];?> &nbsp;&nbsp;&nbsp;</td>
 									</tr>
 								</table>
 							</td>
@@ -184,14 +184,15 @@
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; MOBILE: <?php echo @$userdata['mobile1'];?></td>
-										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; IP: <?php echo @$userdata['ip_address'];?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; STB NO: <?php echo @$userdata['stb_no'];?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; COLLECTOR NAME: <?php echo @$userdata['staff_name'];?></td>
-										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; USERNAME: <?php echo @$userdata['username'];?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; ACCOUNT: <?php echo @$userdata['account'];?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; PACKAGE: <?php echo @$userdata['pakname'];?></td>
+									
 									</tr>
 									
 								</table>
@@ -231,13 +232,13 @@
 										</td>
 										<?php } ?>
 										<!--<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['p_discount'];?></td>-->
-										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['payment_total'];?></td>
+										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['pakren'];?></td>
 									</tr>
 								</table>
 								<br /><br />
 								<table>
 									<tr>
-										<td align="right"><strong>Total: Rs. <?php echo @$userdata['payment_total'];?> &nbsp;</strong></td>
+										<td align="right"><strong>Total: Rs. <?php echo @$userdata['pakren'];?> &nbsp;</strong></td>
 									</tr>
 								</table>
 							</td>
