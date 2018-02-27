@@ -14,8 +14,7 @@ print_r($all_channel);die; */
 ?>
 <div class="col-md-12">
 	<form method="post" action="<?php echo base_url('cable/customers/add_channel')?>" id="add_chnl_frm">
-		<?php foreach($all_channel as $row){ ?>
-		<?php if (!in_array($row['channel_id'], $c_chnl_id)){ ?>
+		<?php foreach($all_channel as $row){ if (!in_array($row['channel_id'], $c_chnl_id)){ ?>
 		<div class="col-md-6">
 			<div class="form-group sadas">
 				<label for="chnl_<?php echo @$row['channel_id'];?>">
