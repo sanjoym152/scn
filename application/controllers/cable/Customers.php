@@ -54,7 +54,9 @@ class Customers extends CI_Controller {
 		}
 		/* echo "<pre>";
 		print_r($data['customers']);die; */
-		$data['total_due'] = $this->common_model->get_data_row(CBL_CUSTOMERS,'','sum(balance) as total_due');
+		$data['total_due_active'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>1),'sum(balance) as total_due');
+		$data['total_due_inactive'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>2),'sum(balance) as total_due');
+		$data['total_due_delete'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>3),'sum(balance) as total_due');
 		$data['total_payment'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1),'sum(payment_total) as payment');
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,array('status'=>1),'','','','','','pakname ASC');
 		$data['collector'] = $this->common_model->get_data_array(STAFF);
