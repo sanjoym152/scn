@@ -18,6 +18,11 @@ class Customers extends CI_Controller {
 			'condition'=>CBL_PACKAGE.'.package_id = '.CBL_CUSTOMERS.'.package_id',
 			'jointype'=>'left'
 		);
+		$joins[1]=array(
+			'table'=>AREA,
+			'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+			'jointype'=>'left'
+		);
 		
 		if($this->input->post('keyword')){
 			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%')"]=null;
@@ -49,7 +54,9 @@ class Customers extends CI_Controller {
 		}
 		/* echo "<pre>";
 		print_r($data['customers']);die; */
-		$data['total_due'] = $this->common_model->get_data_row(CBL_CUSTOMERS,'','sum(balance) as total_due');
+		$data['total_due_active'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>1),'sum(balance) as total_due');
+		$data['total_due_inactive'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>2),'sum(balance) as total_due');
+		$data['total_due_delete'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>3),'sum(balance) as total_due');
 		$data['total_payment'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1),'sum(payment_total) as payment');
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,array('status'=>1),'','','','','','pakname ASC');
 		$data['collector'] = $this->common_model->get_data_array(STAFF);
@@ -179,6 +186,7 @@ class Customers extends CI_Controller {
 			$data['details'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$id));
 			$data['details']['ip'] = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$id));
 		}
+		$data['area'] = $this->common_model->get_data_array(AREA,'','','','','','','area_name ASC');
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,'','','','','','','pakname ASC');
 		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
 		$data['isp'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
@@ -812,7 +820,7 @@ class Customers extends CI_Controller {
 		if($this->input->post()){
 			$customer_id = $this->input->post('customer_id');
 			foreach($customer_id as $row){
-				$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$row));
+				$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$row, 'status'=>1));
 				//echo "<pre>"; print_r($customer_data);
 				//update customer table.
 				$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$row), array('billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 days')), 'balance'=>$customer_data['balance'] + $customer_data['pack_amount']));
