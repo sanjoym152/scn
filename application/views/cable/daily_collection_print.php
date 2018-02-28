@@ -1,9 +1,9 @@
 <?php
     tcpdf();
-    $custom_size=array(230,297);
+    $custom_size="A4";
     $obj_pdf = new TCPDF('P', PDF_UNIT, $custom_size , true, 'UTF-8', false);
     $obj_pdf->SetCreator(PDF_CREATOR);
-    $obj_pdf->SetTitle('SCN | CUSTOMER - CABLE BILLING');
+    $obj_pdf->SetTitle('SCN | CUSTOMER - CABLE - DAILY cOLLECTION');
     $obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
     $obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
     $obj_pdf->SetDefaultMonospacedFont('helvetica');
@@ -83,7 +83,7 @@
 		</style> 
 	</head>
 	<body>
-		<table width="100%" border="0">
+		<!--<table width="100%" border="0">
 			<tr>
 				<td width="30%">
 					<table>
@@ -125,7 +125,7 @@
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp;PAYMENT TYPE: <?php echo @$userdata['payment_id'];?></td>
 									</tr>-->
-									<tr>
+									<!--<tr>
 										<td style="font-size:7px; line-height:15px; padding-left:20px;">&nbsp;&nbsp;PAYMENT TOTAL: Rs. <?php echo @$userdata['payment_total'];?></td>
 									</tr><tr>
 										<td style="font-size:7px; line-height:15px; padding-left:20px;">&nbsp;&nbsp;NET DUE: Rs. <?php echo @$userdata['net_due'];?></td>
@@ -161,7 +161,7 @@
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; MOBILE: <?php echo @$userdata['mobile1'];?></td>
 										<!--<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; IP: <?php echo @$userdata['payment_id'];?></td>-->
-										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; STB NO: <?php echo @$userdata['stb_no'];?></td>
+										<!--<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; STB NO: <?php echo @$userdata['stb_no'];?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; COLLECTOR NAME: <?php echo @$userdata['staff_name'];?></td>
@@ -178,14 +178,14 @@
 									<tr>
 										<td height="15px" style="font-size:7px; line-height:10px">PREVIOUS DUE</td>
 										<!--<td height="15px" style="font-size:7px; line-height:10px">PACKAGE AMOUNT</td>-->
-										<td height="15px" style="font-size:7px; line-height:10px">DISCOUNT</td>
+										<!--<td height="15px" style="font-size:7px; line-height:10px">DISCOUNT</td>
 										<td height="15px" style="font-size:7px; line-height:10px">PAID AMOUNT</td>
 										<td height="15px" style="font-size:7px; line-height:10px">NET DUE</td>
 									</tr>
 									<tr>
 										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['outstanding'];?></td>
 										<!--<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['pack_amount'];?></td>-->
-										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['p_discount'];?></td>
+										<!--<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['p_discount'];?></td>
 										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['payment_total'];?></td>
 										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['net_due'];?></td>
 									</tr>
@@ -202,13 +202,75 @@
 				</td>
 				
 			</tr>
-		</table>
-		
+		</table>-->
+												<div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="table-responsive" data-pattern="priority-columns">
+													<table id="datatable" class="table table-striped table-bordered">
+														<thead>
+														<tr>
+							<td align="center" border="1" height="80px">
+								<h3 style="line-height:20px; font-size:10px">SATALLITE CHANNEL NETWORK</h3><span style="font-size:7px; line-height:10px;">OFFICE COPY</span>
+							</td>
+						</tr>
+															<tr>
+																<th>#</th>
+																<th>CUSTOMER CODE</th>
+																<th>CUSTOMER NAME</th>
+																<th>ADDRESS</th>
+																<th>STB</th>
+																<th>ACCOUNT</th>
+																<th>MOBILE</th>
+																<th>START DATE</th>
+																<th>END DATE</th>
+																<th>STATUS</th>
+															</tr>
+														</thead>
+														<tbody>
+															<?php 
+															$i=1;
+															if(@$customer_details){
+																foreach($customer_details as $row){
+																?>
+																<tr>
+																	<td><?php echo @$i++;?></td>
+																	<td><?php echo @$row['cust_code'];?></td>
+																	<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
+																	<td><?php echo @$row['address1'];?></td>
+																	<td><?php echo @$row['stb_no'];?></td>
+																	<td><?php echo @$row['account'];?></td>
+																	<td><?php echo @$row['mobile1'];?></td>
+																	<td><?php echo @$row['billing_date'];?></td>
+																	<td><?php echo date('Y-m-d', strtotime($row['billing_date']. '+'. '30 days'));?></td>
+																	<td>
+																	<?php 
+																	if($row['status']==1){
+																		echo '<label class="label label-success">Active</label>';
+																	}else if($row['status']==2){
+																		echo '<label class="label label-warning">Inactive</label>';
+																	}else if($row['status']==3){
+																		echo '<label class="label label-danger">Deleted</label>';
+																	}
+																	?></td>
+																</tr>
+																<?php 
+																}
+															}else{
+															?>
+															<tr>
+																<td colspan="15" class="text-center">No result(s) found.</td>
+															<tr/>
+															<?php 
+															}
+															?>
+														</tbody>
+													</table>
+												</div>
+											</div>
 		
 	</body>
 </html>
 <?php
-	$name='INTERNET-PAYMENT-'.date('Y-m-d H:i:s');
+	$name='DAILY-COLLECTION-'.date('Y-m-d H:i:s');
     $content = ob_get_contents();
     ob_end_clean();
     $obj_pdf->writeHTML($content, true, false, true, false, '');

@@ -43,8 +43,9 @@
 										<div class="panel-body">
 										<form method="post" id="search_form">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-												<div class="your-mail">
-													<input class="form-control from_date" type="text" name="keywords" value="<?php echo $this->input->post('keywords');?>" placeholder="Keywords" required>
+												<div class="your-mail keyword_main">
+													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
+													<div class="customer_auto"></div>
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -212,6 +213,57 @@
 		<?php echo @$footer_scripts;?>
 		<script>
 			$(document).ready(function(){
+				/*
+				*@ autocomplete 
+				*/
+				$('#autocomplete').keyup(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').change(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').blur(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+			});
+		
+			$(document).ready(function(){
 				var startDate = new Date('01/01/2012');
 				var FromEndDate = new Date();
 				var ToEndDate = new Date();
@@ -242,5 +294,68 @@
 					});
 			})
 		</script>
+		<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>		<script>
+			$(document).ready(function(){
+				/*
+				*@ autocomplete 
+				*/
+				$('#autocomplete').keyup(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'http://localhost/scn/cable/reports/customer_payment',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').change(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'http://localhost/scn/cable/reports/customer_payment',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').blur(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'http://localhost/scn/cable/reports/customer_payment',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+			});
+		</script>
+		<style>
+		.sadsad{
+			width: 100%;
+			height: 500px;
+			overflow-y: scroll;
+		}
+
 	</body>
 </html>

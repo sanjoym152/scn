@@ -41,7 +41,7 @@
 										<div class="panel panel-default">
 										<div class="panel-heading">Search from date and to date and collecter etc.</div>
 										<div class="panel-body">
-										<form method="post" id="search_form" autocomplete="off">
+										<form method="post" id="search_form" autocomplete="off" action="">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail keyword_main">
 													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
@@ -98,7 +98,7 @@
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-												<a href="<?php echo base_url('cable/reports_print/daily_collection_print');?>"><button class="btn btn-success export pull-right">Print</button></a>
+												<button class="btn btn-success export pull-right" id="print_btn">Print</button>
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
 											
@@ -234,7 +234,7 @@
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'<?php echo base_url('cable/customers/autocomplete')?>',
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -249,7 +249,7 @@
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'<?php echo base_url('cable/customers/autocomplete')?>',
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -264,7 +264,7 @@
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'<?php echo base_url('cable/customers/autocomplete')?>',
+						url:'<?php echo base_url('cable/reports/autocomplete')?>',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -306,6 +306,13 @@
 						$('.from_date').datepicker('setEndDate', FromEndDate);
 					});
 			})
+			$(document).ready(function(){
+				$('#print_btn').click(function(){
+					$('#search_form').attr('action','cable/reports/daily_collection_print');
+					$('#search_form').submit();
+				});
+				$('#search_form').attr('action',''); 
+			});
 		</script>
 	</body>
 </html>

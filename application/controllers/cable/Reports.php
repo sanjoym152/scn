@@ -7,6 +7,8 @@ class Reports extends CI_Controller {
 		if(!$this->session->userdata('user_id')){
 			redirect(base_url());
 		}
+		$this->load->helper('pdf_helper');
+        $this->load->library('upload');
     }
 
 	public function index(){
@@ -14,6 +16,10 @@ class Reports extends CI_Controller {
 		$where=array();
 		if($this->input->post())
 		{ 
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
 			if($this->input->post('f_date')){
 				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
 				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
@@ -164,7 +170,11 @@ class Reports extends CI_Controller {
 		$data = array();
 		$where=array();
 		if($this->input->post())
-		{ 
+		{ 	
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
 			if($this->input->post('f_date')){
 				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
 				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
@@ -205,6 +215,10 @@ class Reports extends CI_Controller {
 		$where=array();
 		if($this->input->post())
 		{ 
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
 			if($this->input->post('f_date')){
 				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
 				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
@@ -274,9 +288,9 @@ class Reports extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
 				'jointype'=>'left'
 			);
-			if($this->input->post('keywords')){
-				$keyword=$this->input->post('keywords');
-				$where["(stb_no LIKE '%".$this->input->post('keywords')."%' OR account LIKE '%".$this->input->post('keywords')."%' OR mobile1 LIKE '%".$this->input->post('keywords')."%' OR first_name LIKE '%".$this->input->post('keywords')."%' OR last_name LIKE '%".$this->input->post('keywords')."%')"]=null;
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
 			}
 			if($this->input->post('mso_id')){
 				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
@@ -316,6 +330,10 @@ class Reports extends CI_Controller {
 				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_PAYMENT.'.customer_id',
 				'jointype'=>'left'
 			);
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
 			if($this->input->post('f_date'))
 			{
 				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
@@ -351,6 +369,59 @@ class Reports extends CI_Controller {
 		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
 		$this->load->view('cable/daily_collection', $data);
 	}
+	public function daily_collection_print(){
+		$data = array();
+		if($this->input->post())
+		{
+			$where=array();
+			$joins=array();
+			$joins[0]=array(
+				'table'=>CBL_CUSTOMERS,
+				'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
+				'jointype'=>'left'
+			);
+			$joins[1]=array(
+				'table'=>CBL_CUSTOMER_TO_STB,
+				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_PAYMENT.'.customer_id',
+				'jointype'=>'left'
+			);
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
+			if($this->input->post('f_date'))
+			{
+				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
+				$where[CBL_PAYMENT.".`payment_date` >= '".$f_date."'"]=null;
+			}
+			if($this->input->post('t_date'))
+			{
+				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
+				$where[CBL_PAYMENT.".`payment_date` <= '".$t_date."'"]=null;
+			}
+			if($this->input->post('mso_id'))
+			{
+				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
+			}
+			if($this->input->post('lco_id'))
+			{
+				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
+			}
+			$where[CBL_PAYMENT.'.type'] = 1;
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'',$joins);
+			/* echo $this->db->last_query(); 
+			print "<pre>";
+			print_r($data['daily_collection']);die; */
+		}
+		
+		$data['pageTitle'] = "SCN | CABLE | DAILY COLLECTION";
+		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
+		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
+		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
+		$data['footer'] = $this->load->view('cable/includes/footer','',true);
+		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
+		$this->load->view('cable/daily_collection_print', $data);
+	}
 	
 	public function package_wise_customer()
 	{
@@ -358,6 +429,10 @@ class Reports extends CI_Controller {
 		$data = array();	
 		if($this->input->post())
 		{ 
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			}
 			if($this->input->post('mso_id')){
 				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
 			}
@@ -402,6 +477,24 @@ class Reports extends CI_Controller {
 		$this->load->view('cable/package_wise_customer', $data); 
 	}
 	
+	public function autocomplete(){
+		$keyword = $this->input->post('keyword');
+		$data = array();
+		$data['html'] = null;
+		if(@$keyword){
+			$where["cust_code LIKE '%".$keyword."%' OR first_name LIKE '%".$keyword."%' OR mobile1 LIKE '%".$keyword."%' OR `stb_no` LIKE '%".$keyword."%' OR `account` LIKE '%".$keyword."%'"] = null;
+			$joins = array();
+			$joins[0] = array(
+				'table' =>CBL_CUSTOMER_TO_STB,
+				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
+			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'first_name,cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
+			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
+		}
+		$data['q'] = $this->db->last_query();
+		echo json_encode($data);
+	}
 	
 	/* public function deactive_customer(){
 		$where=array();
