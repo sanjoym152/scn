@@ -48,7 +48,7 @@
 								<div class="panel panel-default">
 									<div class="panel-body table-rep-plugin">
 										<div class="panel panel-default">
-										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class=""> | Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class=""> | Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
+										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="label label-success">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class="label label-warning"> | Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class="label label-danger"> | Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
 										<div class="panel-body">
 										<form method="post" id="search_form" autocomplete="off">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
