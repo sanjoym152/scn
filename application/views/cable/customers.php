@@ -128,7 +128,7 @@
 																<tr>
 																	<td><?php echo @$i++;?></td>
 																	<td><?php echo @$row['cust_code'];?></td>
-																	<td><?php echo @$row['other_id'];?></td>
+																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
 																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?></a></td>
 																	<td>
 																	<a href="javascript:;" class="ip_address" data-id="<?php echo @$row['customer_id'];?>">

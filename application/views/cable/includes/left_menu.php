@@ -40,8 +40,8 @@
 						<li><a href="<?php echo base_url('cable/stb');?>">STB Model</a></li>
 						<li><a href="<?php echo base_url('cable/package');?>">Package Master</a></li>
 						<li><a href="<?php echo base_url('cable/channel');?>">Channel Master</a></li>
-						<!--<li><a href="<?php echo base_url('cable/area');?>">Area Master</a></li>
-						<li><a href="<?php echo base_url('cable/sub_area');?>">Sub-Area Master</a></li>-->
+						<li><a href="<?php echo base_url('cable/area');?>">Area Master</a></li>
+						<!--<li><a href="<?php echo base_url('cable/sub_area');?>">Sub-Area Master</a></li>-->
 						<li><a href="<?php echo base_url('cable/staff');?>">Staff Master</a></li>
 						<li><a href="<?php echo base_url('cable/customers/import');?>">Import Customers</a></li>
 					</ul>

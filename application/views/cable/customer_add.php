@@ -40,6 +40,17 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
+													<label for="exampleInputEmail1">Area<span class="text-danger">*</span></label>
+													<select name="area_id" class="form-control required">
+														<option value="">Select Area</option>
+														<?php foreach($area as $row){ ?>
+															<option value="<?php echo $row['area_id']?>" <?php if(@$details['area_id']==$row['area_id']){echo "selected";}?>><?php echo $row['area_name']?></option>
+														<?php }?>
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+												<div class="your-mail">
 													<label for="exampleInputEmail1">Other ID<span class="text-danger">*</span></label>
 													<input class="form-control required other_id" type="text" name="other_id" value="<?php echo @$details['other_id'];?>">
 													<span class="other_span"></span>
@@ -81,7 +92,7 @@
 													<span class="email_error"></span>
 												</div>
 											</div>
-											<div class="clearfix"></div>
+											
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
 													<label for="exampleInputEmail1">Gender<span class="text-danger">*</span></label>
