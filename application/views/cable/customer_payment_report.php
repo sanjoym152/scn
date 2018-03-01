@@ -88,7 +88,7 @@
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-												<a href="<?php echo base_url('cable/reports/export');?>"><button class="btn btn-success export pull-right">Export to Excel</button></a>
+												<button class="btn btn-success export pull-right" id="print_btn">Print</button>
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
 											
@@ -307,7 +307,7 @@ $(document).ready(function(){
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'http://localhost/scn/cable/reports/customer_payment',
+						url:'http://localhost/scn/cable/reports/autocomplete',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -322,7 +322,7 @@ $(document).ready(function(){
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'http://localhost/scn/cable/reports/customer_payment',
+						url:'http://localhost/scn/cable/reports/autocomplete',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -337,7 +337,7 @@ $(document).ready(function(){
 					//alert($('#autocomplete').val());
 					var keyword = $('#autocomplete').val();
 					$.ajax({
-						url:'http://localhost/scn/cable/reports/customer_payment',
+						url:'http://localhost/scn/cable/reports/autocomplete',
 						method:'post',
 						data:{keyword: keyword},
 						dataType:'json',
@@ -348,6 +348,14 @@ $(document).ready(function(){
 						}
 					});
 				});
+			});
+			
+			$(document).ready(function(){
+				$('#print_btn').click(function(){
+					$('#search_form').attr('action','cable/reports/customer_payment_report_print');
+					$('#search_form').submit();
+				});
+				$('#search_form').attr('action',''); 
 			});
 		</script>
 		<style>

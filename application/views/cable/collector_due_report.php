@@ -44,7 +44,7 @@
 										<form method="post" id="search_form">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail keyword_main">
-													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
+													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword" required>
 													<div class="customer_auto"></div>
 												</div>
 											</div>
@@ -80,7 +80,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="staff_id" class="form-control">
+													<select name="staff_id" class="form-control"required>
 														<option value="">Select Collector</option>
 														<?php if(@$collecter){ foreach($collecter as $row){?> 
 														<option value="<?php echo @$row['staff_id'];?>" <?php if(@$row['staff_id']==$this->input->post('staff_id')){echo 'selected';}?>><?php echo @$row['staff_name'];?></option>
@@ -108,7 +108,7 @@
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-												<a href="<?php echo base_url('cable/reports/export');?>"><button class="btn btn-success export pull-right">Export to Excel</button></a>
+												<button class="btn btn-success export pull-right" id="print_btn">Print</button>
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
 											
@@ -322,6 +322,14 @@
 						$('.from_date').datepicker('setEndDate', FromEndDate);
 					});
 			})
+			
+			$(document).ready(function(){
+				$('#print_btn').click(function(){
+					$('#search_form').attr('action','cable/reports/collector_due_report_print');
+					$('#search_form').submit();
+				});
+				$('#search_form').attr('action',''); 
+			});
 		</script>
 	</body>
 </html>

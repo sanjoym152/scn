@@ -3,7 +3,7 @@
 	$custom_size="A4";
 	$obj_pdf = new TCPDF('P', PDF_UNIT, $custom_size , true, 'UTF-8', false);
 	$obj_pdf->SetCreator(PDF_CREATOR);
-	$obj_pdf->SetTitle('SCN | CUSTOMER - CABLE - DAILY COLLECTION');
+	$obj_pdf->SetTitle('SCN | CUSTOMER - CABLE - PACKAGE WISE CUSTOMER');
 	$obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 	$obj_pdf->SetDefaultMonospacedFont('helvetica');
@@ -81,7 +81,7 @@
 		</style>
 	</head>
 	<body>
-		<h3 align="center" style="line-height:20px; font-size:10px">DAILY COLLECTION</h3>
+		<h3 align="center" style="line-height:20px; font-size:10px">PACKAGE WISE CUSTOMER</h3>
 		<span align="center" style="font-size:7px; line-height:10px;">OFFICE COPY</span>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive" data-pattern="priority-columns">
@@ -95,39 +95,42 @@
 							<th>STB</th>
 							<th>ACCOUNT</th>
 							<th>MOBILE</th>
-							<th>BALANCE</th>
-							<th>PAYMENT AMOUNT</th>
-							<th>PAY DATE</th>
+							<th>START DATE</th>
+							<th>END DATE</th>
+							<th>PACKAGE</th>	
+							<th>COLLECTOR</th>	
 						</tr>
 					</thead>
 					<tbody>
 						<?php 
-							$i=1;
-							if(@$daily_collection){
-								foreach($daily_collection as $row){
-								?>
-						<tr>
-							<td><?php echo @$i++;?></td>
-							<td><?php echo @$row['cust_code'];?></td>
-							<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
-							<td><?php echo @$row['address1'];?></td>
-							<td><?php echo @$row['stb_no'];?></td>
-							<td><?php echo @$row['account'];?></td>
-							<td><?php echo @$row['mobile1'];?></td>
-							<td><?php echo @$row['balance'];?></td>
-							<td><?php echo @$row['payment_total'];?></td>
-							<td><?php echo @$row['payment_date'];?></td>
-						</tr>
-						<?php 
-							}
-							}else{
+						$i=1;
+						if(@$package_details){
+							foreach($package_details as $row){
 							?>
-						<tr>
-							<td colspan="15" class="text-center">No result(s) found.</td>
-						<tr/>
+							<tr>
+								<td><?php echo @$i++;?></td>
+								<td><?php echo @$row['cust_code'];?></td>
+								<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
+								<td><?php echo @$row['address1'];?></td>
+								<td><?php echo @$row['stb_no'];?></td>
+								<td><?php echo @$row['account'];?></td>
+								<td><?php echo @$row['mobile1'];?></td>
+								<td><?php echo @$row['billing_date'];?></td>
+								<td><?php echo date('Y-m-d', strtotime($row['billing_date']. '+'. '30 days'));?></td>
+								<td><?php echo @$row['pakname'];?></td>
+								<td><?php echo @$row['staff_name'];?></td>
+								
+							</tr>
 							<?php 
-								}
-								?>
+							}
+						}else{
+						?>
+						<tr>
+							<td colspan="13" class="text-center">No result(s) found.</td>
+						<tr/>
+						<?php 
+						}
+						?>
 					</tbody>
 				</table>
 			</div>
