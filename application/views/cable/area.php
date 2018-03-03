@@ -60,7 +60,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
 												<div class="link_style">
-													<a href="<?php echo base_url('internet/area/add');?>"><i class="md md-add"></i> Add New Area</a>
+													<a href="<?php echo base_url('cable/area/add');?>"><i class="md md-add"></i> Add New Area</a>
 												</div>
 											</div>
 											<div class="clearfix"></div>
@@ -90,15 +90,15 @@
 																	
 																	<td><?php echo ($row['area_status']==1)?'<label class="label label-success">Active</label>':'<label class="label label-danger">Inactive</label>';?></td>
 																	<td>
-																		<a href="<?php echo base_url('internet/area/add/'.$row['area_id']);?>" title="Edit" data-toggle="tooltip">   <i class="fa fa-pencil-square-o delet" aria-hidden="true"></i></a>
-																		<a href="<?php echo base_url('internet/area/delete_record/'.$row['area_id']);?>" onclick="return confirm('Are you sure?')" title="Delete" data-toggle="tooltip"> <i class="fa fa-trash-o delet" aria-hidden="true"></i></a>
+																		<a href="<?php echo base_url('cable/area/add/'.$row['area_id']);?>" title="Edit" data-toggle="tooltip">   <i class="fa fa-pencil-square-o delet" aria-hidden="true"></i></a>
+																		<a href="<?php echo base_url('cable/area/delete_record/'.$row['area_id']);?>" onclick="return confirm('Are you sure?')" title="Delete" data-toggle="tooltip"> <i class="fa fa-trash-o delet" aria-hidden="true"></i></a>
 																		<?php 
 																		if($row['area_status']==1){
 																		?>
-																		<a onclick="return confirm('Are you sure?')" href="<?php echo base_url('internet/area/change_status/'.$row['area_id']);?>" title="Click to Inactive" data-toggle="tooltip"> <i class="fa fa-times" aria-hidden="true"></i></a>
+																		<a onclick="return confirm('Are you sure?')" href="<?php echo base_url('cable/area/change_status/'.$row['area_id']);?>" title="Click to Inactive" data-toggle="tooltip"> <i class="fa fa-times" aria-hidden="true"></i></a>
 																		<?php
 																		}else if($row['area_status']==2){ ?>
-																		<a onclick="return confirm('Are you sure?')" href="<?php echo base_url('internet/area/change_status/'.$row['area_id']);?>" title="Click to Active" data-toggle="tooltip"> <i class="fa fa-check delet" aria-hidden="true"></i></a>	
+																		<a onclick="return confirm('Are you sure?')" href="<?php echo base_url('cable/area/change_status/'.$row['area_id']);?>" title="Click to Active" data-toggle="tooltip"> <i class="fa fa-check delet" aria-hidden="true"></i></a>	
 																		<?php } ?>
 																	</td>
 																</tr>

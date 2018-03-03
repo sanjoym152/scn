@@ -238,9 +238,9 @@ class Customers extends CI_Controller {
 	
 	public function check_other_id(){
 		$where=array();
-		//$where['other_id'] = $this->input->post('other_id');
-		//$where['area_id'] = $this->input->post('area_id');
-		$where["(other_id = '".$this->input->post('other_id')."' OR area_id = '".$this->input->post('area_id')."')"]=null;
+		$where['other_id'] = $this->input->post('other_id');
+		$where['area_id'] = $this->input->post('area_id');
+		//$where["(other_id = '".$this->input->post('other_id')."' OR area_id = '".$this->input->post('area_id')."')"]=null;
 		$where['status <>'] = 3;
 		if($this->input->post('customer_id')){
 			$where['customer_id <> '] = $this->input->post('customer_id');

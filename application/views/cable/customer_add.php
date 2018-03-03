@@ -390,7 +390,8 @@
 		$(document).ready(function(){
 			$('.other_id').blur(function(){
 				var other_id = $(this).val();
-				var area_id = $(this).val();
+				var area_id = '';
+				var area_id = $('.area_id').val();
 				var customer_id = '';
 				<?php if(@$details['customer_id']){ ?>
 					customer_id = <?php echo @$details['customer_id'];?>;
@@ -407,14 +408,11 @@
 							$('.other_span').html('This ID is already exist');
 							$('.other_span').css('color','#f00');
 							$('.other_id').val('');
-						}else{
-							$('.other_span').html('');
-						}
-						if(result.STATUS=='EXIST'){
 							$('.area_span').html('This Area is already exist');
 							$('.area_span').css('color','#f00');
 							$('.area_id').val('');
 						}else{
+							$('.other_span').html('');
 							$('.area_span').html('');
 						}
 					}
@@ -433,7 +431,7 @@
 			$('#email').blur(function(){
 				email_flag = false;
 				var email = $(this).val();
-				if(email!=null){
+				if(email!=''){
 					var customer_id = '';
 					<?php if(@$details['customer_id']){ ?>
 						customer_id = <?php echo @$details['customer_id'];?>;
