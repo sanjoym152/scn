@@ -41,12 +41,13 @@
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
 													<label for="exampleInputEmail1">Area<span class="text-danger">*</span></label>
-													<select name="area_id" class="form-control required">
+													<select name="area_id" class="form-control required area_id">
 														<option value="">Select Area</option>
 														<?php foreach($area as $row){ ?>
 															<option value="<?php echo $row['area_id']?>" <?php if(@$details['area_id']==$row['area_id']){echo "selected";}?>><?php echo $row['area_name']?></option>
 														<?php }?>
 													</select>
+													<span class="area_span"></span>
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -389,6 +390,7 @@
 		$(document).ready(function(){
 			$('.other_id').blur(function(){
 				var other_id = $(this).val();
+				var area_id = $(this).val();
 				var customer_id = '';
 				<?php if(@$details['customer_id']){ ?>
 					customer_id = <?php echo @$details['customer_id'];?>;
@@ -396,7 +398,7 @@
 				$.ajax({
 					url:'<?php echo base_url('cable/customers/check_other_id')?>',
 					data:{
-						'other_id':other_id,'customer_id':customer_id
+						'other_id':other_id,'area_id':area_id,'customer_id':customer_id
 					},
 					method:'post',
 					dataType:'json',
@@ -407,6 +409,13 @@
 							$('.other_id').val('');
 						}else{
 							$('.other_span').html('');
+						}
+						if(result.STATUS=='EXIST'){
+							$('.area_span').html('This Area is already exist');
+							$('.area_span').css('color','#f00');
+							$('.area_id').val('');
+						}else{
+							$('.area_span').html('');
 						}
 					}
 				});

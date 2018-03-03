@@ -238,12 +238,16 @@ class Customers extends CI_Controller {
 	
 	public function check_other_id(){
 		$where=array();
-		$where['other_id'] = $this->input->post('other_id');
+		//$where['other_id'] = $this->input->post('other_id');
+		//$where['area_id'] = $this->input->post('area_id');
+		$where["(other_id = '".$this->input->post('other_id')."' OR area_id = '".$this->input->post('area_id')."')"]=null;
 		$where['status <>'] = 3;
 		if($this->input->post('customer_id')){
 			$where['customer_id <> '] = $this->input->post('customer_id');
 		}
 		$tot = count($this->common_model->get_data_array(CBL_CUSTOMERS,$where));
+		//echo $this->db->last_query();
+		//print_r($tot);
 		echo json_encode(array('STATUS'=>($tot>0)?'EXIST':'NOT_EXIST'));
 	}
 	
@@ -483,20 +487,30 @@ class Customers extends CI_Controller {
 			'table'=>CBL_LCO,
 			'condition'=>CBL_LCO.'.lco_id = '.CBL_CUSTOMERS.'.lco_id',
 			'jointype'=>'left'
-		);
-		$customer_data = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins);
+		);$joins[3]=array(
+			'table'=>AREA,
+			'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+			'jointype'=>'left'
+		); $joins[4]=array(
+			'table'=>CBL_PAYMENT,
+			'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+			'jointype'=>'left'
+		); 
+		$customer_data = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','',CBL_PAYMENT.'.customer_id','');
+		//echo "<pre>";print_r($customer_data);die;
 		$filename .= 'Customer-list-'.date('d/m/Y');
 		//header info for browser
 		header("Content-Type: application/xls");    
 		header("Content-Disposition: attachment; filename=$filename.xls");  
 		header("Pragma: no-cache"); 
 		header("Expires: 0");
-		$header = "Customer Name \t Mobile \t Address \t Other ID \t Pincode \t Package \t Connection Date \t Balance \t Installation Amount \t CBL_MSO \t CBL_LCO \t Payment Status \t";
+		$header = "Customer Name \t Mobile \t Address \t Other ID \t Pincode \t Package \t Connection Date \t Balance \t CBL_MSO \t CBL_LCO \t Payment Status \t";
 		if(@$customer_data){
 			$i=0;
 			foreach($customer_data as $row){
 				//ip information 
-				$ips = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$row['customer_id']));
+				$ips = $this->common_model->get_data_array(CUSTOMER_TO_IP,array('customer_id'=>$row['customer_id']));
+				//echo "<pre>";print_r($ips);die;
 				if(@$ips && $i==0){
 					$ip_col = 1;
 					foreach($ips as $row1){
@@ -508,12 +522,11 @@ class Customers extends CI_Controller {
 				$header .= $row['first_name']." ".@$row['last_name']."\t";
 				$header .= $row['mobile1']."\t";
 				$header .= $row['address1']."\t";
-				$header .= $row['other_id']."\t";
+				$header .= $row['area_name'].' - '.$row['other_id']."\t";
 				$header .= $row['pincode']."\t";
 				$header .= $row['pakname']."\t";
 				$header .= $row['connection_date']."\t";
 				$header .= $row['balance']."\t";
-				$header .= $row['installation_amount']."\t";
 				$header .= $row['mso']."\t"; 
 				$header .= $row['lconame']."\t"; 
 				if($row['payment_status']==1){
