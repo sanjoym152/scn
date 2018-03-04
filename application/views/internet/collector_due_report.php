@@ -78,6 +78,16 @@
 													</select>
 												</div>
 											</div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+												<div class="your-mail">
+													<select name="staff_id" class="form-control"required>
+														<option value="">Select Collector</option>
+														<?php if(@$collecter){ foreach($collecter as $row){?> 
+														<option value="<?php echo @$row['staff_id'];?>" <?php if(@$row['staff_id']==$this->input->post('staff_id')){echo 'selected';}?>><?php echo @$row['staff_name'];?></option>
+														<?php } }?>
+													</select>
+												</div>
+											</div>
 											<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4">
 												<div class="submit-login mrgnT5">
 													<button type="submit" class="btn btn-default">Search</button>
@@ -123,16 +133,17 @@
 																<th>Package</th>
 																<th>Address</th>
 																<th>Mobile</th>
-																<th>Due Balance</th>
-																<th>Payment Amount</th>
+																<th>TOTAL PAID</th>
+																<th>TOTAL DUE</th>
+																<th>TOTAL BALANCE</th>
 																
 															</tr>
 														</thead>
 														<tbody>
 															<?php 
 															$i=1;
-															if(@$daily_collection){
-																foreach($daily_collection as $row){
+															if(@$customer_details){
+																foreach($customer_details as $row){
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
@@ -144,15 +155,16 @@
 																	<td><?php echo @$row['pakname'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	
 																	<td><?php echo @$row['mobile1'];?></td>	
-																	<td><?php echo @$row['balance'];?></td>	
-																	<td><?php echo @$row['payment_total'];?></td>
+																	<td><?php echo @$row['tot_due'];?></td>
+																	<td><?php echo @$row['tot_payment'];?></td>
+																	<td><?php echo @$row['tot_due']-$row['tot_payment'];?></td>
 																</tr>
 																<?php 
 																}
 															}else{
 															?>
 															<tr>
-																<td colspan="11" class="text-center">No result(s) found.</td>
+																<td colspan="12" class="text-center">No result(s) found.</td>
 															<tr/>
 															<?php 
 															}
@@ -305,7 +317,7 @@
 			})
 			$(document).ready(function(){
 				$('#print_btn').click(function(){
-					$('#search_form').attr('action','internet/reports/daily_collection_print');
+					$('#search_form').attr('action','internet/reports/collector_due_report_print');
 					$('#search_form').submit();
 				});
 				$('#search_form').attr('action',''); 

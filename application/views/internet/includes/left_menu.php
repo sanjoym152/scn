@@ -55,9 +55,10 @@
 					<a href="#" class="waves-effect"<?php if($this->uri->segment(2)=='reports'){echo 'subdrop active-menu';}?>><i class="md ion-person"></i>
 					<span> Reports </span> <span class="pull-right"><?php if($this->uri->segment(2)=='reports'){echo '<i class="md md-remove"></i>';}else{echo '<i class="md md-add"></i>';}?></span></a>
 					<ul class="list-unstyled" <?php if($this->uri->segment(2)=='reports'){echo 'style="display:block"';}?>>
-						<li><a href="<?php echo base_url('internet/reports/');?>">Customers Reports</a></li>
+						<!--<li><a href="<?php echo base_url('internet/reports/');?>">Customers Reports</a></li>-->
 						<li><a href="<?php echo base_url('internet/reports/daily_collection');?>">Daily Collection</a></li>
-						<li><a href="<?php echo base_url('internet/reports/staff_commission');?>">Staff Commission</a></li>
+						<li><a href="<?php echo base_url('internet/reports/collector_due');?>">Collector wise Due</a></li>
+						<!--<li><a href="<?php echo base_url('internet/reports/staff_commission');?>">Staff Commission</a></li>-->
 					</ul>
 				</li>
 				
