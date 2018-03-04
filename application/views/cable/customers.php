@@ -48,7 +48,7 @@
 								<div class="panel panel-default">
 									<div class="panel-body table-rep-plugin">
 										<div class="panel panel-default">
-										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="label label-success">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class="label label-warning"> | Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class="label label-danger"> | Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
+										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="label label-success">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class="label label-warning">  Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class="label label-danger">  Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
 										<div class="panel-body">
 										<form method="post" id="search_form" autocomplete="off">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -81,6 +81,11 @@
 										</div>
 										<div class="row">
 											<div class="clearfix"></div>
+											
+											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12 pull-right">
+												<button class="btn btn-success export pull-right"><i class="fa fa-upload"></i> Export to Excel</button>
+											</div>
+											<div class="clearfix"></div>
 											<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
 												<div class="dess5">
 													<i class="fa fa-pencil-square-o cncl" aria-hidden="true"> <span class="cncl_oopo">Edit</span></i>
@@ -88,9 +93,6 @@
 													<i class="fa fa-check cncl" aria-hidden="true"> <span class="cncl_oopo">Active</span></i>
 													<i class="fa fa-times cncl" aria-hidden="true"> <span class="cncl_oopo">Inactive</span></i>
 												</div>
-											</div>
-											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-												<button class="btn btn-success export pull-right">Export to Excel</button>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
 												<div class="link_style">
