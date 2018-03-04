@@ -496,7 +496,7 @@ class Customers extends CI_Controller {
 			'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 			'jointype'=>'left'
 		); 
-		$customer_data = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','',CBL_PAYMENT.'.customer_id','');
+		$customer_data = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.customer_id as c_id',$joins,'','',CBL_PAYMENT.'.customer_id','');
 		//echo "<pre>";print_r($customer_data);die;
 		$filename .= 'Customer-list-'.date('d/m/Y');
 		//header info for browser
@@ -504,17 +504,16 @@ class Customers extends CI_Controller {
 		header("Content-Disposition: attachment; filename=$filename.xls");  
 		header("Pragma: no-cache"); 
 		header("Expires: 0");
-		$header = "Customer Name \t Mobile \t Address \t Other ID \t Pincode \t Package \t Connection Date \t Balance \t CBL_MSO \t CBL_LCO \t Payment Status \t";
+		$header = "Customer Name \t Mobile \t Address \t Other ID \t Pincode \t Package \t Connection Date \t Balance \t MSO \t LCO \t";
 		if(@$customer_data){
 			$i=0;
 			foreach($customer_data as $row){
 				//ip information 
-				$ips = $this->common_model->get_data_array(CUSTOMER_TO_IP,array('customer_id'=>$row['customer_id']));
-				//echo "<pre>";print_r($ips);die;
+				$ips = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$row['c_id']));
 				if(@$ips && $i==0){
 					$ip_col = 1;
 					foreach($ips as $row1){
-						$header .= "IP $ip_col \t Username $ip_col";
+						$header .= "STB No. $ip_col \t ACCOUNT $ip_col";
 						$ip_col +=1;
 					}
 				}
@@ -529,20 +528,13 @@ class Customers extends CI_Controller {
 				$header .= $row['balance']."\t";
 				$header .= $row['mso']."\t"; 
 				$header .= $row['lconame']."\t"; 
-				if($row['payment_status']==1){
-					$header .= "Unpaid";
-				}if($row['payment_status']==2){
-					$header .= "Paid";
-				}
-				$header .=" \t";
 				if(@$ips){
 					$ip_col = 0;
 					foreach($ips as $row1){
-						$header .= $row1['ip_address']."\t".$row1['username'];
+						$header .= $row1['stb_no']."\t".$row1['account'];
 						$ip_col +=1;
 					}
 				}
-				$header .="\n";
 				$i++;
 			}
 		}else{
