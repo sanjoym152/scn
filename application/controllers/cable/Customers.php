@@ -296,6 +296,7 @@ class Customers extends CI_Controller {
 		foreach($customer_ip as $row){
 			$data['ip_data'] = '<div class="col-md-6">'.$row['stb_no'].'</div>';
 		}
+		$data['last_payment'] = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$customer_id, 'type'=>1),'','','payment_id');
 		$data['customer_info'] = $this->load->view('cable/ajax/payment_customer_info',$data,true);
 		echo json_encode($data);
 	}
