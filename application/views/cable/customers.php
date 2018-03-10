@@ -48,7 +48,7 @@
 								<div class="panel panel-default">
 									<div class="panel-body table-rep-plugin">
 										<div class="panel panel-default">
-										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="label label-success">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class="label label-warning">  Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class="label label-danger">  Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
+										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right"><span class="label label-success">Active: <?php echo @$total_due_active['total_due']?$total_due_active['total_due']:0?></span><span class="label label-warning">Inactive: <?php echo @$total_due_inactive['total_due']?$total_due_inactive['total_due']:0?></span><span class="label label-danger">  Deleted: <?php echo @$total_due_delete['total_due']?$total_due_delete['total_due']:0?></span></span></div>
 										<div class="panel-body">
 										<form method="post" id="search_form" autocomplete="off">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -108,14 +108,12 @@
 															<tr>
 																<th>#</th>
 																<th>Customer Code</th>
-																<th>Other ID</th>
 																<th>Customer Name</th>
 																<th>Address</th>
 																<th>STB</th>
 																<th>Account</th>
 																<th>STB Model</th>
 																<th>Package</th>
-																<th>Mobile</th>
 																<th>Due Balance</th>
 																<th>Status</th>
 																<th>Action</th>
@@ -129,9 +127,9 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td><?php echo @$row['cust_code'];?></td>
-																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
-																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?></a></td>
+																	<td><?php echo @$row['cust_code'];?>
+																	<br>Other ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?><br>Mobile: <?php echo @$row['mobile1'];?></a></td>
 																	<td><?php echo @$row['address1'];?></td>
 																	<td>
 																	<a href="javascript:;" class="ip_address" data-id="<?php echo @$row['customer_id'];?>">
@@ -152,8 +150,6 @@
 																	</td>
 																	<td>
 																	<a href="javascript:;" class="channel"  data-id="<?php echo @$row['customer_id'];?>"><?php echo @$row['pakname'];?></a></td>
-																	
-																	<td><?php echo @$row['mobile1'];?></td>
 																	<td>Rs.<?php echo @$row['balance'];?></td>
 																	<td>
 																	<?php 

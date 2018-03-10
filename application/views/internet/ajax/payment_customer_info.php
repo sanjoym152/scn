@@ -28,4 +28,13 @@
 			<label>Total outstanding: Rs.<?php echo @$customer['balance'];?><br><small>(including package charge)</small></label>
 		</div>
 	</div>
+	<div class="clearfix"></div>
+	<div class="col-md-12 noPad">
+		<div class="col-md-12">
+		<h4>Last Payment Information</h4>
+		</div>
+		<div class="col-md-4"><label>Pay Date: <?php echo @$last_payment['payment_date']?$last_payment['payment_date']:'N/A';?></label></div>
+		<div class="col-md-4"><label>Pay Amount: <?php echo @$last_payment['payment_total']?'Rs.'.$last_payment['payment_total']:'N/A';?></label></div>
+		<div class="col-md-4"><label>Month of: <?php if(@$last_payment['month_of']){$dateObj   = DateTime::createFromFormat('!m', @$last_payment['month_of']); $monthName = $dateObj->format('F'); echo @$last_payment['month_of']?$monthName.' '.date('Y'):'N/A';}else{echo "N/A";}?></label></div>
+	</div>
 </div>

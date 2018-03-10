@@ -233,6 +233,7 @@ class Customers extends CI_Controller {
 		foreach($customer_ip as $row){
 			$data['ip_data'] = '<div class="col-md-6">'.$row['ip_address'].'</div>';
 		}
+		$data['last_payment'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$customer_id, 'type'=>1),'','','payment_id');
 		$data['customer_info'] = $this->load->view('internet/ajax/payment_customer_info',$data,true);
 		echo json_encode($data);
 	}
