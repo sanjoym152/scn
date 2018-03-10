@@ -172,8 +172,11 @@
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:10px; padding-left:20px;">&nbsp;&nbsp; PACKAGE: <?php echo @$userdata['pakname'];?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; LAST PAY DATE: <?php echo @$last_payment['payment_date']?$last_payment['payment_date']:'N/A';?></td>
 									</tr>
-									
+									<tr>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; LAST PAY AMOUNT: <?php echo @$last_payment['payment_total']?'Rs.'.$last_payment['payment_total']:'N/A';?></td>
+									</tr>
 								</table>
 								<br>
 								<br>
