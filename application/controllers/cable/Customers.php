@@ -23,6 +23,11 @@ class Customers extends CI_Controller {
 			'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
 			'jointype'=>'left'
 		);
+		$joins[2]=array(
+			'table'=>STAFF,
+			'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
+			'jointype'=>'left'
+		);
 		
 		if($this->input->post('keyword')){
 			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%')"]=null;
@@ -794,6 +799,7 @@ class Customers extends CI_Controller {
 	public function top_up(){
 		if($this->input->post()){
 			$where = array();
+			$where[CBL_CUSTOMERS.'.status'] = 1;
 			$where['lco_id'] = $this->input->post('lco');
 			$where['billing_date < '] = date('Y-m-d', strtotime('-30 days'));
 			$joins = array();
@@ -826,7 +832,8 @@ class Customers extends CI_Controller {
 			$customer_id = $this->input->post('customer_id');
 			foreach($customer_id as $row){
 				$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$row, 'status'=>1));
-				//echo "<pre>"; print_r($customer_data);
+				/* echo $this->db->last_query();
+				echo "<pre>"; print_r($customer_data);die; */
 				//update customer table.
 				$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$row), array('billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 days')), 'balance'=>$customer_data['balance'] + $customer_data['pack_amount']));
 				//echo $this->db->last_query();die;

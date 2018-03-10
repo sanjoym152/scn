@@ -108,14 +108,14 @@
 															<tr>
 																<th>#</th>
 																<th>Customer Code</th>
-																<th>Other ID</th>
+																
 																<th>Customer Name</th>
 																<th>STB</th>
 																<th>Account</th>
 																<th>STB Model</th>
 																<th>Package</th>
 																<th>Address</th>
-																<th>Mobile</th>
+																
 																<th>Due Balance</th>
 																<th>Status</th>
 																<th>Action</th>
@@ -129,9 +129,14 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td><?php echo @$row['cust_code'];?></td>
-																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
-																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?></a></td>
+																	<td><?php echo @$row['cust_code'];?><br>
+																	O ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?><br>
+																	COL: <?php echo $row['staff_name']?>
+																	</td>
+																	
+																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?>
+																	<br>Mo: <?php echo @$row['mobile1'];?>
+																	</a></td>
 																	<td>
 																	<a href="javascript:;" class="ip_address" data-id="<?php echo @$row['customer_id'];?>">
 																		<?php if(@$row['ip']){ foreach($row['ip'] as $row1){
@@ -152,7 +157,7 @@
 																	<td>
 																	<a href="javascript:;" class="channel"  data-id="<?php echo @$row['customer_id'];?>"><?php echo @$row['pakname'];?></a></td>
 																	<td><?php echo @$row['address1'];?></td>
-																	<td><?php echo @$row['mobile1'];?></td>
+																	
 																	<td>Rs.<?php echo @$row['balance'];?></td>
 																	<td>
 																	<?php 
