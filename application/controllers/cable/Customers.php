@@ -45,8 +45,10 @@ class Customers extends CI_Controller {
 		}else{
 			$where[CBL_CUSTOMERS.'.status'] = 1;// for default active customers.
 		}
-		
-		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status',$joins);
+		$total_rows = count($this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status',$joins));
+		$page = ($this->uri->segment(4)?$this->uri->segment(4):'');
+		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status', $joins, PAGE_LIMIT, $page);
+		$data['paginationLink'] = $this->utilitylib->pagination(base_url('cable/customers/index/'),$total_rows, PAGE_LIMIT, 4);
 		//echo $this->db->last_query();die;
 		$joins=array();
 		$joins[0]=array(
@@ -299,6 +301,7 @@ class Customers extends CI_Controller {
 		foreach($customer_ip as $row){
 			$data['ip_data'] = '<div class="col-md-6">'.$row['stb_no'].'</div>';
 		}
+		$data['last_payment'] = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$customer_id, 'type'=>1),'','','payment_id');
 		$data['customer_info'] = $this->load->view('cable/ajax/payment_customer_info',$data,true);
 		echo json_encode($data);
 	}

@@ -103,19 +103,24 @@
 											<div class="col-md-12 col-sm-12 col-xs-12">
 												
 												<div class="table-responsive" data-pattern="priority-columns">
-													<table id="datatable" class="table table-striped table-bordered">
+													<table id="datatable1" class="table table-striped table-bordered">
 														<thead>
 															<tr>
 																<th>#</th>
 																<th>Customer Code</th>
 																
 																<th>Customer Name</th>
+																<th>Address</th>
 																<th>STB</th>
 																<th>Account</th>
 																<th>STB Model</th>
 																<th>Package</th>
+<<<<<<< HEAD
 																<th>Address</th>
 																
+=======
+																<th>Mobile</th>
+>>>>>>> 7c00a81275201d04e2bbd1b80fd663ca2f65e058
 																<th>Due Balance</th>
 																<th>Status</th>
 																<th>Action</th>
@@ -129,6 +134,7 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
+<<<<<<< HEAD
 																	<td><?php echo @$row['cust_code'];?><br>
 																	O ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?><br>
 																	COL: <?php echo $row['staff_name']?>
@@ -137,6 +143,12 @@
 																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?>
 																	<br>Mo: <?php echo @$row['mobile1'];?>
 																	</a></td>
+=======
+																	<td><?php echo @$row['cust_code'];?></td>
+																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?></a></td>
+																	<td><?php echo @$row['address1'];?></td>
+>>>>>>> 7c00a81275201d04e2bbd1b80fd663ca2f65e058
 																	<td>
 																	<a href="javascript:;" class="ip_address" data-id="<?php echo @$row['customer_id'];?>">
 																		<?php if(@$row['ip']){ foreach($row['ip'] as $row1){
@@ -156,8 +168,13 @@
 																	</td>
 																	<td>
 																	<a href="javascript:;" class="channel"  data-id="<?php echo @$row['customer_id'];?>"><?php echo @$row['pakname'];?></a></td>
+<<<<<<< HEAD
 																	<td><?php echo @$row['address1'];?></td>
 																	
+=======
+																	
+																	<td><?php echo @$row['mobile1'];?></td>
+>>>>>>> 7c00a81275201d04e2bbd1b80fd663ca2f65e058
 																	<td>Rs.<?php echo @$row['balance'];?></td>
 																	<td>
 																	<?php 
@@ -200,6 +217,7 @@
 															?>
 														</tbody>
 													</table>
+													<?php echo $paginationLink; ?>
 												</div>
 											</div>
 										</div>
