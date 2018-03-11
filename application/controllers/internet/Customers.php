@@ -638,7 +638,7 @@ class Customers extends CI_Controller {
 				'condition'=>CUSTOMER_TO_IP.'.customer_id = '.CUSTOMERS.'.customer_id',
 				'jointype'=>'inner'
 			);
-			$data['customers'] = $this->common_model->get_data_array(CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
+			$data['customers'] = $this->common_model->get_data_array(CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CUSTOMERS.'.customer_id','first_name');
 			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
 		}
 		$data['q'] = $this->db->last_query();
