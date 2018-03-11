@@ -36,6 +36,7 @@ class Customers extends CI_Controller {
 		}
 		
 		$data['customers'] = $this->common_model->get_data_array(CUSTOMERS,$where,"*,".CUSTOMERS.'.status as c_status',$joins);
+		//echo $this->db->last_query();
 		foreach($data['customers'] as $k=>$v){
 			$data['customers'][$k]['ip'] = $this->common_model->get_data_array(CUSTOMER_TO_IP,array('customer_id'=>$v['customer_id']));
 		}
@@ -634,10 +635,10 @@ class Customers extends CI_Controller {
 			$joins = array();
 			$joins[0] = array(
 				'table' =>CUSTOMER_TO_IP,
-				'condition'=>CUSTOMER_TO_IP.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'condition'=>CUSTOMER_TO_IP.'.customer_id = '.CUSTOMERS.'.customer_id',
 				'jointype'=>'inner'
 			);
-			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
+			$data['customers'] = $this->common_model->get_data_array(CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
 			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
 		}
 		$data['q'] = $this->db->last_query();
