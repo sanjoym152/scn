@@ -7,11 +7,11 @@
     z-index: 99;
     border: solid 1px #eee;
     overflow-y: scroll;
-    height: 134px;
+    max-height: 134px;
     box-shadow: 2px 0px 5px 0px #949393;
 }
 .customer_auto ul li{
-        border-bottom: solid 1px #eee;
+    border-bottom: solid 1px #eee;
     list-style: none;
     padding: 6px 0 6px 10px;
     cursor: pointer;
@@ -21,7 +21,7 @@
     color: #fff;
 }
 .customer_auto ul{
-	    padding: 0;
+	padding: 0;
 }
 </style>
 <ul>

@@ -624,4 +624,23 @@ class Customers extends CI_Controller {
 		$data['html'] = $this->load->view('internet/ajax/customer_details',$data,true);
 		echo json_encode($data);
 	}
+	
+	public function autocomplete(){
+		$keyword = $this->input->post('keyword');
+		$data = array();
+		$data['html'] = null;
+		if(@$keyword){
+			$where["cust_code LIKE '%".$keyword."%' OR first_name LIKE '%".$keyword."%' OR mobile1 LIKE '%".$keyword."%' OR `ip_address` LIKE '%".$keyword."%' OR ".CUSTOMER_TO_IP.".`username` LIKE '%".$keyword."%'"] = null;
+			$joins = array();
+			$joins[0] = array(
+				'table' =>CUSTOMER_TO_IP,
+				'condition'=>CUSTOMER_TO_IP.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
+			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
+			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
+		}
+		$data['q'] = $this->db->last_query();
+		echo json_encode($data);
+	}
 }

@@ -50,10 +50,11 @@
 										<div class="panel panel-default">
 										<div class="panel-heading">Search Customer by Name, Mobile etc.<span class="pull-right">Total Due: Rs. <?php echo $total_due['total_due']?><!-- | Total Payment: Rs. <?php echo @$total_payment['payment']?>--></span></div>
 										<div class="panel-body">
-										<form method="post" id="search_form">
+										<form method="post" id="search_form" autocomplete="off">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<input class="form-control" id="keyword" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
+													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
+													<div class="customer_auto"></div>
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -337,8 +338,63 @@
 				</div>
 			</div>
 		</div>
+		
+		<script>
+			$(document).ready(function(){
+				/*
+				*@ autocomplete 
+				*/
+				$('#autocomplete').keyup(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('internet/customers/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').change(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('internet/customers/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				$('#autocomplete').blur(function(){
+					//alert($('#autocomplete').val());
+					var keyword = $('#autocomplete').val();
+					$.ajax({
+						url:'<?php echo base_url('internet/customers/autocomplete')?>',
+						method:'post',
+						data:{keyword: keyword},
+						dataType:'json',
+						success:function(result){
+							//console.log(result);
+							$('.customer_auto').html(result.html);
+							$('.customer_auto').show();
+						}
+					});
+				});
+				
+			});
+		</script>
 		<!--Topup Modal-->
 		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		
 		<script>
 			$(document).ready(function(){
 				$('.datepicker').datepicker({

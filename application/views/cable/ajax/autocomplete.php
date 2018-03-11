@@ -7,7 +7,7 @@
     z-index: 99;
     border: solid 1px #eee;
     overflow-y: scroll;
-    height: 134px;
+    max-height: 134px;
     box-shadow: 2px 0px 5px 0px #949393;
 }
 .customer_auto ul li{
