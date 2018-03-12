@@ -197,6 +197,7 @@ class Customers extends CI_Controller {
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,'','','','','','','pakname ASC');
 		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
 		$data['isp'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
+		$data['last_other_id'] = $this->common_model->get_data_row(CBL_CUSTOMERS,'','','','','','','customer_id DESC');
 		$data['collector'] = $this->common_model->get_data_array(STAFF,'','','','','','','staff_name ASC');
 		$data['stb'] = $this->common_model->get_data_array(CBL_STB_MODEL,array('status'=>1),'','','','','','stb_model_no ASC');
 		$data['pageTitle'] = "SCN | CABLE | ADD CUSTOMER";
@@ -624,6 +625,7 @@ class Customers extends CI_Controller {
 		$data['documents'] = $this->load->view('cable/ajax/customer_documents',$data,true);
 		echo json_encode($data);
 	}
+	
 	public function autocomplete(){
 		$keyword = $this->input->post('keyword');
 		$data = array();
@@ -642,6 +644,7 @@ class Customers extends CI_Controller {
 		$data['q'] = $this->db->last_query();
 		echo json_encode($data);
 	}
+	
 	public function get_pack_amount(){
 		$package_id = $this->input->post('package_id');
 		$including = $this->common_model->get_data_row(CBL_PACKAGE,array('package_id'=>$package_id));

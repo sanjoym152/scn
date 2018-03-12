@@ -55,6 +55,7 @@
 													<label for="exampleInputEmail1">Other ID<span class="text-danger">*</span></label>
 													<input class="form-control required other_id" type="text" name="other_id" value="<?php echo @$details['other_id'];?>">
 													<span class="other_span"></span>
+													<span class="label label-success">Last other ID: <?php echo @$last_other_id['other_id'];?></span>
 												</div>
 											</div>
 											
@@ -65,6 +66,7 @@
 													
 												</div>
 											</div>
+											<div class="clearfix"></div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
 													<label for="exampleInputEmail1">Full Name<span class="text-danger">*</span></label>
