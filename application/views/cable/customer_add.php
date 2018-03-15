@@ -372,8 +372,13 @@
 					},
 					dataType:'json',
 					success:function(result){
-						//console.log(result);
-						$('.other_id').val(result.result.other_id);
+						//console.log(result.result);
+						if(result.result != null){
+							$('.other_id').val(result.result.other_id);	
+						} else{
+							$('.other_id').val('');	
+						}
+						
 					},
 					error:function(err){
 						console.log(err);
