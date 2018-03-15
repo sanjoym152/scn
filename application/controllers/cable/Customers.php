@@ -864,7 +864,7 @@ class Customers extends CI_Controller {
 	public function get_other_id(){
 		$area_id = $this->input->post('area_id');
 		$response = array();
-		$response['result'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('area_id'=>$area_id),'','','customer_id');
+		$response['result'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('area_id'=>$area_id),'','','other_id');
 		echo json_encode($response);
 	}
 }
