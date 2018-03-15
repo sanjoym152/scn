@@ -372,6 +372,7 @@
 					},
 					dataType:'json',
 					success:function(result){
+						console.log(result.result.other_id);
 						console.log(result.result);
 						if(result.result != null){
 							$('.other_id').val(parseInt(result.result.other_id)+1);	
