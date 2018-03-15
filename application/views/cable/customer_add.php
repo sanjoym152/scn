@@ -55,7 +55,6 @@
 													<label for="exampleInputEmail1">Other ID<span class="text-danger">*</span></label>
 													<input class="form-control required other_id" type="text" name="other_id" value="<?php echo @$details['other_id'];?>">
 													<span class="other_span"></span>
-													<span class="label label-success">Last other ID: <?php echo @$last_other_id['other_id'];?></span>
 												</div>
 											</div>
 											
@@ -361,6 +360,29 @@
 	<!-- content -->
 	<?php echo @$footer;?>
 	<?php echo @$footer_scripts;?>
+	<script>
+		$(document).ready(function(){
+			$('.area_id').change(function(){
+				var area_id = $(this).val();
+				$.ajax({
+					url:'<?php echo base_url('cable/customers/get_other_id')?>',
+					method:'post',
+					data:{
+						area_id:area_id
+					},
+					dataType:'json',
+					success:function(result){
+						console.log(result);
+						$('.other_id').val(result.result.other_id);
+					},
+					error:function(err){
+						console.log(err);
+					}
+				});
+			});
+		});
+	</script>
+	
 	<script type="text/javascript" src="js/jquery.validate.js"></script>
 	<script>
 		$(document).ready(function(){

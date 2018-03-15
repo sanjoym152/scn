@@ -860,4 +860,11 @@ class Customers extends CI_Controller {
 			redirect(base_url('cable/customers/top_up'));
 		}
 	}
+	
+	public function get_other_id(){
+		$area_id = $this->input->post('area_id');
+		$response = array();
+		$response['result'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('area_id'=>$area_id),'','','customer_id');
+		echo json_encode($response);
+	}
 }
