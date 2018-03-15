@@ -106,7 +106,7 @@
 																<th>#</th>
 																<th>Customer Code</th>
 																<th>Customer Name</th>
-																<th>Ip Address</th>
+																<th>Ip/Username</th>
 																<th>Package</th>
 																<th>Address</th>
 																<th>Due Balance</th>
