@@ -372,9 +372,9 @@
 					},
 					dataType:'json',
 					success:function(result){
-						//console.log(result.result);
+						console.log(result.result);
 						if(result.result != null){
-							$('.other_id').val(result.result.other_id);	
+							$('.other_id').val(parseInt(result.result.other_id)+1);	
 						} else{
 							$('.other_id').val('');	
 						}
