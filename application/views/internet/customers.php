@@ -105,13 +105,10 @@
 															<tr>
 																<th>#</th>
 																<th>Customer Code</th>
-																<th>Other ID</th>
 																<th>Customer Name</th>
 																<th>Ip Address</th>
-																<th>Username</th>
 																<th>Package</th>
 																<th>Address</th>
-																<th>Mobile</th>
 																<th>Due Balance</th>
 																<th>Status</th>
 																<th>Payment Status</th>
@@ -126,24 +123,22 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td><?php echo @$row['cust_code'];?></td>
-																	<td><?php echo @$row['other_id'];?></td>
-																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?></a></td>
+																	<td><?php echo @$row['cust_code'];?>
+																	<br>Other ID: <?php echo @$row['other_id'];?>
+																	</td>
+																	<td><a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="cust_details_complain"><?php echo @$row['first_name'].' '.@$row['last_name'];?><br>Mo: <?php echo @$row['mobile1'];?></a></td>
 																	<td>
 																	<a href="javascript:;" class="ip_address" data-id="<?php echo @$row['customer_id'];?>">
 																		<?php if(@$row['ip']){ foreach($row['ip'] as $row1){
-																			echo '<p>'.@$row1['ip_address'].'</p>';
+																			echo '<p>'.@$row1['ip_address'];
+																		}} ?>
+																		<?php if(@$row['ip']){ foreach($row['ip'] as $row1){
+																			echo @$row1['username'].'</p>';
 																		}} ?>
 																	</a>
 																	</td>
-																	<td>
-																		<?php if(@$row['ip']){ foreach($row['ip'] as $row1){
-																			echo '<p>'.@$row1['username'].'</p>';
-																		}} ?>
-																	</td>
 																	<td><?php echo @$row['pakname'];?></td>
 																	<td><?php echo @$row['address1'];?></td>
-																	<td><?php echo @$row['mobile1'];?></td>
 																	<td>Rs.<?php echo @$row['balance'];?></td>
 																	<td>
 																	<?php 
