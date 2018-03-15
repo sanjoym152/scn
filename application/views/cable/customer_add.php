@@ -372,7 +372,7 @@
 					},
 					dataType:'json',
 					success:function(result){
-						console.log(result);
+						//console.log(result);
 						$('.other_id').val(result.result.other_id);
 					},
 					error:function(err){
