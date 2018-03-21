@@ -49,7 +49,6 @@ class Customers extends CI_Controller {
 		$page = ($this->uri->segment(4)?$this->uri->segment(4):'');
 		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status', $joins, PAGE_LIMIT, $page);
 		$data['paginationLink'] = $this->utilitylib->pagination(base_url('cable/customers/index/'),$total_rows, PAGE_LIMIT, 4);
-		//echo $this->db->last_query();die;
 		$joins=array();
 		$joins[0]=array(
 			'table'=>CBL_STB_MODEL,
@@ -59,8 +58,68 @@ class Customers extends CI_Controller {
 		foreach($data['customers'] as $k=>$v){
 			$data['customers'][$k]['ip'] = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$v['customer_id']),'',$joins);
 		}
-		/* echo "<pre>";
-		print_r($data['customers']);die; */
+		$data['total_due_active'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>1),'sum(balance) as total_due');
+		$data['total_due_inactive'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>2),'sum(balance) as total_due');
+		$data['total_due_delete'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>3),'sum(balance) as total_due');
+		$data['total_payment'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1),'sum(payment_total) as payment');
+		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,array('status'=>1),'','','','','','pakname ASC');
+		$data['collector'] = $this->common_model->get_data_array(STAFF);
+		$data['pageTitle'] = "SCN | CABLE | CUSTOMERS";
+		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
+		$data['topbar'] = $this->load->view('cable/includes/topbar',$data,true);
+		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
+		$data['footer'] = $this->load->view('cable/includes/footer','',true);
+		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
+		$this->load->view('cable/customers', $data);
+	}
+	
+	public function all(){
+		$where=array();
+		$joins=array();
+		$joins[0]=array(
+			'table'=>CBL_PACKAGE,
+			'condition'=>CBL_PACKAGE.'.package_id = '.CBL_CUSTOMERS.'.package_id',
+			'jointype'=>'left'
+		);
+		$joins[1]=array(
+			'table'=>AREA,
+			'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+			'jointype'=>'left'
+		);
+		$joins[2]=array(
+			'table'=>STAFF,
+			'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
+			'jointype'=>'left'
+		);
+		
+		if($this->input->post('keyword')){
+			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+		}
+		if($this->input->post('status')){
+			$customer_type = $this->input->post('status');
+			if($customer_type == 1 || $customer_type == 2 || $customer_type == 3){
+				$where[CBL_CUSTOMERS.'.status'] = $customer_type;
+			}else if($customer_type == 4){
+				//paid
+				$where['last_payment_month'] = date('m'); 
+			}else if($customer_type == 5){
+				$where['last_payment_month != '] = date('m'); 
+			}
+		}else{
+			$where[CBL_CUSTOMERS.'.status'] = 1;// for default active customers.
+		}
+		
+		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status', $joins);
+		
+		$joins=array();
+		$joins[0]=array(
+			'table'=>CBL_STB_MODEL,
+			'condition'=>CBL_STB_MODEL.'.stb_model_id = '.CBL_CUSTOMER_TO_STB.'.stb_model_id',
+			'jointype'=>'inner'
+		);
+		foreach($data['customers'] as $k=>$v){
+			$data['customers'][$k]['ip'] = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$v['customer_id']),'',$joins);
+		}
 		$data['total_due_active'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>1),'sum(balance) as total_due');
 		$data['total_due_inactive'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>2),'sum(balance) as total_due');
 		$data['total_due_delete'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>3),'sum(balance) as total_due');
@@ -78,8 +137,6 @@ class Customers extends CI_Controller {
 	
 	public function add($id = null){
 		if($this->input->post()){
-			/* echo "<pre>";
-			print_r($this->input->post());die; */
 			$insert_array = $this->input->post();
 			unset($insert_array['stb_no']);
 			unset($insert_array['account']);
@@ -92,8 +149,6 @@ class Customers extends CI_Controller {
 				$package = $this->common_model->get_data_row(CBL_PACKAGE,array('package_id'=>$this->input->post('package_id')));
 				$insert_array['balance'] = $insert_array['pack_amount'] + $insert_array['stb_amount'] + $this->input->post('balance');
 				$insert_array['status'] = 1;
-				/* echo "<pre>";
-				print_r($insert_array);die; */
 				$id = $this->common_model->tbl_insert(CBL_CUSTOMERS,$insert_array);
 				
 				$cust_code = 'CUST00'.$id;
@@ -151,8 +206,6 @@ class Customers extends CI_Controller {
                         $this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
                     }
                     else {
-						/* echo "<pre>";
-						print_r($this->upload->data());die; */
                         $insert_array['caf_page2'] = $this->upload->data('file_name');
                     }
                 }
@@ -254,14 +307,12 @@ class Customers extends CI_Controller {
 			$where['customer_id <> '] = $this->input->post('customer_id');
 		}
 		$tot = count($this->common_model->get_data_array(CBL_CUSTOMERS,$where));
-		//echo $this->db->last_query();
-		//print_r($tot);
 		echo json_encode(array('STATUS'=>($tot>0)?'EXIST':'NOT_EXIST'));
 	}
 	
 	public function check_username(){
 		$where=array();
-		$where['username'] = $this->input->post('username');
+		$where['account'] = $this->input->post('username');
 		if($this->input->post('customer_id')){
 			$where['customer_id <> '] = $this->input->post('customer_id');
 		}
@@ -271,7 +322,7 @@ class Customers extends CI_Controller {
 	
 	public function check_ip(){
 		$where=array();
-		$where['ip_address'] = $this->input->post('ip');
+		$where['stb_no'] = $this->input->post('ip');
 		if($this->input->post('customer_id')){
 			$where['customer_id <>'] = $this->input->post('customer_id');
 		}
@@ -360,8 +411,6 @@ class Customers extends CI_Controller {
 			'jointype'=>'left'
 		);
 		$data['userdata'] = $this->common_model->get_data_row(CBL_PAYMENT,array(CBL_PAYMENT.'.payment_id'=>$id),'*,'.CBL_PAYMENT.'.discount_total as p_discount',$joins);
-		/* echo "<pre>";
-		print_r($data['userdata']);die; */
 		$data['pageTitle'] = "SCN | Internet | Bill Print";
 		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('cable/includes/topbar',$data,true);

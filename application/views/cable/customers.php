@@ -149,7 +149,9 @@
 																		}} ?>
 																	</td>
 																	<td>
-																	<a href="javascript:;" class="channel"  data-id="<?php echo @$row['customer_id'];?>"><?php echo @$row['pakname'];?></a></td>
+																	<a href="javascript:;" class="channel"  data-id="<?php echo @$row['customer_id'];?>"><?php echo @$row['pakname'];?></a>
+																	<br>Collector: <?php echo $row['staff_name'];?>
+																	</td>
 																	<td>Rs.<?php echo @$row['balance'];?></td>
 																	<td>
 																	<?php 
@@ -192,7 +194,7 @@
 															?>
 														</tbody>
 													</table>
-													<?php echo $paginationLink; ?>
+													<?php echo @$paginationLink; ?>
 												</div>
 											</div>
 										</div>
