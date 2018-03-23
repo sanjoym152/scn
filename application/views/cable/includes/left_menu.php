@@ -62,7 +62,7 @@
 						<li><a href="<?php echo base_url('cable/reports');?>">Active Customers Reports</a></li>
 						<li><a href="<?php echo base_url('cable/reports/get_all_customers_details');?>">All Customers List</a></li>
 						<li><a href="<?php echo base_url('cable/reports/collector_due');?>">Collector Wise Due</a></li>
-						<li><a href="<?php echo base_url('cable/reports/customer_payment');?>">customer Wise Payment</a></li>
+						<li><a href="<?php echo base_url('cable/reports/customer_payment');?>">Customer Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/daily_collection');?>">Daily Collection</a></li>
 						<li><a href="<?php echo base_url('cable/reports/package_wise_customer');?>">Package Wise Customer</a></li>
 						<!--<li><a href="<?php echo base_url('cable/reports/deactive_customer');?>">Deactive Customers Reports</a></li>

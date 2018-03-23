@@ -50,7 +50,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="mso_id" class="form-control" required>
+													<select name="mso_id" class="form-control">
 														<option value="">Select MSO</option>
 														<?php if(@$mso){ foreach($mso as $row){?> 
 														<option value="<?php echo @$row['isp_id'];?>" <?php if(@$row['isp_id']==$this->input->post('mso_id')){echo 'selected';}?>><?php echo @$row['mso'];?></option>
@@ -60,7 +60,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="lco_id" class="form-control" required>
+													<select name="lco_id" class="form-control">
 														<option value="">Select LCO</option>
 														<?php if(@$lco){ foreach($lco as $row){?> 
 														<option value="<?php echo @$row['lco_id'];?>" <?php if(@$row['lco_id']==$this->input->post('lco_id')){echo 'selected';}?>><?php echo @$row['lconame'];?></option>
@@ -106,6 +106,8 @@
 															<tr>
 																<th>#</th>
 																<th>CUSTOMER CODE</th>
+																<th>OTHER ID</th>
+																<th>STAFF NAME</th>
 																<th>CUSTOMER NAME</th>
 																<th>ADDRESS</th>
 																<th>STB</th>
@@ -127,6 +129,8 @@
 																<tr>
 																	<td><?php echo @$i++;?></td>
 																	<td><?php echo @$row['cust_code'];?></td>
+																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+																	<td><?php echo @$row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
 																	<td><?php echo @$row['address1'];?></td>
 																	<td><?php echo @$row['stb_no'];?></td>
@@ -142,7 +146,7 @@
 															}else{
 															?>
 															<tr>
-																<td colspan="11" class="text-center">No result(s) found.</td>
+																<td colspan="13" class="text-center">No result(s) found.</td>
 															<tr/>
 															<?php 
 															}

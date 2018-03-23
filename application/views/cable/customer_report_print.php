@@ -90,13 +90,15 @@
 						<tr>
 							<th>#</th>
 							<th>CUSTOMER CODE</th>
+							<th>OTHER ID</th>
+							<th>STAFF NAME</th>
 							<th>CUSTOMER NAME</th>
 							<th>ADDRESS</th>
 							<th>STB</th>
 							<th>ACCOUNT</th>
 							<th>MOBILE</th>
-							<th>START DATE</th>
-							<th>END DATE</th>
+							<!--<th>START DATE</th>
+							<th>END DATE</th>-->
 							<th>STATUS</th>
 						</tr>
 					</thead>
@@ -109,13 +111,15 @@
 						<tr>
 							<td><?php echo @$i++;?></td>
 							<td><?php echo @$row['cust_code'];?></td>
+							<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+							<td><?php echo @$row['staff_name'];?></td>
 							<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
 							<td><?php echo @$row['address1'];?></td>
 							<td><?php echo @$row['stb_no'];?></td>
 							<td><?php echo @$row['account'];?></td>
 							<td><?php echo @$row['mobile1'];?></td>
-							<td><?php echo @$row['billing_date'];?></td>
-							<td><?php echo date('Y-m-d', strtotime($row['billing_date']. '+'. '30 days'));?></td>
+							<!--<td><?php echo @$row['billing_date'];?></td>
+							<td><?php echo date('Y-m-d', strtotime($row['billing_date']. '+'. '30 days'));?></td>-->
 							<td>
 							<?php 
 							if($row['status']==1){

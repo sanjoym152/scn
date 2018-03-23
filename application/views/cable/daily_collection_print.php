@@ -90,6 +90,8 @@
 						<tr>
 							<th>#</th>
 							<th>CUSTOMER CODE</th>
+							<th>OTHER ID</th>
+							<th>STAFF NAME</th>
 							<th>CUSTOMER NAME</th>
 							<th>ADDRESS</th>
 							<th>STB</th>
@@ -109,6 +111,8 @@
 						<tr>
 							<td><?php echo @$i++;?></td>
 							<td><?php echo @$row['cust_code'];?></td>
+							<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+							<td><?php echo @$row['staff_name'];?></td>
 							<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
 							<td><?php echo @$row['address1'];?></td>
 							<td><?php echo @$row['stb_no'];?></td>

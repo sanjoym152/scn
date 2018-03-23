@@ -44,23 +44,23 @@
 										<form method="post" id="search_form">
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail keyword_main">
-													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword" required>
+													<input class="form-control" id="autocomplete" type="text" name="keyword" value="<?php echo $this->input->post('keyword');?>" placeholder="Search Keyword">
 													<div class="customer_auto"></div>
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<input class="form-control from_date" type="text" name="f_date" value="<?php echo $this->input->post('f_date');?>" placeholder="From Date" required>
+													<input class="form-control from_date" type="text" name="f_date" value="<?php echo $this->input->post('f_date');?>" placeholder="From Date">
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<input class="form-control to_date" type="text" name="t_date" value="<?php echo $this->input->post('t_date');?>" placeholder="To Date" required>
+													<input class="form-control to_date" type="text" name="t_date" value="<?php echo $this->input->post('t_date');?>" placeholder="To Date" >
 												</div>
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="mso_id" class="form-control" required>
+													<select name="mso_id" class="form-control" >
 														<option value="">Select MSO</option>
 														<?php if(@$mso){ foreach($mso as $row){?> 
 														<option value="<?php echo @$row['isp_id'];?>" <?php if(@$row['isp_id']==$this->input->post('mso_id')){echo 'selected';}?>><?php echo @$row['mso'];?></option>
@@ -70,7 +70,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="lco_id" class="form-control" required>
+													<select name="lco_id" class="form-control">
 														<option value="">Select LCO</option>
 														<?php if(@$lco){ foreach($lco as $row){?> 
 														<option value="<?php echo @$row['lco_id'];?>" <?php if(@$row['lco_id']==$this->input->post('lco_id')){echo 'selected';}?>><?php echo @$row['lconame'];?></option>
@@ -80,7 +80,7 @@
 											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
-													<select name="staff_id" class="form-control"required>
+													<select name="staff_id" class="form-control">
 														<option value="">Select Collector</option>
 														<?php if(@$collecter){ foreach($collecter as $row){?> 
 														<option value="<?php echo @$row['staff_id'];?>" <?php if(@$row['staff_id']==$this->input->post('staff_id')){echo 'selected';}?>><?php echo @$row['staff_name'];?></option>
@@ -126,6 +126,8 @@
 															<tr>
 																<th>#</th>
 																<th>CUSTOMER CODE</th>
+																<th>OTHER ID</th>
+																<th>STAFF NAME</th>
 																<th>CUSTOMER NAME</th>
 																<th>ADDRESS</th>
 																<th>STB</th>
@@ -147,6 +149,8 @@
 																<tr>
 																	<td><?php echo @$i++;?></td>
 																	<td><?php echo @$row['cust_code'];?></td>
+																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+																	<td><?php echo @$row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
 																	<td><?php echo @$row['address1'];?></td>
 																	<td><?php echo @$row['stb_no'];?></td>
@@ -171,7 +175,7 @@
 															}else{
 															?>
 															<tr>
-																<td colspan="11" class="text-center">No result(s) found.</td>
+																<td colspan="13" class="text-center">No result(s) found.</td>
 															<tr/>
 															<?php 
 															}
