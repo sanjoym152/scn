@@ -246,21 +246,22 @@ class Reports extends CI_Controller {
 			if($this->input->post('staff_id')){
 				$where[CBL_CUSTOMERS.".`staff_id` = '".$this->input->post('staff_id')."'"]=null;
 			}
+		
 			$joins=array();
-			
+
 			$joins[0]=array(
-				'table'=>CBL_CUSTOMER_TO_STB,
-				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'table'=>STAFF,
+				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
 			$joins[1]=array(
 				'table'=>CBL_PAYMENT,
-				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'condition'=>CBL_PAYMENT.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
 			$joins[2]=array(
-				'table'=>STAFF,
-				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
+				'table'=>CBL_CUSTOMER_TO_STB,
+				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'left'
 			);
 			$joins[3]=array(
@@ -269,7 +270,8 @@ class Reports extends CI_Controller {
 				'jointype'=>'left'
 			);
 			$where[CBL_PAYMENT.'.type']=1;
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',CBL_PAYMENT.'.customer_id',CBL_CUSTOMERS.'.customer_id ASC');
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
+			//$data['customer_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'count(*)',$joins);
 			//echo $this->db->last_query();
 			//print "<pre>";print_r($data['customer_details']);die;
 		}		
