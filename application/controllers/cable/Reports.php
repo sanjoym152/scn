@@ -50,9 +50,14 @@ class Reports extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
+			$joins[3]=array(
+				'table'=>CBL_PAYMENT,
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
 			$where[CBL_CUSTOMERS.'.status']=1;
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
-			//print "<pre>";print_r($data['customer_details']);die;
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+		//print "<pre>";print_r($data['customer_details']);die;
 		}
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
 		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
@@ -104,8 +109,13 @@ class Reports extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
+			$joins[3]=array(
+				'table'=>CBL_PAYMENT,
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
 			$where[CBL_CUSTOMERS.'.status']=1;
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
 		}
 		$data['pageTitle'] = "SCN | CABLE | ACTIVE CUSTOMER";
 		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
@@ -155,7 +165,12 @@ class Reports extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+			$joins[3]=array(
+				'table'=>CBL_PAYMENT,
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
 		}
 		//echo $this->db->last_query();die;
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
@@ -208,7 +223,12 @@ class Reports extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+			$joins[3]=array(
+				'table'=>CBL_PAYMENT,
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'inner'
+			);
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
 		}
 		//echo $this->db->last_query();die;
 		$data['pageTitle'] = "SCN | CABLE | All CUSTOMERS";
@@ -270,7 +290,8 @@ class Reports extends CI_Controller {
 				'jointype'=>'left'
 			);
 			$where[CBL_PAYMENT.'.type']=1;
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
+			//$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
 			//$data['customer_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'count(*)',$joins);
 			//echo $this->db->last_query();
 			//print "<pre>";print_r($data['customer_details']);die;
@@ -480,7 +501,7 @@ class Reports extends CI_Controller {
 			$joins[3]=array(
 				'table'=>AREA,
 				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
-				'jointype'=>'left'
+				'jointype'=>'inner'
 			);
 			if($this->input->post('keyword')){
 				$keyword=$this->input->post('keyword');
@@ -505,7 +526,7 @@ class Reports extends CI_Controller {
 				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
 			}
 			$where[CBL_PAYMENT.'.type'] = 1;
-			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'',$joins);
+			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'*,'.CBL_CUSTOMERS.'.other_id',$joins);
 			/* echo $this->db->last_query(); 
 			print "<pre>";
 			print_r($data['daily_collection']);die; */
@@ -537,6 +558,16 @@ class Reports extends CI_Controller {
 				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_PAYMENT.'.customer_id',
 				'jointype'=>'left'
 			);
+			$joins[2]=array(
+				'table'=>STAFF,
+				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
+				'jointype'=>'left'
+			);
+			$joins[3]=array(
+				'table'=>AREA,
+				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+				'jointype'=>'inner'
+			);
 			if($this->input->post('keyword')){
 				$keyword=$this->input->post('keyword');
 				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
@@ -560,7 +591,7 @@ class Reports extends CI_Controller {
 				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
 			}
 			$where[CBL_PAYMENT.'.type'] = 1;
-			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'',$joins);
+			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'*,'.CBL_CUSTOMERS.'.other_id',$joins);
 			/* echo $this->db->last_query(); 
 			print "<pre>";
 			print_r($data['daily_collection']);die; */
@@ -608,7 +639,7 @@ class Reports extends CI_Controller {
 			$joins[2]=array(
 				'table'=>STAFF,
 				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
-				'jointype'=>'left'
+				'jointype'=>'inner'
 			);
 			$joins[3]=array(
 				'table'=>CBL_PACKAGE,
@@ -621,6 +652,7 @@ class Reports extends CI_Controller {
 				'jointype'=>'left'
 			);			
 			$data['package_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');	 
+		//echo "<pre>";print_r($data['package_details']);die;
 		}
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE);
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');

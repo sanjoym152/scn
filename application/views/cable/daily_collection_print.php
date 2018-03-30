@@ -100,6 +100,7 @@
 							<th>BALANCE</th>
 							<th>PAYMENT AMOUNT</th>
 							<th>PAY DATE</th>
+							<th>PAY FOR MONTH</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -121,6 +122,10 @@
 							<td><?php echo @$row['balance'];?></td>
 							<td><?php echo @$row['payment_total'];?></td>
 							<td><?php echo @$row['payment_date'];?></td>
+							<td>
+							<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+							$monthName = $dateObj->format('F');
+							echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
 						</tr>
 						<?php 
 							}

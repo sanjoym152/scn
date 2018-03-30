@@ -136,6 +136,8 @@
 																<th>TOTAL PAID</th>
 																<th>TOTAL DUE</th>
 																<th>TOTAL BALANCE</th>
+																<th>PAY DATE</th>
+																<th>PAY FOR MONTH</th>
 																<th>STATUS</th>
 																
 															</tr>
@@ -159,6 +161,11 @@
 																	<td><?php echo @$row['tot_due'];?></td>
 																	<td><?php echo @$row['tot_payment'];?></td>
 																	<td><?php echo @$row['tot_due']-$row['tot_payment'];?></td>
+																	<td><?php echo @$row['payment_date'];?></td>
+																	<td>
+																	<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+																	$monthName = $dateObj->format('F');
+																	echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
 																	<td>
 																	<?php 
 																	if($row['status']==1){
@@ -175,7 +182,7 @@
 															}else{
 															?>
 															<tr>
-																<td colspan="13" class="text-center">No result(s) found.</td>
+																<td colspan="15" class="text-center">No result(s) found.</td>
 															<tr/>
 															<?php 
 															}

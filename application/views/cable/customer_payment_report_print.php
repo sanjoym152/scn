@@ -98,9 +98,10 @@
 							<th>ACCOUNT</th>
 							<th>MOBILE</th>
 							<th>PAY DATE</th>
+							<th>PAY FOR MONTH</th>
 							<th>PAY AMOUNT</th>
 							<th>DUE AMOUNT</th>
-							<th>COLLECTOR</th>
+							<!--<th>COLLECTOR</th>-->
 							
 						</tr>
 					</thead>
@@ -121,16 +122,20 @@
 								<td><?php echo @$row['account'];?></td>
 								<td><?php echo @$row['mobile1'];?></td>
 								<td><?php echo @$row['payment_date'];?></td>
+								<td>
+								<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+								$monthName = $dateObj->format('F');
+								echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
 								<td><?php echo @$row['payment_total'];?></td>
 								<td><?php echo @$row['balance']?></td>
-								<td><?php echo @$row['staff_name']?></td>
+								<!--<td><?php echo @$row['staff_name']?></td>-->
 							</tr>
 							<?php 
 							}
 						}else{
 						?>
 						<tr>
-							<td colspan="11" class="text-center">No result(s) found.</td>
+							<td colspan="14" class="text-center">No result(s) found.</td>
 						<tr/>
 						<?php 
 						}

@@ -124,6 +124,8 @@
 																<th>STB</th>
 																<th>ACCOUNT</th>
 																<th>MOBILE</th>
+																<th>Pay Date</th>
+																<th>Pay For Month</th>
 																<!--<th>START DATE</th>
 																<th>END DATE</th>-->
 																<th>STATUS</th>
@@ -147,6 +149,13 @@
 																	<td><?php echo @$row['mobile1'];?></td>
 																	<!--<td><?php echo @$row['billing_date'];?></td>
 																	<td><?php echo date('Y-m-d', strtotime($row['billing_date']. '+'. '30 days'));?></td>-->
+																	<td><?php echo @$row['payment_date'];?></td>
+																	
+																	<td>
+																	<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+																	$monthName = $dateObj->format('F');
+																	echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+																	
 																	<td>
 																	<?php 
 																	if($row['status']==1){

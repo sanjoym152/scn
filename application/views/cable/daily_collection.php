@@ -115,8 +115,7 @@
 														<thead>
 															<tr>
 																<th>Sl.No</th>
-																<th>Customer Code</th>
-																<th>Other Id</th>
+																<th>Other Id - Collector</th>
 																<th>Staff Name</th>
 																<th>Name</th>
 																<th>Address</th>
@@ -138,8 +137,7 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td><?php echo @$row['cust_code'];?></td>
-																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></br><?php echo $row['staff_name'];?></td>
 																	<td><?php echo @$row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	
