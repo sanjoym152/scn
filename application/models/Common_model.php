@@ -179,7 +179,9 @@
 		return $this->db->get($table)->row_array();
 	}
     
-    public function get_data_array($tbl,$con=array(),$select='*',$joins=array(),$limit='',$page='',$group_by='',$order=''){
+    public function get_data_array($tbl,$con=array(),$select='*',$joins=array(),$limit='',$page='',$group_by='',$order='', $having = array()){
+		/* echo "<pre>";
+		print_r($having);die; */
         $this->db->select($select);
         $this->db->from($tbl);
         if(!empty($joins)){
@@ -199,6 +201,9 @@
 		if($limit!=''){
             $this->db->limit($limit,$page);
         }
+		if(!empty($having)){
+			$this->db->having($having);
+		}
         $res=$this->db->get();
 		//echo $this->db->last_query();exit;
         return $res->result_array();

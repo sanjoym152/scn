@@ -30,7 +30,7 @@ class Customers extends CI_Controller {
 		);
 		
 		if($this->input->post('keyword')){
-			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%')"]=null;
+			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%' OR area_other_id LIKE '%".$this->input->post('keyword')."')"]=null;
 		}
 		if($this->input->post('status')){
 			$customer_type = $this->input->post('status');
@@ -45,9 +45,10 @@ class Customers extends CI_Controller {
 		}else{
 			$where[CBL_CUSTOMERS.'.status'] = 1;// for default active customers.
 		}
-		$total_rows = count($this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status',$joins));
+		$total_rows = count($this->common_model->get_data_array(CBL_CUSTOMERS,'',"*,CONCAT_WS('-', area_name, other_id) as area_other_id,".CBL_CUSTOMERS.'.status as c_status',$joins,'','','','',$where));
 		$page = ($this->uri->segment(4)?$this->uri->segment(4):'');
-		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,"*,".CBL_CUSTOMERS.'.status as c_status', $joins, PAGE_LIMIT, $page);
+		$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,'',"*,CONCAT_WS('-', area_name, other_id) as area_other_id,".CBL_CUSTOMERS.'.status as c_status', $joins, PAGE_LIMIT, $page,'','',$where);
+		//echo $this->db->last_query();
 		$data['paginationLink'] = $this->utilitylib->pagination(base_url('cable/customers/index/'),$total_rows, PAGE_LIMIT, 4);
 		$joins=array();
 		$joins[0]=array(
@@ -680,16 +681,24 @@ class Customers extends CI_Controller {
 		$data = array();
 		$data['html'] = null;
 		if(@$keyword){
-			$where["cust_code LIKE '%".$keyword."%' OR first_name LIKE '%".$keyword."%' OR mobile1 LIKE '%".$keyword."%' OR `stb_no` LIKE '%".$keyword."%' OR `account` LIKE '%".$keyword."%'"] = null;
+			//$where["cust_code LIKE '%".$keyword."%' OR first_name LIKE '%".$keyword."%' OR mobile1 LIKE '%".$keyword."%' OR `stb_no` LIKE '%".$keyword."%' OR `account` LIKE '%".$keyword."%' OR `area_other_id` LIKE '%".$keyword."%'"] = null;
+			$where["(first_name LIKE '%".$this->input->post('keyword')."%' OR last_name LIKE '%".$this->input->post('keyword')."%' OR area_other_id LIKE '%".$this->input->post('keyword')."' OR cust_code LIKE '%".$keyword."%' OR mobile1 LIKE '%".$keyword."%' OR `stb_no` LIKE '%".$keyword."%' OR `account` LIKE '%".$keyword."%')"]=null;
 			$joins = array();
 			$joins[0] = array(
 				'table' =>CBL_CUSTOMER_TO_STB,
 				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'inner'
 			);
-			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'first_name, cust_code', $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name');
+			$joins[1]=array(
+				'table'=>AREA,
+				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+				'jointype'=>'left'
+			);
+			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,'',"*,first_name, cust_code, CONCAT_WS('-', area_name, other_id) as area_other_id", $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name',$where);
 			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
+			
 		}
+		
 		$data['q'] = $this->db->last_query();
 		echo json_encode($data);
 	}
