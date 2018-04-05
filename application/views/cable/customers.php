@@ -94,8 +94,13 @@
 													<i class="fa fa-times cncl" aria-hidden="true"> <span class="cncl_oopo">Inactive</span></i>
 												</div>
 											</div>
-											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
+											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12 pull-right">
 												<div class="link_style">
+													<?php if($this->uri->segment(3)==='all'){ ?> 
+													<a href="<?php echo base_url('cable/customers');?>"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a> | 
+													<?php }else{ ?> 
+													<a href="<?php echo base_url('cable/customers/all');?>"><i class="fa fa-eye" aria-hidden="true"></i> View All</a> | 
+													<?php } ?>
 													<a href="<?php echo base_url('cable/customers/add');?>"><i class="md md-add"></i> Add New Customer</a>
 												</div>
 											</div>

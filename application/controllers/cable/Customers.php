@@ -148,7 +148,8 @@ class Customers extends CI_Controller {
 				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),$insert_array);
 			}else{
 				$package = $this->common_model->get_data_row(CBL_PACKAGE,array('package_id'=>$this->input->post('package_id')));
-				$insert_array['balance'] = $insert_array['pack_amount'] + $insert_array['stb_amount'] + $this->input->post('balance');
+				//$insert_array['balance'] = $insert_array['pack_amount'] + $insert_array['stb_amount'] + $this->input->post('balance'); // remove stb amount due to wrong calculation.
+				$insert_array['balance'] = $insert_array['pack_amount'] + $this->input->post('balance');
 				$insert_array['status'] = 1;
 				$id = $this->common_model->tbl_insert(CBL_CUSTOMERS,$insert_array);
 				
@@ -322,12 +323,16 @@ class Customers extends CI_Controller {
 	}
 	
 	public function check_ip(){
-		$where=array();
+		$data = array();
+		$where = array();
 		$where['stb_no'] = $this->input->post('ip');
 		if($this->input->post('customer_id')){
 			$where['customer_id <>'] = $this->input->post('customer_id');
 		}
-		echo $tot = count($this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,$where));
+		
+		$data['tot'] = count($this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,$where));
+		$data['query'] = $this->db->last_query();
+		echo json_encode($data);
 	}
 	
 	public function get_customer_data(){

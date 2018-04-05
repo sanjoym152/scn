@@ -379,7 +379,6 @@
 						} else{
 							$('.other_id').val('');	
 						}
-						
 					},
 					error:function(err){
 						console.log(err);
@@ -412,7 +411,6 @@
 						}
 					});
 				}
-				
 			});
 		});
 	</script>
@@ -493,9 +491,11 @@
 						ip:ip,
 						customer_id:'<?php echo @$details['customer_id']?$details['customer_id']:'';?>'
 					},
+					dataType: 'json',
 					success:function(result){
-						if(result>0){
-							$('.ip_input_span_'+id).html('This IP is already exist');
+						console.log(result);
+						if(result.tot > 0){
+							$('.ip_input_span_'+id).html('This STB is already exist');
 							$('.ip_input_span_'+id).css('color','#f00');
 							ip_flag=ip_flag+1;
 						}else{
@@ -517,7 +517,7 @@
 						customer_id:'<?php echo @$details['customer_id']?$details['customer_id']:'';?>'
 					},
 					success:function(result){
-						//console.log(result);
+						console.log(result);
 						if(result>0){
 							$('.username_input_span_'+id).html('This username is already exist');
 							$('.username_input_span_'+id).css('color','#f00');
@@ -529,17 +529,23 @@
 					}
 				});
 			});
+			
+			/*
+			* @ This function is used for submit the form if username and stb no is not exist.
+			*/
 			$('.form_submit').click(function(){
 				$('.loader').show();
 				$('.loader-inner').show();
 				setTimeout(function(){
-					if(ip_flag>0 && username_flag>0){
+					if(ip_flag>0 || username_flag>0){
 						$('.loader').hide();
 						$('.loader-inner').hide();
+						console.log(ip_flag, username_flag);
 						email_flag=false;
 						return false;
 					}else{
 						email_flag=true;
+						console.log(ip_flag, username_flag);
 						$('#customer_form').submit();
 						$('.loader').hide();
 						$('.loader-inner').hide();
