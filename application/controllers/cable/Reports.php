@@ -289,7 +289,7 @@ class Reports extends CI_Controller {
 				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
 				'jointype'=>'left'
 			);
-			$where[CBL_PAYMENT.'.type']=1;
+			//$where[CBL_PAYMENT.'.type']=1;
 			//$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
 			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
 			//$data['customer_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'count(*)',$joins);

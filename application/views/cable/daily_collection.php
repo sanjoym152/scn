@@ -115,8 +115,7 @@
 														<thead>
 															<tr>
 																<th>Sl.No</th>
-																<th>Other Id - Collector</th>
-																<th>Staff Name</th>
+																<th>Other Id/ Collector</th>
 																<th>Name</th>
 																<th>Address</th>
 																<th>STB</th>
@@ -137,8 +136,7 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></br><?php echo $row['staff_name'];?></td>
-																	<td><?php echo @$row['staff_name'];?></td>
+																	<td>Other ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?>Collector: <?php echo $row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	
 																	<td><?php echo @$row['stb_no'];?></td>	

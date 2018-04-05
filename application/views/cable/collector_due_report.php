@@ -157,15 +157,21 @@
 																	<td><?php echo @$row['address1'];?></td>
 																	<td><?php echo @$row['stb_no'];?></td>
 																	<td><?php echo @$row['account'];?></td>
-																	<td><?php echo @$row['mobile1'];?></td>
+																	<td><?php echo @$row['mobile1']!=0?$row['mobile1']:'N/A';?></td>
+																	<td><?php echo @$row['tot_payment']?number_format($row['tot_payment'],2):number_format(0,2);?></td>
 																	<td><?php echo @$row['tot_due'];?></td>
-																	<td><?php echo @$row['tot_payment'];?></td>
-																	<td><?php echo @$row['tot_due']-$row['tot_payment'];?></td>
-																	<td><?php echo @$row['payment_date'];?></td>
+																	<td><?php echo number_format(@$row['tot_due']-$row['tot_payment'],2);?></td>
+																	<td><?php echo @$row['payment_date']?$row['payment_date']:'---';?></td>
 																	<td>
-																	<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
-																	$monthName = $dateObj->format('F');
-																	echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+																	<?php 
+																	if($row['month_of']){
+																		$dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+																		$monthName = $dateObj->format('F');
+																		echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';
+																	}else{
+																		echo "---";
+																	}
+																	?></td>
 																	<td>
 																	<?php 
 																	if($row['status']==1){
