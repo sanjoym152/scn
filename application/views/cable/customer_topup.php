@@ -72,8 +72,10 @@
 											<div class="col-md-12 col-sm-12 col-xs-12">
 												<div class="panel panel-default">
 													<div class="panel-heading">CUSTOMER PACKAGE SUMMARY</div>
+													
 													<form method="post" action="<?php echo base_url('cable/customers/add_topup')?>">
 													<div class="panel-body">
+														<label><input type="checkbox" name="select_all" class="select_all" value="1"><span>SELECT ALL</span></label>
 														<div class="table-responsive" data-pattern="priority-columns">
 															<table id="datatable" class="table table-striped table-bordered">
 																<tbody>
@@ -86,7 +88,7 @@
 																		?>
 																		<tr>
 																			<td>
-																			<label><input type="checkbox" name="customer_id[]" value="<?php echo @$row['customer_id'];?>">
+																			<label><input class="customer_id" type="checkbox" name="customer_id[]" value="<?php echo @$row['customer_id'];?>">
 																			<span><?php foreach($row['accounts'] as $row1){echo @$row1['account'].'<br>';}?></span></label>
 																			</td>
 																			
@@ -149,6 +151,14 @@
 					$('.loader').show();
 					$('.loader-inner').show();
 					$('#topup_form').submit();
+				});
+				
+				$('.select_all').click(function(){
+					if($(this).is(':checked')){
+						$('.customer_id').prop('checked',true);
+					} else{
+						$('.customer_id').prop('checked',false);
+					}
 				});
 			});
 		</script>

@@ -873,7 +873,7 @@ class Customers extends CI_Controller {
 				'jointype'=>'inner'
 			);
 			
-			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS, $where, '', $joins);
+			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS, $where, '', $joins,20);
 			//echo $this->db->last_query();die;
 			foreach($data['customers'] as $key=>$val){
 				$data['customers'][$key]['accounts'] = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$val['customer_id']));
