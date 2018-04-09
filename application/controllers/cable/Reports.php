@@ -289,8 +289,8 @@ class Reports extends CI_Controller {
 				'jointype'=>'left'
 			);
 			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
-			echo $this->db->last_query();
-			print "<pre>";print_r($data['customer_details']);die;
+			/* echo $this->db->last_query();
+			print "<pre>";print_r($data['customer_details']);die; */
 		}		
 		$data['collecter'] = $this->common_model->get_data_array(STAFF,'','','','','','','staff_name ASC');
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');

@@ -60,7 +60,7 @@
 		<span class="">Balance: Rs.<?php echo @$customer['balance'];?></span>
 	</div>
 	<div class="col-md-6">
-		<span class="">Installation Amount: Rs.<?php echo @$customer['installation_amount'];?></span>
+		<span class="">STB Amount: Rs.<?php echo @$customer['stb_amount'];?></span>
 	</div>
 	<div class="info_ii">
 		<p>STB Information</p>
