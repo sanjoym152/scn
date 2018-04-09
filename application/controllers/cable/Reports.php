@@ -268,7 +268,6 @@ class Reports extends CI_Controller {
 			}
 		
 			$joins=array();
-
 			$joins[0]=array(
 				'table'=>STAFF,
 				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
@@ -289,12 +288,9 @@ class Reports extends CI_Controller {
 				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
 				'jointype'=>'left'
 			);
-			//$where[CBL_PAYMENT.'.type']=1;
-			//$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,SUM('.CBL_CUSTOMERS.'.balance) AS tot_due,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',/* CBL_PAYMENT.'.staff_id' */'',CBL_CUSTOMERS.'.customer_id ASC');
-			//$data['customer_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'count(*)',$joins);
-			//echo $this->db->last_query();
-			//print "<pre>";print_r($data['customer_details']);die;
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+			echo $this->db->last_query();
+			print "<pre>";print_r($data['customer_details']);die;
 		}		
 		$data['collecter'] = $this->common_model->get_data_array(STAFF,'','','','','','','staff_name ASC');
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
@@ -592,9 +588,6 @@ class Reports extends CI_Controller {
 			}
 			$where[CBL_PAYMENT.'.type'] = 1;
 			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'*,'.CBL_CUSTOMERS.'.other_id',$joins);
-			/* echo $this->db->last_query(); 
-			print "<pre>";
-			print_r($data['daily_collection']);die; */
 		}
 		
 		$data['pageTitle'] = "SCN | CABLE | DAILY COLLECTION";

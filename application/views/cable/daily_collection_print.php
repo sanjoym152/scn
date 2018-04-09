@@ -85,7 +85,7 @@
 		<span align="center" style="font-size:7px; line-height:10px;">OFFICE COPY</span>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive" data-pattern="priority-columns">
-				<table id="datatable" class="table table-striped table-bordered">
+				<table id="datatable" class="table table-striped table-bordered" border="0.5">
 					<thead>
 						<tr>
 							<th>#</th>
@@ -109,34 +109,34 @@
 							if(@$daily_collection){
 								foreach($daily_collection as $row){
 								?>
-						<tr>
-							<td><?php echo @$i++;?></td>
-							<td><?php echo @$row['cust_code'];?></td>
-							<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
-							<td><?php echo @$row['staff_name'];?></td>
-							<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
-							<td><?php echo @$row['address1'];?></td>
-							<td><?php echo @$row['stb_no'];?></td>
-							<td><?php echo @$row['account'];?></td>
-							<td><?php echo @$row['mobile1'];?></td>
-							<td><?php echo @$row['balance'];?></td>
-							<td><?php echo @$row['payment_total'];?></td>
-							<td><?php echo @$row['payment_date'];?></td>
-							<td>
-							<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
-							$monthName = $dateObj->format('F');
-							echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
-						</tr>
-						<?php 
-							}
+								<tr>
+									<td><?php echo @$i++;?></td>
+									<td><?php echo @$row['cust_code'];?></td>
+									<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+									<td><?php echo @$row['staff_name'];?></td>
+									<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
+									<td><?php echo @$row['address1'];?></td>
+									<td><?php echo @$row['stb_no'];?></td>
+									<td><?php echo @$row['account'];?></td>
+									<td><?php echo @$row['mobile1'];?></td>
+									<td><?php echo @$row['balance'];?></td>
+									<td><?php echo @$row['payment_total'];?></td>
+									<td><?php echo @$row['payment_date'];?></td>
+									<td>
+									<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
+									$monthName = $dateObj->format('F');
+									echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+								</tr>
+								<?php 
+								}
 							}else{
 							?>
-						<tr>
-							<td colspan="15" class="text-center">No result(s) found.</td>
-						<tr/>
+							<tr>
+								<td colspan="15" class="text-center">No result(s) found.</td>
+							<tr/>
 							<?php 
-								}
-								?>
+							}
+							?>
 					</tbody>
 				</table>
 			</div>

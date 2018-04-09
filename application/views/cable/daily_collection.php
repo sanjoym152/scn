@@ -97,7 +97,7 @@
 													<i class="fa fa-times cncl" aria-hidden="true"> <span class="cncl_oopo">Inactive</span></i>
 												</div>
 											</div>
-											<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+											<div class="col-lg-7 col-md-7 col-sm-3 col-xs-12">
 												<button class="btn btn-success export pull-right" id="print_btn">Print</button>
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
