@@ -275,7 +275,7 @@ class Reports extends CI_Controller {
 			);
 			$joins[1]=array(
 				'table'=>CBL_PAYMENT,
-				'condition'=>CBL_PAYMENT.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'left'
 			);
 			$joins[2]=array(
@@ -288,7 +288,7 @@ class Reports extends CI_Controller {
 				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
 				'jointype'=>'left'
 			);
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
+			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*,'.CBL_CUSTOMERS.'.balance AS tot_due,'.CBL_PAYMENT.'.payment_total AS tot_payment,'.CBL_CUSTOMERS.'.status',$joins,'','',CBL_CUSTOMERS.'.customer_id',CBL_CUSTOMERS.'.customer_id ASC');
 			/* echo $this->db->last_query();
 			print "<pre>";print_r($data['customer_details']);die; */
 		}		

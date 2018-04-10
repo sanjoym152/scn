@@ -73,12 +73,11 @@
 				<th>Account</th>
 			</tr>
 			<?php if(@$customer_ip){ foreach($customer_ip as $row){ ?>
-				<tr>
-					<td><?php echo @$row['stb_no'];?></td>
-					<td><?php echo @$row['stb_model_no'];?></td>
-					<td><?php echo @$row['account'];?></td>
-					
-				</tr>
+			<tr>
+				<td><?php echo @$row['stb_no'];?></td>
+				<td><?php echo @$row['stb_model_no'];?></td>
+				<td><?php echo @$row['account'];?></td>
+			</tr>
 			<?php }} ?>
 			
 		</table>
