@@ -241,6 +241,7 @@ class Reports extends CI_Controller {
 	}
 	public function collector_due()
 	{
+		ini_set('max_execution_time', 0);
 		$data = array();
 		$where=array();
 		if($this->input->post())
