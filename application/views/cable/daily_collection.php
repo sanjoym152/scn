@@ -9,7 +9,7 @@
 				margin:0 !important;
 			}
 			.customer_main{
-				    background: #d2d2d2;
+				background: #d2d2d2;
 			}
 		</style>
 	</head>
@@ -84,7 +84,6 @@
 												</div>
 											</div>
 										</form>
-										
 										</div>
 										</div>
 										<div class="row">
@@ -102,11 +101,6 @@
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
 											
-											<!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
-												<div class="link_style">
-													<a href="<?php echo base_url('internet/customers/add');?>"><i class="md md-add"></i> Add New Customer</a>
-												</div>
-											</div>-->
 											<div class="clearfix"></div>
 											<div class="col-md-12 col-sm-12 col-xs-12">
 												
@@ -142,7 +136,7 @@
 																	<td><?php echo @$row['stb_no'];?></td>	
 																	<td><?php echo @$row['account'];?></td>	
 																	<td><?php echo @$row['mobile1'];?></td>	
-																	<td><?php echo @$row['balance'];?></td>	
+																	<td><?php echo @$row['outstanding'];?></td>	
 																	<td><?php echo @$row['payment_total'];?></td>	
 																	<td><?php echo @$row['payment_date'];?></td>
 																	
