@@ -737,299 +737,65 @@ class Reports extends CI_Controller {
 		echo json_encode($data);
 	}
 	
-	/* public function deactive_customer(){
-		$where=array();
+	
+	public function stb(){
 		if($this->input->post())
 		{ 
-			if($this->input->post('f_date'))
-			{
-				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
+			$where[CBL_CUSTOMERS.".stb_date <>". NULL] = null;
+			if($this->input->post('keyword')){
+				$keyword=$this->input->post('keyword');
+				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
 			}
-			if($this->input->post('t_date'))
-			{
-				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` <= '".$t_date."'"]=null;
+			
+			if($this->input->post('f_date')){
+				$where[CBL_CUSTOMERS.".`stb_date` >= '".date('Y-m-d', strtotime($this->input->post('f_date')))."'"]=null;
 			}
-			if($this->input->post('mso_id'))
-			{
+			
+			if($this->input->post('t_date')){
+				$where[CBL_CUSTOMERS.".`stb_date` <= '".date('y-m-d', strtotime($this->input->post('t_date')))."'"]=null;
+			}
+			
+			if($this->input->post('mso_id')){
 				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
 			}
-			if($this->input->post('lco_id'))
-			{
+			
+			if($this->input->post('lco_id')){
 				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
 			}
-		}
-		$where[CBL_CUSTOMERS.'.status']=2;
-		$data = array();
-		$joins=array();
-		$joins[0]=array(
-			'table'=>CBL_PACKAGE,
-			'condition'=>CBL_PACKAGE.'.package_id = '.CBL_CUSTOMERS.'.package_id',
-			'jointype'=>'left'
-		);
-		$joins[1]=array(
-			'table'=>CUSTOMER_TO_IP,
-			'condition'=>CUSTOMER_TO_IP.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
-			'jointype'=>'left'
-		);
-		$joins[2]=array(
-			'table'=>STAFF,
-			'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
-			'jointype'=>'left'
-		);
-		$data['collecter'] = $this->common_model->get_data_array(STAFF,'','','','','','','staff_name ASC');
-		if($this->input->post())
-		{
-			$data['customer_details'] = $this->common_model->get_data_array(CBL_CUSTOMERS,$where,'',$joins,'','','',CBL_CUSTOMERS.'.customer_id ASC');
-		}
-		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
-		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
-		$data['pageTitle'] = "SCN | CABLE | ACTIVE CUSTOMER";
-		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
-		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
-		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
-		$data['footer'] = $this->load->view('cable/includes/footer','',true);
-		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
-		$this->load->view('cable/deactive_customer_report', $data);
-	}
-	
-	
-	public function date_wise_payment()
-	{
-		$where=array();
-		if($this->input->post())
-		{ 
-			if($this->input->post('f_date'))
-			{
-				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
-			}
-			if($this->input->post('t_date'))
-			{
-				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` <= '".$t_date."'"]=null;
-			}
-			if($this->input->post('mso_id'))
-			{
-				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
-			}
-			if($this->input->post('lco_id'))
-			{
-				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
-			}
-			if($this->input->post('staff_id'))
-			{
-				$where[CBL_CUSTOMERS.".`staff_id` = '".$this->input->post('staff_id')."'"]=null;
-			}
-		}
-		$data = array();
-		if($this->input->post())
-		{ 
-			$join=array();
-			$join[0]=array(
-				'table'=>CBL_CUSTOMERS,
-				'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
-				'jointype'=>'left'
-			);
-			$data['payment_details'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,CBL_PAYMENT.'.*,SUM('.CBL_PAYMENT.'.payment_total) AS tot_payment',$join,'','',CBL_PAYMENT.'.payment_date',CBL_PAYMENT.'.payment_date ASC');
-			//echo $this->db->last_query();die;
-			$joins=array();
-			$joins[0]=array(
-				'table'=>CBL_PAYMENT.' as cbl_payment1',
-				'condition'=>'cbl_payment1.customer_id = '.CBL_CUSTOMERS.'.customer_id',
-				'jointype'=>'left'
-			);
-			foreach($data['payment_details'] as $key=>$val)
-			{		
-				$data['payment_details'][$key]['customers']=$this->common_model->get_data_array(CBL_CUSTOMERS,array('cbl_payment1.payment_date'=>$val['payment_date']),'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');
-			} 
-		}
-		//echo "<pre>"; print_r($data['payment_details']);die;
-		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
-		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
-		$data['pageTitle'] = "SCN | CABLE | DATE WISE PAYMENT";
-		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
-		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
-		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
-		$data['footer'] = $this->load->view('cable/includes/footer','',true);
-		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
-		$this->load->view('cable/date_wise_payment_report', $data);
-	}
-	
-	
-	
-	public function month_wise_payment(){
-		$where=array();
-		if($this->input->post())
-		{ 
-			if($this->input->post('f_date'))
-			{
-				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
-				$where[CBL_CUSTOMERS.".`payment_date` >= '".$f_date."'"]=null;
-			}
-			if($this->input->post('t_date'))
-			{
-				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
-				$where[CBL_CUSTOMERS.".`payment_date` <= '".$t_date."'"]=null;
-			}
-			if($this->input->post('mso_id'))
-			{
-				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
-			}
-			if($this->input->post('lco_id'))
-			{
-				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
-			}
-		}
-		$where=array('type'=>1);
-		$data = array();
-		$joins=array();
-		$joins[0]=array(
-			'table'=>CBL_CUSTOMERS,
-			'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
-			'jointype'=>'left'
-		);
-		if($this->input->post())
-		{
-			$data['payment_details'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,CBL_PAYMENT.'.*,sum(`payment_total`) as tot_payment,monthname(payment_date) AS month',$joins,'','','MONTH(payment_date)',CBL_PAYMENT.'.payment_date ASC');
 			
 			$joins=array();
 			$joins[0]=array(
-				'table'=>CBL_PAYMENT.' as cbl_payment1',
-				'condition'=>'cbl_payment1.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'table'=>CBL_CUSTOMER_TO_STB,
+				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'left'
 			);
-			foreach($data['payment_details'] as $key=>$val)
-			{		
-				$data['payment_details'][$key]['customers']=$this->common_model->get_data_array(CBL_CUSTOMERS,array('cbl_payment1.payment_date'=>$val['payment_date']),'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');
-			} 
+			$joins[1]=array(
+				'table'=>CBL_PAYMENT,
+				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'left'
+			);
+			$joins[2]=array(
+				'table'=>STAFF,
+				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
+				'jointype'=>'left'
+			);
+			
+			$joins[3]=array(
+				'table'=>AREA,
+				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
+				'jointype'=>'left'
+			);			
+			$data['customer_details']=$this->common_model->get_data_array(CBL_CUSTOMERS,$where,'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');	 
 		}
-		//print_r($this->db->last_query());die;
+		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE);
 		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
 		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
-		$data['pageTitle'] = "SCN | CABLE | MONTH WISE PAYMENT";
+		$data['pageTitle'] = "SCN | CABLE | STB REPORT";
 		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
 		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
 		$data['footer'] = $this->load->view('cable/includes/footer','',true);
 		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
-		$this->load->view('cable/month_wise_payment', $data);
+		$this->load->view('cable/report_stb', $data); 
 	}
-	
-	public function monthly_billing_report()
-	{
-		$where=array();
-		if($this->input->post())
-		{ 
-			if($this->input->post('f_date'))
-			{
-				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
-			}
-			if($this->input->post('t_date'))
-			{
-				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` <= '".$t_date."'"]=null;
-			}
-			if($this->input->post('mso_id'))
-			{
-				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
-			}
-			if($this->input->post('lco_id'))
-			{
-				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
-			}
-		}
-		$where=array('type'=>2);
-		$data = array();
-		$joins=array();
-		$joins[0]=array(
-			'table'=>CBL_CUSTOMERS,
-			'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
-			'jointype'=>'left'
-		);
-		if($this->input->post())
-		{
-			$data['payment_details'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,CBL_PAYMENT.'.*,sum(`payment_total`) as tot_payment,monthname(payment_date) AS month','','','','MONTH(payment_date)',CBL_PAYMENT.'.payment_date ASC');
-			
-			$joins=array();
-			$joins[0]=array(
-				'table'=>CBL_PAYMENT.' as cbl_payment1',
-				'condition'=>'cbl_payment1.customer_id = '.CBL_CUSTOMERS.'.customer_id',
-				'jointype'=>'left'
-			);
-			foreach($data['payment_details'] as $key=>$val)
-			{		
-				$data['payment_details'][$key]['customers']=$this->common_model->get_data_array(CBL_CUSTOMERS,array('cbl_payment1.payment_date'=>$val['payment_date']),'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');
-			}
-		}
-		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
-		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');		
-		$data['pageTitle'] = "SCN | CABLE | MONTHLY BILLING REPORT";
-		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
-		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
-		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
-		$data['footer'] = $this->load->view('cable/includes/footer','',true);
-		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
-		$this->load->view('cable/monthly_billing_report', $data);
-	}
-	
-	
-	public function yearly_payment_report()
-	{
-		$where=array();
-		if($this->input->post())
-		{ 
-			if($this->input->post('f_date'))
-			{
-				$f_date=date("Y-m-d", strtotime($this->input->post('f_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` >= '".$f_date."'"]=null;
-			}
-			if($this->input->post('t_date'))
-			{
-				$t_date=date("Y-m-d", strtotime($this->input->post('t_date')));
-				$where[CBL_CUSTOMERS.".`billing_date` <= '".$t_date."'"]=null;
-			}
-			if($this->input->post('mso_id'))
-			{
-				$where[CBL_CUSTOMERS.".`mso_id` = '".$this->input->post('mso_id')."'"]=null;
-			}
-			if($this->input->post('lco_id'))
-			{
-				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
-			}
-		}
-		$data = array();
-		$joins=array();
-		$joins[0]=array(
-			'table'=>CBL_CUSTOMERS,
-			'condition'=>CBL_CUSTOMERS.'.customer_id = '.CBL_PAYMENT.'.customer_id',
-			'jointype'=>'left'
-		);
-		if($this->input->post())
-		{
-			$data['payment_details'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,CBL_PAYMENT.'.*,sum(`payment_total`) as tot_payment,YEAR(payment_date) AS year',$joins,'','','YEAR(payment_date)',CBL_PAYMENT.'.payment_date ASC');
-			
-			$joins=array();
-			$joins[0]=array(
-				'table'=>CBL_PAYMENT.' as cbl_payment1',
-				'condition'=>'cbl_payment1.customer_id = '.CBL_CUSTOMERS.'.customer_id',
-				'jointype'=>'left'
-			);
-			foreach($data['payment_details'] as $key=>$val)
-			{		
-				$data['payment_details'][$key]['customers']=$this->common_model->get_data_array(CBL_CUSTOMERS,array('cbl_payment1.payment_date'=>$val['payment_date']),'*',$joins,'','',CBL_CUSTOMERS.'.customer_id','');
-			} 
-		}
-		$data['mso'] = $this->common_model->get_data_array(CBL_MSO,'','','','','','','mso ASC');
-		$data['lco'] = $this->common_model->get_data_array(CBL_LCO,'','','','','','','lconame ASC');
-		$data['pageTitle'] = "SCN | CABLE | YEARLY PAYMENT REPORT";
-		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
-		$data['topbar'] = $this->load->view('cable/includes/topbar','',true);
-		$data['left_menu'] = $this->load->view('cable/includes/left_menu','',true);
-		$data['footer'] = $this->load->view('cable/includes/footer','',true);
-		$data['footer_scripts'] = $this->load->view('cable/includes/footer_scripts','',true);
-		$this->load->view('cable/yearly_payment_report', $data);
-	} */
 }

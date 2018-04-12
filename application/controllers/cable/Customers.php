@@ -142,8 +142,11 @@ class Customers extends CI_Controller {
 			unset($insert_array['stb_no']);
 			unset($insert_array['account']);
 			unset($insert_array['stb_model']);
-			
 			$insert_array['added_date'] = date('Y-m-d H:i:s');
+			if($this->input->post('change_stb')){
+				$insert_array['stb_date'] = date('Y-m-d H:i:s');
+			}
+			unset($insert_array['change_stb']);
 			if(@$id){
 				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),$insert_array);
 			}else{

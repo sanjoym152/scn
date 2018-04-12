@@ -210,7 +210,13 @@
 													<input class="form-control required dob" type="text" name="billing_date" value="<?php echo @$details['billing_date'];?>" readonly>
 												</div>
 											</div>
-											
+											<div class="clearfix"></div>
+											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+												<div class="your-mail">
+													<label for="change_stb"><input class="" type="checkbox" name="change_stb" value="1" id="change_stb"> Change STB </label>
+													
+												</div>
+											</div>
 											<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 												<div class="your-mail">
 													<label for="exampleInputEmail1">STB Amount<span class="text-danger">*</span></label>

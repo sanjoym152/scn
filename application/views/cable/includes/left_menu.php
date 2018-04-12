@@ -65,6 +65,7 @@
 						<li><a href="<?php echo base_url('cable/reports/customer_payment');?>">Customer Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/daily_collection');?>">Daily Collection</a></li>
 						<li><a href="<?php echo base_url('cable/reports/package_wise_customer');?>">Package Wise Customer</a></li>
+						<li><a href="<?php echo base_url('cable/reports/stb');?>">STB Report</a></li>
 						<!--<li><a href="<?php echo base_url('cable/reports/deactive_customer');?>">Deactive Customers Reports</a></li>
 						<li><a href="<?php echo base_url('cable/reports/date_wise_payment');?>">Date Wise Payment</a></li>
 						<li><a href="<?php echo base_url('cable/reports/month_wise_payment');?>">Month Wise Payment</a></li>
