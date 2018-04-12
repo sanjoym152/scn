@@ -774,13 +774,8 @@ class Reports extends CI_Controller {
 				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'left'
 			);
-			$joins[2]=array(
-				'table'=>STAFF,
-				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
-				'jointype'=>'left'
-			);
 			
-			$joins[3]=array(
+			$joins[2]=array(
 				'table'=>AREA,
 				'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
 				'jointype'=>'left'
