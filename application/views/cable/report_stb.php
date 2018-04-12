@@ -121,6 +121,8 @@
 														</thead>
 														<tbody>
 															<?php 
+															/* echo "<pre>";
+															print_r($customer_details); */
 															$i=1;
 															if(@$customer_details){
 																foreach($customer_details as $row){

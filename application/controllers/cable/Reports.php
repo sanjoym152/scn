@@ -769,9 +769,10 @@ class Reports extends CI_Controller {
 				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
 				'jointype'=>'left'
 			);
+			
 			$joins[1]=array(
-				'table'=>CBL_PAYMENT,
-				'condition'=>CBL_PAYMENT.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'table'=>STAFF,
+				'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
 				'jointype'=>'left'
 			);
 			
