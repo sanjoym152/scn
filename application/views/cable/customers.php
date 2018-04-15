@@ -380,7 +380,7 @@
 									<input type="hidden" name="customer_id" id="customer_id" value="">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Month of</label>
-										<select class="form-control month_of" name="month_of">
+										<!--<select class="form-control month_of" name="month_of">
 											<option value="">--Select Month--</option>
 											<?php for($i=1;$i<=12;$i++){ ?>
 											<option value="<?php echo $i;?>"><?php 
@@ -388,7 +388,8 @@
 												echo $monthName = $dateObj->format('F'); // March?>
 											</option>
 											<?php } ?>
-										</select>
+										</select>-->
+										<textarea name="month_of" class="required form-control" placeholder="Enter description of months."></textarea>
 										<span class="month_of_error"></span>
 									</div>
 								</div>

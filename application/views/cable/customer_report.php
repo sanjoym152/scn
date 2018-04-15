@@ -102,11 +102,7 @@
 												<!--<button class="btn btn-success export pull-right">Export to PDF</button>-->
 											</div>
 											
-											<!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 pull-right">
-												<div class="link_style">
-													<a href="<?php echo base_url('internet/customers/add');?>"><i class="md md-add"></i> Add New Customer</a>
-												</div>
-											</div>-->
+											
 											<div class="clearfix"></div>
 											<div class="col-md-12 col-sm-12 col-xs-12">
 												
@@ -151,9 +147,8 @@
 																	<td><?php echo @$row['payment_date'];?></td>
 																	
 																	<td>
-																	<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
-																	$monthName = $dateObj->format('F');
-																	echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+																	<?php 
+																	echo @$row['month_of'];?></td>
 																	<td>
 																	<?php 
 																	if($row['status']==1){

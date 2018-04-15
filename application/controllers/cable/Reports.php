@@ -7,6 +7,7 @@ class Reports extends CI_Controller {
 		if(!$this->session->userdata('user_id')){
 			redirect(base_url());
 		}
+		ini_set('max_execution_time', 0);
 		$this->load->helper('pdf_helper');
         $this->load->library('upload');
     }
@@ -241,7 +242,6 @@ class Reports extends CI_Controller {
 	}
 	public function collector_due()
 	{
-		ini_set('max_execution_time', 0);
 		$data = array();
 		$where=array();
 		if($this->input->post())

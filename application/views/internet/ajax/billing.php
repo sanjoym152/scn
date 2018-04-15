@@ -33,6 +33,7 @@
 				<td><?php echo @$row['other_fees'];?></td>
 				<td><?php echo @$row['dis'];?></td>
 				<td><?php echo @$row['type']==1?@$row['payment_total']:'N/A';?></td>
+				<td><?php echo @$row['type']==1?@$row['outstanding']-@$row['payment_total']:@$row['payment_total'];?></td>
 				<td><?php echo @$row['payment_total'];?></td>
 				<!--<td>Paid</td>-->
 				<td><?php echo @$row['staff_name']?$row['staff_name']:'Office';?></td>
