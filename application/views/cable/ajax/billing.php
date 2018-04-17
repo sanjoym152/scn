@@ -13,7 +13,7 @@
 		<th>TOTAL</th>
 		<!--<th>Status</th>-->
 		<th>COLLECTOR</th>
-		<th>ACTION213123</th>
+		<th>ACTION</th>
 	</thead>
 	<tbody>
 		<?php 
