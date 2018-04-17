@@ -1,8 +1,4 @@
 <div class="customer_info">
-	<?php 
-	/* echo '<pre>';
-	print_r($last_payment); */
-	?>
 	<div class="col-md-6">
 		<div class="form-group">
 			<label><?php echo @$customer['first_name'].' '.@$customer['last_name'];?></label>
@@ -35,6 +31,6 @@
 		</div>
 		<div class="col-md-4"><label>Pay Date: <?php echo @$last_payment['payment_date']?$last_payment['payment_date']:'N/A';?></label></div>
 		<div class="col-md-4"><label>Pay Amount: <?php echo @$last_payment['payment_total']?'Rs.'.$last_payment['payment_total']:'N/A';?></label></div>
-		<div class="col-md-4"><label>Month of: <?php if(@$last_payment['month_of']){$dateObj   = DateTime::createFromFormat('!m', @$last_payment['month_of']); $monthName = $dateObj->format('F'); echo @$last_payment['month_of']?$monthName.' '.date('Y'):'N/A';}else{echo "N/A";}?></label></div>
+		<div class="col-md-4"><label>Month of: <?php @$last_payment['month_of']; ?></label></div>
 	</div>
 </div>

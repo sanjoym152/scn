@@ -389,7 +389,8 @@
 											</option>
 											<?php } ?>
 										</select>-->
-										<textarea name="month_of" class="required form-control" placeholder="Enter description of months."></textarea>
+										<!--<textarea name="month_of" class="required form-control" placeholder="Enter description of months."></textarea>-->
+										<input type="text" name="month_of" class="required form-control" placeholder="Enter description of months.">
 										<span class="month_of_error"></span>
 									</div>
 								</div>

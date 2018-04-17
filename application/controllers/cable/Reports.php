@@ -247,7 +247,6 @@ class Reports extends CI_Controller {
 		if($this->input->post())
 		{ 
 			if($this->input->post('keyword')){
-				$keyword=$this->input->post('keyword');
 				$where["(stb_no LIKE '%".$this->input->post('keyword')."%' OR account LIKE '%".$this->input->post('keyword')."%' OR mobile1 LIKE '%".$this->input->post('keyword')."%' OR first_name LIKE '%".$this->input->post('keyword')."%')"]=null;
 			}
 			if($this->input->post('f_date')){
@@ -267,7 +266,7 @@ class Reports extends CI_Controller {
 			if($this->input->post('staff_id')){
 				$where[CBL_CUSTOMERS.".`staff_id` = '".$this->input->post('staff_id')."'"]=null;
 			}
-		
+			$where[CBL_PAYMENT.'.type'] = 2;
 			$joins=array();
 			$joins[0]=array(
 				'table'=>STAFF,
@@ -622,9 +621,9 @@ class Reports extends CI_Controller {
 			}
 			$joins=array();
 			$joins[0]=array(
-			'table'=>CBL_CUSTOMER_TO_STB,
-			'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
-			'jointype'=>'left'
+				'table'=>CBL_CUSTOMER_TO_STB,
+				'condition'=>CBL_CUSTOMER_TO_STB.'.customer_id = '.CBL_CUSTOMERS.'.customer_id',
+				'jointype'=>'left'
 			);
 			$joins[1]=array(
 				'table'=>CBL_PAYMENT,
