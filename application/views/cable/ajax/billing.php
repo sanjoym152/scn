@@ -13,7 +13,7 @@
 		<th>TOTAL</th>
 		<!--<th>Status</th>-->
 		<th>COLLECTOR</th>
-		<th>ACTION</th>
+		<th>ACTION213123</th>
 	</thead>
 	<tbody>
 		<?php 
@@ -31,9 +31,7 @@
 				<td><?php echo @$row['dis'];?></td>
 				<td><?php echo @$row['type']==1?@$row['payment_total']:'N/A';?></td>
 				<td>
-				<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
-				$monthName = $dateObj->format('F');
-				echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+				<?php echo @$row['month_of'];?></td>
 				<td><?php echo @$row['payment_total'];?></td>
 				
 				<!--<td>Paid</td>-->
