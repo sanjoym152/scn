@@ -64,7 +64,7 @@ class Customers extends CI_Controller {
 		$data['total_due_delete'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('status'=>3),'sum(balance) as total_due');
 		$data['total_payment'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1),'sum(payment_total) as payment');
 		$data['package'] = $this->common_model->get_data_array(CBL_PACKAGE,array('status'=>1),'','','','','','pakname ASC');
-		$data['collector'] = $this->common_model->get_data_array(STAFF);
+		$data['collector'] = $this->common_model->get_data_array(STAFF,array('status'=>1));
 		$data['pageTitle'] = "SCN | CABLE | CUSTOMERS";
 		$data['header_links'] = $this->load->view('cable/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('cable/includes/topbar',$data,true);
@@ -931,6 +931,13 @@ class Customers extends CI_Controller {
 		$area_id = $this->input->post('area_id');
 		$response = array();
 		$response['result'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('area_id'=>$area_id),'','','other_id');
+		echo json_encode($response);
+	}
+	
+	public function get_payment_info(){
+		$payment_id = $this->input->post('payment_id');
+		$response = array();
+		$response['result'] = $this->common_model->get_data_row(CBL_PAYMENT, array('payment_id'=>$payment_id));
 		echo json_encode($response);
 	}
 }

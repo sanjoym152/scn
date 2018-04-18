@@ -37,7 +37,10 @@
 				<!--<td>Paid</td>-->
 				<td><?php echo @$row['staff_name']?$row['staff_name']:'Office';?></td>
 				<td>
+					<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(<?php echo $row['payment_id'] ?>)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+					
 					<a href="<?php echo base_url('cable/customers/delete_billing/'.$row['payment_id']);?>" data-toggle="tooltip" title="Delete"  onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+					
 					<?php if(@$row['type']==1){
 					?>
 					<a target="_blank" href="<?php echo base_url('cable/customers/bill_print/'.$row['payment_id']);?>" data-toggle="tooltip" title="Delete"><i class="fa fa-print" aria-hidden="true"></i></a>
@@ -50,3 +53,5 @@
 		<?php }} ?>
 	</tbody>
 </table>
+
+

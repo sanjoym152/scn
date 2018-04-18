@@ -117,7 +117,7 @@
 											<div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
 												<div class="your-mail">
 													<label for="exampleInputEmail1">Address1<span class="text-danger">*</span></label>
-													<textarea class="form-control required" name="address1"><?php echo @$details['address1'];?></textarea>
+													<textarea class="form-control required" name="address1" row="1"><?php echo @$details['address1'];?></textarea>
 												</div>
 											</div>
 											<!--<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">

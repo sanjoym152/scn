@@ -806,6 +806,7 @@
 					$('#search_form').attr('action','');
 					return false;
 				});
+				$('#autocomplete').focus();
 			});
 			/* $('#autocomplete').autocomplete({
 				serviceUrl: '<?php echo base_url('cable/customers/autocomplete')?>',
@@ -814,5 +815,91 @@
 				}
 			}); */
 		</script>
+		
+		<!--customer details and complain modal -->
+		<div id="payment_edit" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+			<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Edit Payment Info </h4>
+					</div>
+					<div class="modal-body">
+						<form method="post" class="edit_payment">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" name="payment_date" class="form-control datepicker required" placeholder="Payment Date">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" name="month_of" class="form-control required" placeholder="Month Of">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control required" name="staff_id">
+										<option value="">--Select Collector--</option>
+										<?php 
+										foreach($collector as $row){ ?> 
+										<option value="<?php echo $row['staff_id'];?>"><?php echo $row['staff_name'];?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="col-md-6">
+								<button type="submit" class="btn btn-primary">SAVE</button>
+							</div>
+							<div class="clearfix"></div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--End customer details and complain modal -->
+		<script>
+			function editPayment(payment_id){
+				$.ajax({
+					url:'<?php echo base_url('cable/customers/get_payment_info/')?>',
+					method:'post',
+					data:{
+						payment_id:payment_id,
+					},
+					dataType:'json',
+					success:function(result){
+						$('#payment_edit').modal('show');
+					},
+					error:function(e){
+						console.log(e.responseText);
+					}
+				});
+			}
+			$(document).ready(function(){
+				$('.edit_payment').validate();
+				$('.edit_payment').submit(function(e){
+					$.ajax({
+						url:'<?php echo base_url('cable/customers/get_payment_info/')?>',
+						method:'post',
+						data:{
+							payment_id:payment_id,
+						},
+						dataType:'json',
+						success:function(result){
+							$('#payment_edit').modal('show');
+						},
+						error:function(e){
+							console.log(e.responseText);
+						}
+					});
+				});
+			});
+		</script>
+		
+		
 	</body>
 </html>

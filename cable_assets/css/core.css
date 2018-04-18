@@ -2936,3 +2936,7 @@ button.view_btn:hover {
 .noPad{
 	padding:0 !important;
 }
+
+.form-control{
+	text-transform:uppercase !important;
+}
