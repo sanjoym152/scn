@@ -158,65 +158,7 @@ class Customers extends CI_Controller {
 				
 				$cust_code = 'CUST00'.$id;
 				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),array('cust_code'=>$cust_code));
-				/*
-				@ upload address proof
-				*/
-				$insert_array = array();
-				if($_FILES['address_proof']){
-                    $config['upload_path']          = './uploads/';
-                    $config['allowed_types']        = 'gif|jpg|png';
-                    $config['file_name']             = time().rand(11111,99999);
-                    $config['max_size']             = 10000;
-                    $config['max_width']            = 1024;
-                    $config['max_height']           = 768;
-
-                    $this->upload->initialize($config);
-                    if ( ! $this->upload->do_upload('address_proof')) {
-                        $error = array('error' => $this->upload->display_errors());
-                        $this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
-                    }
-                    else {
-                        $insert_array['address_attachment'] = $this->upload->data('file_name');
-                    }
-                }
-                if($_FILES['caf_page1']){
-                    $config = array();
-                    $config['upload_path']          = './uploads/';
-                    $config['allowed_types']        = 'gif|jpg|png';
-                    $config['file_name']             = time().rand(11111,99999);
-                    $config['max_size']             = 10000;
-                    $config['max_width']            = 1024;
-                    $config['max_height']           = 768;
-                    $this->upload->initialize($config);
-                    if ( ! $this->upload->do_upload('caf_page1')) {
-                        $error = array('error' => $this->upload->display_errors());
-                        $this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
-                    }
-                    else {
-                        $insert_array['caf_page1'] = $this->upload->data('file_name');
-                    }
-                }
-                if($_FILES['caf_page2']){
-                    $config = array();
-                    $config['upload_path']          = './uploads/';
-                    $config['allowed_types']        = 'gif|jpg|png';
-                    $config['file_name']             = time().'saf2'.rand(11111,99999);
-                    $config['max_size']             = 10000;
-                    $config['max_width']            = 1024;
-                    $config['max_height']           = 768;
-
-                    $this->upload->initialize($config);
-                    if ( ! $this->upload->do_upload('caf_page2')) {
-                        $error = array('error' => $this->upload->display_errors());
-                        $this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
-                    }
-                    else {
-                        $insert_array['caf_page2'] = $this->upload->data('file_name');
-                    }
-                }
-				if(@$insert_array['address_attachment'] || @$insert_array['caf_page2'] || @$insert_array['caf_page1']) {
-					$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),$insert_array);
-				}
+				
                 
 				//insert into payment table as add topup
 				$insert_array=array();
@@ -234,6 +176,68 @@ class Customers extends CI_Controller {
 				//$this->common_model->tbl_insert(PAYMENT,$insert_array);
 				
 			}
+			
+			/*
+			@ upload address proof
+			*/
+			$insert_array = array();
+			if($_FILES['address_proof']){
+				$config['upload_path']          = './uploads/';
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['file_name']             = time().rand(11111,99999);
+				$config['max_size']             = 10000;
+				$config['max_width']            = 1024;
+				$config['max_height']           = 768;
+
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('address_proof')) {
+					$error = array('error' => $this->upload->display_errors());
+					$this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
+				}
+				else {
+					$insert_array['address_attachment'] = $this->upload->data('file_name');
+				}
+			}
+			if($_FILES['caf_page1']){
+				$config = array();
+				$config['upload_path']          = './uploads/';
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['file_name']             = time().rand(11111,99999);
+				$config['max_size']             = 10000;
+				$config['max_width']            = 1024;
+				$config['max_height']           = 768;
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('caf_page1')) {
+					$error = array('error' => $this->upload->display_errors());
+					$this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
+				}
+				else {
+					$insert_array['caf_page1'] = $this->upload->data('file_name');
+				}
+			}
+			if($_FILES['caf_page2']){
+				$config = array();
+				$config['upload_path']          = './uploads/';
+				$config['allowed_types']        = 'gif|jpg|png';
+				$config['file_name']             = time().'saf2'.rand(11111,99999);
+				$config['max_size']             = 10000;
+				$config['max_width']            = 1024;
+				$config['max_height']           = 768;
+
+				$this->upload->initialize($config);
+				if ( ! $this->upload->do_upload('caf_page2')) {
+					$error = array('error' => $this->upload->display_errors());
+					$this->utilitylib->setMsg(SUCCESS_ICON.' '.$this->upload->display_errors(),'ERROR');
+				}
+				else {
+					$insert_array['caf_page2'] = $this->upload->data('file_name');
+				}
+			}
+			if(@$insert_array['address_attachment'] || @$insert_array['caf_page2'] || @$insert_array['caf_page1']) {
+				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),$insert_array);
+			}
+			
+			
 			if($this->input->post('stb_no')){
 				$this->common_model->tbl_record_del(CBL_CUSTOMER_TO_STB,array('customer_id'=>$id));
 				$insert_array2 = $this->input->post();
@@ -704,9 +708,7 @@ class Customers extends CI_Controller {
 			);
 			$data['customers'] = $this->common_model->get_data_array(CBL_CUSTOMERS,'',"*,first_name, cust_code, CONCAT_WS('-', area_name, other_id) as area_other_id", $joins,'','',CBL_CUSTOMERS.'.customer_id','first_name',$where);
 			$data['html'] = $this->load->view('cable/ajax/autocomplete',$data,true);
-			
 		}
-		
 		$data['q'] = $this->db->last_query();
 		echo json_encode($data);
 	}
@@ -904,11 +906,8 @@ class Customers extends CI_Controller {
 			$customer_id = $this->input->post('customer_id');
 			foreach($customer_id as $row){
 				$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$row, 'status'=>1));
-				/* echo $this->db->last_query();
-				echo "<pre>"; print_r($customer_data);die; */
 				//update customer table.
 				$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$row), array('billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 days')), 'balance'=>$customer_data['balance'] + $customer_data['pack_amount']));
-				//echo $this->db->last_query();die;
 				//insert to payment table as top up.
 				$insert_array = array();
 				$insert_array['payment_date'] = date('Y-m-d H:i:s');
@@ -922,7 +921,7 @@ class Customers extends CI_Controller {
 				$insert_array['type'] = 2;//for top up
 				$this->common_model->tbl_insert(CBL_PAYMENT, $insert_array);
 			}
-			$this->utilitylib->setMsg(SUCCESS_ICON.' '.count($customer_id) . ' Customer(s) top up has been successfully added.','SUCCESS');
+			$this->utilitylib->setMsg(SUCCESS_ICON.' '.count($customer_id) . ' Customer(s) top up has been added successfully .','SUCCESS');
 			redirect(base_url('cable/customers/top_up'));
 		}
 	}

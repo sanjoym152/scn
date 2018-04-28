@@ -890,6 +890,7 @@
 						},
 						dataType:'json',
 						success:function(result){
+							$('#customer_details').modal('hide');
 							$('#payment_edit').modal('show');
 						},
 						error:function(e){
