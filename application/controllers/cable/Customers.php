@@ -907,10 +907,10 @@ class Customers extends CI_Controller {
 			foreach($customer_id as $row){
 				$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$row, 'status'=>1));
 				//update customer table.
-				$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$row), array('billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' + 1 month')), 'balance'=>$customer_data['balance'] + $customer_data['pack_amount']));
+				$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$row), array('billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 days')), 'balance'=>$customer_data['balance'] + $customer_data['pack_amount']));
 				//insert to payment table as top up.
 				$insert_array = array();
-				$insert_array['billing_date'] = date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 month'));
+				$insert_array['billing_date'] = date('Y-m-d', strtotime($customer_data['billing_date']. ' + 30 days'));
 				$insert_array['customer_id'] = $row;
 				$insert_array['package_id'] = $customer_data['package_id'];
 				$insert_array['pack_amount'] = $customer_data['pack_amount'];
