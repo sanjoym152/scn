@@ -18,15 +18,21 @@ print_r($payment_info); *///die;
 		<th>ACTION</th>
 	</thead>
 	<tbody>
-		<?php foreach($payment_info as $row){ ?>
+		<?php 
+		$i=1;
+		foreach($payment_info as $row){ ?>
 		<tr>
-			<td><?php echo date('M', strtotime($row['billing_date'])); ?></td>
+			<td>
+			<?php 
+				$dateObj = DateTime::createFromFormat('!m',  $i);
+				echo $monthName = $dateObj->format('M'); $i++;?>
+			<?php //echo date('M', strtotime($row['billing_date'])); ?></td>
 			<td><?php echo date('d/m/Y', strtotime($row['billing_date'])); ?></td>
 			<td><?php echo @$row['pack_amount']; ?></td>
 			<td>ALA CA</td>
 			<td><?php echo @$row['outstanding']; ?></td>
 			<td><?php echo @$row['billing_total']; ?></td>
-			<td><?php echo @$row['payment_date']; ?></td>
+			<td><?php echo @$row['payment_date']?$row['payment_date']:'N/A'; ?></td>
 			<td><?php echo @$row['staff_name']; ?></td>
 			<td><?php echo @$row['discount_total']; ?></td>
 			<td><?php echo @$row['other_fees']; ?></td>

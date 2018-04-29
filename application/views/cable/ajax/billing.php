@@ -19,7 +19,6 @@
 		<?php 
 		if(@$billing){ foreach($billing as $row){ ?>
 			<tr>
-				
 				<td>
 				<?php if(@$row['type']==2){ echo "BILL"; }else if(@$row['type']==1){ echo "PAY"; } ?>
 				</td>

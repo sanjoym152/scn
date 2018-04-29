@@ -14,7 +14,6 @@ class Home extends CI_Controller {
 		$data['daily_collection'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1, 'payment_date'=>date('Y-m-d')),'sum(`payment_total`) as daily_total');
 		$data['total_collection'] = $this->common_model->get_data_row(CBL_PAYMENT,array('type'=>1),'sum(`payment_total`) as total');
 		$data['due'] = $this->common_model->get_data_row(CBL_CUSTOMERS,'','sum(balance) as total_due');
-		
 		$data['daily_collection_graph'] = $this->common_model->get_data_array(CBL_PAYMENT,array('type'=>1),'sum(`payment_total`) as daily_total, payment_date','','','','payment_date');
 		/* echo $this->db->last_query();
 		echo "<pre>";

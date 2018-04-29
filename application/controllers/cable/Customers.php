@@ -915,7 +915,7 @@ class Customers extends CI_Controller {
 				$insert_array['package_id'] = $customer_data['package_id'];
 				$insert_array['pack_amount'] = $customer_data['pack_amount'];
 				$insert_array['outstanding'] = $customer_data['balance'];
-				$insert_array['staff_id'] = 1;// as admin
+				$insert_array['staff_id'] = $this->session->userdata('user_id');// current login id
 				$insert_array['sub_total'] = $customer_data['pack_amount'];
 				$insert_array['net_due'] = $customer_data['balance'] + $customer_data['pack_amount'];
 				$insert_array['billing_total'] = $customer_data['balance'] + $customer_data['pack_amount'];
