@@ -16,6 +16,10 @@
 				<div class="basic_info">
 					<div class="col-md-12">
 						<div class="col-md-6">
+							<span class="">Full Name: </span>
+							<span class="pull-right"><strong><?php echo @$customer_details['first_name'];?></strong></span>
+						</div>
+						<div class="col-md-6">
 							<span class="">OTHER ID: </span>
 							<span class="pull-right"><?php echo @$customer_details['area_name'].'-'.@$customer_details['other_id'];?></span>
 						</div>
@@ -90,7 +94,7 @@
 								<?php 
 								foreach($customer_details['stb'] as $row){ ?>
 									<tr>
-										<td><?php echo @$row['stb_no']?></td>
+										<td><strong><?php echo @$row['stb_no']?></strong></td>
 										<td><?php echo @$row['stb_model_no']?></td>
 										<td><?php echo @$row['account']?></td>
 									</tr>

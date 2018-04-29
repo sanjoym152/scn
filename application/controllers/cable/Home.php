@@ -53,7 +53,7 @@ class Home extends CI_Controller {
 		$joins[1] = array(
 			'table'=>AREA,
 			'condition'=>AREA.'.area_id = '.CBL_CUSTOMERS.'.area_id',
-			'jointype'=>'inner'
+			'jointype'=>'left'
 		);
 		$joins[2] = array(
 			'table'=>CBL_LCO,
@@ -66,12 +66,16 @@ class Home extends CI_Controller {
 			'jointype'=>'inner'
 		);
 		$data['customer_details'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$customer_id),'',$joins);
+		/* echo $this->db->last_query();
+		echo "<pre>";
+		print_r($data['customer_details']); */
 		$joins = array();
 		$joins[0] = array(
 			'table'=>CBL_STB_MODEL,
 			'condition'=>CBL_STB_MODEL.'.stb_model_id = '.CBL_CUSTOMER_TO_STB.'.stb_model_id',
 			'jointype'=>'left'
 		);
+		
 		foreach($data['customer_details'] as $k=>$v){
 			$data['customer_details']['stb'] = $this->common_model->get_data_array(CBL_CUSTOMER_TO_STB,array('customer_id'=>$customer_id),'',$joins);
 		}
@@ -86,7 +90,13 @@ class Home extends CI_Controller {
 		if($this->input->post()){
 			$customer_id = $this->input->post('customer_id');
 			$year = $this->input->post('year');
-			$data['payment_info'] = $this->common_model->get_data_array(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR(payment_date)'=>$year, 'type'=>2));
+			$joins = array();
+			$joins[0] = array(
+				'table'=>STAFF,
+				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
+				'jointype'=>'inner'
+			);
+			$data['payment_info'] = $this->common_model->get_data_array(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR(payment_date)'=>$year, 'type'=>2), '', $joins);
 			$result['template'] = $this->load->view('cable/ajax/customer_payment_info', $data, true);
 		} else{
 			$result['error']['message'] = "Please select a month";
