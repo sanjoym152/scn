@@ -150,6 +150,8 @@ class Customers extends CI_Controller {
 			if(@$id){
 				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),$insert_array);
 			}else{
+				/* echo "<pre>";
+				print_r($insert_array);die; */
 				$package = $this->common_model->get_data_row(CBL_PACKAGE,array('package_id'=>$this->input->post('package_id')));
 				//$insert_array['balance'] = $insert_array['pack_amount'] + $insert_array['stb_amount'] + $this->input->post('balance'); // remove stb amount due to wrong calculation.
 				$insert_array['balance'] = $insert_array['pack_amount'] + $this->input->post('balance');
@@ -163,11 +165,11 @@ class Customers extends CI_Controller {
 				$insert_array=array();
 				$insert_array['package_id'] = $this->input->post('package_id');
 				$insert_array['customer_id'] = $id;
-				$insert_array['pack_amount'] = $package['tot_amount'];
+				$insert_array['pack_amount'] = $this->input->post('pack_amount');
 				$insert_array['outstanding'] = $this->input->post('balance');
-				$insert_array['net_due'] = $package['tot_amount'];
+				$insert_array['net_due'] = $this->input->post('pack_amount');
 				$insert_array['is_added_time'] = 1;
-				$insert_array['billing_total'] = $package['tot_amount']+$this->input->post('balance');
+				$insert_array['billing_total'] = $this->input->post('pack_amount')+$this->input->post('balance');
 				$insert_array['billing_date'] = $this->input->post('billing_date');
 				$insert_array['type'] = 2;
 				$this->common_model->tbl_insert(CBL_PAYMENT,$insert_array);
