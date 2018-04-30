@@ -17,12 +17,22 @@ class payment extends CI_Controller{
 	
 	// This function is used for add payment
 	public function add_payment(){
-		if($this->input->post()){
+		/* if($this->input->post()){
 			echo "<pre>";
 			print_r($this->input->post());die;
-		}
+		} */
 		$insert_array=array();
 		$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
+		$payment_data = $this->common_model->get_data_row(CBL_PAYMENT,array('payment_id'=>$this->input->post('payment_id')));
+		echo "<pre>";
+		print_r($payment_data);die;
+		
+		if($payment_data['billing_total']==$this->input->post('payment_total')){
+			$insert_array['status'] = 1;
+		} else{
+			$insert_array['status'] = 2;
+		}
+		
 		$insert_array['customer_id'] = $this->input->post('customer_id');
 		$insert_array['payment_date'] = $this->input->post('payment_date');
 		$insert_array['payment_total'] = $this->input->post('payment_total');
@@ -36,7 +46,7 @@ class payment extends CI_Controller{
 		$insert_array['type']=			1;
 		$insert_array['month_of'] = $this->input->post('month_of');
 		
-		$payment_id = $this->common_model->tbl_insert(CBL_PAYMENT,$insert_array);
+		$payment_id = $this->common_model->tbl_update(CBL_PAYMENT, array('payment_id'=>$this->input->post('payment_id')), $insert_array);
 		
 		$c_array=array();
 		$c_array['balance'] = $this->input->post('net_due');
