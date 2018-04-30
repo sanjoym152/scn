@@ -19,7 +19,7 @@ print_r($payment_info); *///die;
 	</thead>
 	<tbody>
 		<?php 
-		$i=1;
+		@$i = date('m', strtotime($payment_info[0]['billing_date']));
 		foreach($payment_info as $row){ ?>
 		<tr>
 			<td>
@@ -38,7 +38,7 @@ print_r($payment_info); *///die;
 			<td><?php echo @$row['other_fees']; ?></td>
 			<td><?php echo @$row['payment_total']; ?></td>
 			<td width="10%">
-				<a href="#" data-toggle="tooltip" title="Add payment"><i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a href="javascript:;" data-id="<?php echo @$row['customer_id']; ?>" data-payment_id="<?php echo @$row['payment_id']; ?>" class="add_payment" data-toggle="tooltip" title="Add payment"><i class="fa fa-plus" aria-hidden="true"></i></a>
 				<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(5913)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 				<a href="http://localhost/scn/cable/customers/delete_billing/5913" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
 				<a target="_blank" href="http://localhost/scn/cable/customers/bill_print/5913" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>

@@ -160,7 +160,7 @@ class Customers extends CI_Controller {
 				$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$id),array('cust_code'=>$cust_code));
 				
                 
-				//insert into payment table as add topup
+				//insert a row to payment table as a bill
 				$insert_array=array();
 				$insert_array['package_id'] = $this->input->post('package_id');
 				$insert_array['customer_id'] = $id;
@@ -168,12 +168,12 @@ class Customers extends CI_Controller {
 				$insert_array['outstanding'] = $this->input->post('balance');
 				$insert_array['net_due'] = $package['tot_amount'];
 				$insert_array['is_added_time'] = 1;
-				$insert_array['payment_total'] = $package['tot_amount']+$this->input->post('balance');
-				$insert_array['payment_date'] = $this->input->post('billing_date');
-				$insert_array['staff_id'] = $this->input->post('staff_id');
+				$insert_array['billing_total'] = $package['tot_amount']+$this->input->post('balance');
+				$insert_array['billing_date'] = $this->input->post('billing_date');
+				//$insert_array['staff_id'] = $this->input->post('staff_id');
 				$insert_array['type'] = 2;
 				//$insert_array['installation_charge'] = $this->input->post('installation_amount');
-				//$this->common_model->tbl_insert(PAYMENT,$insert_array);
+				$this->common_model->tbl_insert(CBL_PAYMENT,$insert_array);
 				
 			}
 			
@@ -371,35 +371,7 @@ class Customers extends CI_Controller {
 		echo json_encode($data);
 	}
 	
-	public function payment(){
-		
-		$insert_array=array();
-		$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
-		$insert_array['customer_id'] = $this->input->post('customer_id');
-		$insert_array['payment_date'] = $this->input->post('payment_date');
-		$insert_array['payment_total'] = $this->input->post('payment_total');
-		$insert_array['sub_total'] = $this->input->post('payment_total')+$this->input->post('discount_total');
-		$insert_array['outstanding'] = $customer_data['balance'];
-		$insert_array['net_due'] = $this->input->post('net_due');
-		$insert_array['pack_amount'] = $this->input->post('pack_amount');
-		$insert_array['package_id'] = $this->input->post('package_id');
-		$insert_array['staff_id'] = $this->input->post('staff_id');
-		$insert_array['discount_in'] = $this->input->post('discount_in');
-		$insert_array['discount_type'] = $this->input->post('discount_type');
-		$insert_array['discount_total'] = $this->input->post('discount_total');
-		$insert_array['type']=			1;
-		if($this->input->post('month_of')){
-			$insert_array['month_of'] = $this->input->post('month_of');
-		}
-		$payment_id = $this->common_model->tbl_insert(CBL_PAYMENT,$insert_array);
-		$c_array=array();
-		$c_array['balance'] = $this->input->post('net_due');
-		
-		$c_array['payment_status']=2;
-		$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$c_array);
-		$this->utilitylib->setMsg(SUCCESS_ICON.' Payment was success!','SUCCESS');
-		redirect(base_url('cable/customers/bill_print/'.$payment_id));
-	}
+	
 	
 	public function bill_print($id=null){
 		$joins=array();
@@ -915,7 +887,6 @@ class Customers extends CI_Controller {
 				$insert_array['package_id'] = $customer_data['package_id'];
 				$insert_array['pack_amount'] = $customer_data['pack_amount'];
 				$insert_array['outstanding'] = $customer_data['balance'];
-				$insert_array['staff_id'] = $this->session->userdata('user_id');// current login id
 				$insert_array['sub_total'] = $customer_data['pack_amount'];
 				$insert_array['net_due'] = $customer_data['balance'] + $customer_data['pack_amount'];
 				$insert_array['billing_total'] = $customer_data['balance'] + $customer_data['pack_amount'];
