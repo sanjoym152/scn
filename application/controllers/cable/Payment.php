@@ -24,8 +24,8 @@ class payment extends CI_Controller{
 		$insert_array=array();
 		$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
 		$payment_data = $this->common_model->get_data_row(CBL_PAYMENT,array('payment_id'=>$this->input->post('payment_id')));
-		echo "<pre>";
-		print_r($payment_data);die;
+		/* echo "<pre>";
+		print_r($payment_data);die; */
 		
 		if($payment_data['billing_total']==$this->input->post('payment_total')){
 			$insert_array['status'] = 1;
@@ -43,7 +43,6 @@ class payment extends CI_Controller{
 		$insert_array['discount_in'] = $this->input->post('discount_in');
 		$insert_array['discount_type'] = $this->input->post('discount_type');
 		$insert_array['discount_total'] = $this->input->post('discount_total');
-		$insert_array['type']=			1;
 		$insert_array['month_of'] = $this->input->post('month_of');
 		
 		$payment_id = $this->common_model->tbl_update(CBL_PAYMENT, array('payment_id'=>$this->input->post('payment_id')), $insert_array);
