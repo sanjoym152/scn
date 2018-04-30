@@ -19,31 +19,38 @@ print_r($payment_info); *///die;
 	</thead>
 	<tbody>
 		<?php 
-		@$i = date('m', strtotime($payment_info[0]['billing_date']));
-		foreach($payment_info as $row){ ?>
-		<tr>
-			<td>
-			<?php 
-				$dateObj = DateTime::createFromFormat('!m',  $i);
-				echo $monthName = $dateObj->format('M'); $i++;?>
-			<?php //echo date('M', strtotime($row['billing_date'])); ?></td>
-			<td><?php echo date('d/m/Y', strtotime($row['billing_date'])); ?></td>
-			<td><?php echo @$row['pack_amount']; ?></td>
-			<td>ALA CA</td>
-			<td><?php echo @$row['outstanding']; ?></td>
-			<td><?php echo @$row['billing_total']; ?></td>
-			<td><?php echo @$row['payment_date']?$row['payment_date']:'N/A'; ?></td>
-			<td><?php echo @$row['staff_name']; ?></td>
-			<td><?php echo @$row['discount_total']; ?></td>
-			<td><?php echo @$row['other_fees']; ?></td>
-			<td><?php echo @$row['payment_total']; ?></td>
-			<td width="10%">
-				<a href="javascript:;" data-id="<?php echo @$row['customer_id']; ?>" data-payment_id="<?php echo @$row['payment_id']; ?>" class="add_payment" data-toggle="tooltip" title="Add payment"><i class="fa fa-plus" aria-hidden="true"></i></a>
-				<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(5913)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-				<a href="http://localhost/scn/cable/customers/delete_billing/5913" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
-				<a target="_blank" href="http://localhost/scn/cable/customers/bill_print/5913" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
-			</td>
-		</tr>
-		<?php } ?>
+		if(@$payment_info){ 
+			@$i = date('m', strtotime($payment_info[0]['billing_date']));
+			foreach($payment_info as $row){ ?>
+			<tr>
+				<td>
+				<?php 
+					$dateObj = DateTime::createFromFormat('!m',  $i);
+					echo $monthName = $dateObj->format('M'); $i++;?>
+				<?php //echo date('M', strtotime($row['billing_date'])); ?></td>
+				<td><?php echo date('d/m/Y', strtotime($row['billing_date'])); ?></td>
+				<td><?php echo @$row['pack_amount']; ?></td>
+				<td>ALA CA</td>
+				<td><?php echo @$row['outstanding']; ?></td>
+				<td><?php echo @$row['billing_total']; ?></td>
+				<td><?php echo @$row['payment_date']?$row['payment_date']:'N/A'; ?></td>
+				<td><?php echo @$row['staff_name']; ?></td>
+				<td><?php echo @$row['discount_total']; ?></td>
+				<td><?php echo @$row['other_fees']; ?></td>
+				<td><?php echo @$row['payment_total']; ?></td>
+				<td width="10%">
+					<a href="javascript:;" data-id="<?php echo @$row['customer_id']; ?>" data-payment_id="<?php echo @$row['payment_id']; ?>" class="add_payment" data-toggle="tooltip" title="Add payment"><i class="fa fa-plus" aria-hidden="true"></i></a>
+					<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(5913)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+					<a href="javascript:;" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+					<a target="_blank" href="http://localhost/scn/cable/customers/bill_print/5913" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
+				</td>
+			</tr>
+		<?php } } else{ ?>
+			<tr>
+				<td colspan="12" align="center">
+					<h4>No bill generated in this year.<br> Click <a target="_blank" href="<?php echo base_url('cable/customers/top_up')?>">here</a> to generate a bill.</h4>
+				</td>
+			</tr>
+		<?php }  ?>
 	</tbody>
 </table>

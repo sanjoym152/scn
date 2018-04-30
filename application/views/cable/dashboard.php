@@ -58,6 +58,9 @@
 									</div>
 									<div class="card-body">
 										<div class="row table-responsive account_info">
+											
+										</div>
+										<div class="row table-responsive before_select">
 											<h5 class="text-center">Select a year to view customer payment details</h1>
 										</div>
 									</div>
@@ -92,18 +95,8 @@
 									<input type="hidden" name="customer_id" id="customer_id" value="">
 									<input type="hidden" name="payment_id" id="payment_id" value="">
 									<div class="your-mail">
-										<label for="exampleInputEmail1">Month of</label>
-										<!--<select class="form-control month_of" name="month_of">
-											<option value="">--Select Month--</option>
-											<?php for($i=1;$i<=12;$i++){ ?>
-											<option value="<?php echo $i;?>"><?php 
-												$dateObj   = DateTime::createFromFormat('!m', $i);
-												echo $monthName = $dateObj->format('F'); // March?>
-											</option>
-											<?php } ?>
-										</select>-->
-										<!--<textarea name="month_of" class="required form-control" placeholder="Enter description of months."></textarea>-->
-										<input type="text" name="month_of" class="required form-control" placeholder="Enter description of months.">
+										<label for="exampleInputEmail1">Description</label>
+										<input type="text" name="month_of" class="required form-control" placeholder="Enter description of month.">
 										<span class="month_of_error"></span>
 									</div>
 								</div>
@@ -189,32 +182,7 @@
 		
 		<script>
 			$( function() {
-				$('.year').change(function(){
-					//console.log($(this).val());
-					var year = $(this).val();
-					var cust_id = $('.edit_cust').data('id');
-					console.log(cust_id);
-					$.ajax({
-						url:'<?php echo base_url('cable/home/get_payment_info');?>',
-						method:'post',
-						data:{
-							customer_id:cust_id,
-							year:year
-						},
-						dataType:'json',
-						success:function(result){
-							if(result.error){
-								console.log(result.error);
-							} else{
-								console.log(result);
-								$('.account_info').html(result.template);
-							}
-						},
-						error:function(err){
-							console.log(err);
-						}
-					});
-				});
+				
 				$( "#autocomplete" ).autocomplete({
 					source: function( request, response ) {
 						$.ajax({
@@ -231,6 +199,10 @@
 					},
 					minLength: 2,
 					select: function( event, ui ) {
+						$('.payment_div').hide();
+						$('.before_select').show();
+						$('.account_info').hide();
+						$('.year').val('');
 						$('.loader').show();
 						$('.loader-inner').show();
 						event.preventDefault(); // <--- Prevent the value from being inserted.
@@ -245,6 +217,7 @@
 							success: function( result ) {
 								$('.loader').hide();
 								$('.loader-inner').hide();
+								//$('.before_select').hide();
 								$('.basic_info').html(result.template);
 								$('.payment_div').slideDown();
 								console.log(result);
@@ -254,6 +227,35 @@
 							}
 						});
 					}
+				});
+				
+				$('.year').change(function(){
+					//console.log($(this).val());
+					var year = $(this).val();
+					var cust_id = $('.edit_cust').data('id');
+					console.log(cust_id);
+					$.ajax({
+						url:'<?php echo base_url('cable/home/get_payment_info');?>',
+						method:'post',
+						data:{
+							customer_id:cust_id,
+							year:year
+						},
+						dataType:'json',
+						success:function(result){
+							$('.before_select').hide();
+							$('.account_info').show();
+							if(result.error){
+								console.log(result.error);
+							} else{
+								console.log(result);
+								$('.account_info').html(result.template);
+							}
+						},
+						error:function(err){
+							console.log(err);
+						}
+					});
 				});
 				
 				/*

@@ -20,6 +20,10 @@
 							<span class="pull-right"><strong><?php echo @$customer_details['first_name'];?></strong></span>
 						</div>
 						<div class="col-md-6">
+							<span class="">CUST CODE: </span>
+							<span class="pull-right"><?php echo @$customer_details['cust_code'];?></span>
+						</div>
+						<div class="col-md-6">
 							<span class="">OTHER ID: </span>
 							<span class="pull-right"><?php echo @$customer_details['area_name'].'-'.@$customer_details['other_id'];?></span>
 						</div>
