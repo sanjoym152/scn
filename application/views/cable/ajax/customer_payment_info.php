@@ -8,7 +8,7 @@ print_r($payment_info); *///die;
 		<th>BILL DATE</th>
 		<th>PACK AMOUNT</th>
 		<th>ALA CA</th>
-		<th>DUE</th>
+		<!--<th>DUE</th>-->
 		<th>TOTAL</th>
 		<th>PAY DATE</th>
 		<th>COLLECTOR</th>
@@ -31,7 +31,7 @@ print_r($payment_info); *///die;
 				<td><?php echo date('d/m/Y', strtotime($row['billing_date'])); ?></td>
 				<td><?php echo @$row['pack_amount']; ?></td>
 				<td>ALA CA</td>
-				<td><?php echo @$row['outstanding']; ?></td>
+				<!--<td><?php echo @$row['outstanding']; ?></td>-->
 				<td><?php echo @$row['billing_total']; ?></td>
 				<td><?php echo @$row['payment_date']?$row['payment_date']:'N/A'; ?></td>
 				<td><?php echo @$row['staff_name']; ?></td>
@@ -45,16 +45,24 @@ print_r($payment_info); *///die;
 					<?php } ?>
 					
 					<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(5913)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-					<a href="javascript:;" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+					
 					<a target="_blank" href="http://localhost/scn/cable/customers/bill_print/5913" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
+					
+					<a href="javascript:;" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 		<?php } } else{ ?>
 			<tr>
 				<td colspan="12" align="center">
-					<h4>No bill generated in this year.<br> Click <a target="_blank" href="<?php echo base_url('cable/customers/top_up')?>">here</a> to generate a bill.</h4>
+					<h5>No bill generated in this year.<br> Click <a target="_blank" href="<?php echo base_url('cable/customers/top_up')?>">here</a> to generate a bill.</h5>
 				</td>
 			</tr>
 		<?php }  ?>
 	</tbody>
 </table>
+<div class="due_area col-md-12">
+	<div class="col-md-3">Billing Total: <?php echo @$payment_total_info['billing_tot'];?></div>
+	<div class="col-md-3">Due: <?php echo @$customer_info['balance'];?></div>
+	<div class="col-md-3">Discount: <?php echo @$payment_total_info['discount_tot'];?></div>
+	<div class="col-md-3">Payment Total: <?php echo @$payment_total_info['payment_tot'];?></div>
+</div>

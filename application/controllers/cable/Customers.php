@@ -916,7 +916,7 @@ class Customers extends CI_Controller {
 				$insert_array['staff_id'] = $this->session->userdata('user_id');// current login id
 				$insert_array['sub_total'] = $customer_data['pack_amount'];
 				$insert_array['net_due'] = $customer_data['balance'] + $customer_data['pack_amount'];
-				$insert_array['billing_total'] = $customer_data['balance'] + $customer_data['pack_amount'];
+				$insert_array['billing_total'] = $customer_data['pack_amount'];
 				$insert_array['type'] = 2;//for top up
 				$this->common_model->tbl_insert(CBL_PAYMENT, $insert_array);
 			}

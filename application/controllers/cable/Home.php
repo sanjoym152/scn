@@ -93,8 +93,13 @@ class Home extends CI_Controller {
 				'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
 				'jointype'=>'left'
 			);
-			$data['payment_info'] = $this->common_model->get_data_array(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR(billing_date)'=>$year, 'type'=>2), '', $joins);
+			
+			$data['payment_info'] = $this->common_model->get_data_array(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.CBL_PAYMENT.'.billing_date)'=>$year, 'type'=>2), '', $joins);
+			
+			$data['payment_total_info'] = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.CBL_PAYMENT.'.billing_date)'=>$year, 'type'=>2), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
 			$result['q'] = $this->db->last_query();
+			$data['customer_info'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$customer_id));
+			
 			$result['template'] = $this->load->view('cable/ajax/customer_payment_info', $data, true);
 		} else{
 			$result['error']['message'] = "Please select a month";
