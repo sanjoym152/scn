@@ -415,9 +415,7 @@
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Payment Date</label>
-										<input class="form-control required" id="pack_amount" type="hidden" name="pack_amount" value="0.00" readonly>
 										<input class="form-control required datepicker" type="text" name="payment_date" id="payment_date" value="" readonly>
-										<input class="form-control required" id="package_id" type="hidden" name="package_id">
 									</div>
 								</div>
 								

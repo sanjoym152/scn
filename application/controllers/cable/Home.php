@@ -145,7 +145,6 @@ class Home extends CI_Controller {
 	}
 	
 	public function get_customer_info(){
-		
 		ini_set('max_execution_time',0);
 		$data= array();
 		$insert=array();
@@ -153,18 +152,17 @@ class Home extends CI_Controller {
 		//echo "<pre>";print_r($get_customer_data);die;
 		foreach($get_customer_data as $row){
 			// update to customer table
-			
 			$insert['customer_id']=$row['customer_id'];
 			$insert['package_id']=$row['package_id'];
 			$insert['pack_amount']=$row['pack_amount'];
 			$insert['billing_total']=$row['pack_amount'];
 			$insert['outstanding']=$insert['billing_total'];
 			$insert['billing_date']="2018-01-01";
-			$insert['type']="2";
+			$insert['type']=2;
 			
 			$this->common_model->tbl_insert(CBL_PAYMENT,$insert);
 			
-			$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$row['customer_id']), array('balance'=>$row['pack_amount']));
+			$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$row['customer_id']), array('balance'=>$row['pack_amount'], 'billing_date'=>"2018-01-01"));
 		}
 	}
 }
