@@ -44,9 +44,9 @@ print_r($payment_info); *///die;
 					<a href="javascript:;" data-id="<?php echo @$row['customer_id']; ?>" data-payment_id="<?php echo @$row['payment_id']; ?>" class="add_payment" data-toggle="tooltip" title="Add payment"><i class="fa fa-plus" aria-hidden="true"></i></a>	
 					<?php } ?>
 					
-					<a href="javascript:;" data-toggle="tooltip" title="Edit" onclick="editPayment(5913)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+					<a href="javascript:;" class="edit_payment" data-customer_id="<?php echo @$row['customer_id']; ?>" data-id="<?php echo @$row['payment_id']; ?>" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 					
-					<a target="_blank" href="http://localhost/scn/cable/customers/bill_print/5913" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
+					<a target="_blank" href="<?php echo base_url('cable/customers/bill_print/'.@$row['payment_id'])?>" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
 					
 					<a href="javascript:;" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure?')"><i class="fa fa-trash" aria-hidden="true"></i></a>
 				</td>

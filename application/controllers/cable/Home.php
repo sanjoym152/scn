@@ -135,4 +135,13 @@ class Home extends CI_Controller {
 		echo json_encode($output);
 	}
 	
+	public function get_payment_data(){
+		$data = array();
+		$payment_id = $this->input->post('payment_id');
+		$customer_id = $this->input->post('customer_id');
+		$data['payment_data'] = $this->common_model->get_data_row(CBL_PAYMENT, array('payment_id'=>$payment_id));
+		$data['customer_data'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$customer_id));
+		echo json_encode($data);
+	}
+	
 }
