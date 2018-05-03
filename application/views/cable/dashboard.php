@@ -422,7 +422,7 @@
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Payable Amount</label>
-										<input class="form-control required number" id="payment_total" type="text" name="payment_total" value="0.00">
+										<input class="form-control required number" autocomplete="off" id="payment_total" type="text" name="payment_total" value="0.00">
 									</div>
 								</div>
 								
