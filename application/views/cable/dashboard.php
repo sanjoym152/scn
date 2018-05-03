@@ -394,7 +394,7 @@
 			<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 				<div class="modal-content">
-					<form id="payment_form" method="post" action="<?php echo base_url('cable/payment/add_payment')?>">
+					<form id="payment_form" autocomplete="off" method="post" action="<?php echo base_url('cable/payment/add_payment')?>">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Edit Payment</h4>
