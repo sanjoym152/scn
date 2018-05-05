@@ -17,15 +17,9 @@ class payment extends CI_Controller{
 	
 	// This function is used for add payment
 	public function add_payment(){
-		/* if($this->input->post()){
-			echo "<pre>";
-			print_r($this->input->post());die;
-		} */
 		$insert_array=array();
 		$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
 		$payment_data = $this->common_model->get_data_row(CBL_PAYMENT,array('payment_id'=>$this->input->post('payment_id')));
-		/* echo "<pre>";
-		print_r($payment_data);die; */
 		
 		if($payment_data['billing_total']==$this->input->post('payment_total')){
 			$insert_array['status'] = 1;
@@ -53,5 +47,27 @@ class payment extends CI_Controller{
 		$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$c_array);
 		$this->utilitylib->setMsg(SUCCESS_ICON.' Payment was success!','SUCCESS');
 		redirect(base_url('cable/customers/bill_print/'.$payment_id));
+	}
+	
+	public function edit_payment(){
+		if($this->input->post()){
+			/* echo "<pre>";
+			print_r($this->input->post()); */
+			$payment_total = $this->common_model->get_data_row(CBL_PAYMENT, array('payment_id != '=>$this->input->post('payment_id')), 'sum(payment_total) as payment_tot');
+			
+			//print_r($payment_total);
+			$insert_array = array();
+			$insert_array = $this->input->post();
+			
+			$this->common_model->tbl_update(CBL_PAYMENT,array('payment_id'=>$this->input->post('payment_id')), $insert_array);
+			
+			$payment_data = $this->common_model->get_data_row(CBL_PAYMENT, '', 'sum(payment_total) as payment_tot, sum(billing_total) as billing_tot');
+			
+			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot']));
+			
+			echo $payment_data['billing_tot'].' '.$payment_data['payment_tot'];
+			
+			
+		}
 	}
 }

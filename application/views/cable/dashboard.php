@@ -376,10 +376,16 @@
 						dataType:'json',
 						success:function(result){
 							$('#edit_payment').modal('show');
-							console.log(result);
+							console.log(payment_id);
+							$('.payment_id').val(payment_id);
+							$('.customer_id').val(customer_id);
 							$('.month_of').val(result.payment_data.month_of);
-							$('#payment_date').val(result.payment_data.payment_date);
-							$('#payment_total').val(result.payment_data.payment_total);
+							$('.payment_date').val(result.payment_data.payment_date);
+							$('.payment_total').val(result.payment_data.payment_total);
+							$('.discount_total').val(result.payment_data.discount_total);
+							$('.discount_amount').val(result.payment_data.discount_in);
+							$('.discount_type').val(result.payment_data.discount_type);
+							$('.collector').val(result.payment_data.staff_id);
 						},
 						error:function(error){
 							console.log(error.responseText);
@@ -394,7 +400,7 @@
 			<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 				<div class="modal-content">
-					<form id="payment_form" autocomplete="off" method="post" action="<?php echo base_url('cable/payment/add_payment')?>">
+					<form id="payment_form" autocomplete="off" method="post" action="<?php echo base_url('cable/payment/edit_payment')?>">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Edit Payment</h4>
@@ -403,8 +409,8 @@
 							<div class="clearfix"></div>
 							<div class="col-md-12">
 								<div class="col-md-4">
-									<input type="hidden" name="customer_id" id="customer_id" value="">
-									<input type="hidden" name="payment_id" id="payment_id" value="">
+									<input type="hidden" name="customer_id" class="customer_id" value="">
+									<input type="hidden" name="payment_id" class="payment_id" value="">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Description</label>
 										<input type="text" name="month_of" class="month_of required form-control" placeholder="Enter description of month.">
@@ -415,29 +421,29 @@
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Payment Date</label>
-										<input class="form-control required datepicker" type="text" name="payment_date" id="payment_date" value="" readonly>
+										<input class="form-control required datepicker payment_date" type="text" name="payment_date" value="" readonly>
 									</div>
 								</div>
 								
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Payable Amount</label>
-										<input class="form-control required number" autocomplete="off" id="payment_total" type="text" name="payment_total" value="0.00">
+										<input class="form-control required number payment_total" autocomplete="off" type="text" name="payment_total" value="0.00">
 									</div>
 								</div>
 								
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Discount Amount</label>
-										<input class="form-control" id="discount_total" type="text" name="discount_total" value="0.00" readonly>
+										<input class="form-control discount_total" type="text" name="discount_total" value="0.00" readonly>
 									</div>
 								</div>
 								
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Discount In</label>
-										<input class="form-control required" id="discount_amount" type="text" name="discount_in" value="0.00" style="width:50%">
-										<select class="form-control" style="width:50%" name="discount_type" id="discount_type">
+										<input class="form-control required discount_amount" id="" type="text" name="discount_in" value="0.00" style="width:50%">
+										<select class="form-control discount_type" style="width:50%" name="discount_type">
 											<option value="">Type</option>
 											<option value="1">%</option>
 											<option value="2">Rs.</option>
@@ -451,7 +457,7 @@
 										<select name="staff_id" class="form-control collector required">
 											<option value="">--Select Staff--</option>
 											<?php foreach($collector as $row){ ?> 
-												<option value="<?php echo @$row['staff_id'];?>"><?php echo @$row['staff_name'];?></option>
+											<option value="<?php echo @$row['staff_id'];?>"><?php echo @$row['staff_name'];?></option>
 											<?php } ?>
 										</select>
 										<span class="collector_error"></span>
