@@ -64,10 +64,7 @@ class payment extends CI_Controller{
 			$payment_data = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$this->input->post('customer_id')), 'sum(payment_total) as payment_tot, sum(billing_total) as billing_tot');
 			
 			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot']));
-			
-			echo $payment_data['billing_tot'].' '.$payment_data['payment_tot'];
-			
-			
+			redirect(base_url('cable'));
 		}
 	}
 }
