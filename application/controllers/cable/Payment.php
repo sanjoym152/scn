@@ -53,9 +53,7 @@ class payment extends CI_Controller{
 		if($this->input->post()){
 			/* echo "<pre>";
 			print_r($this->input->post()); */
-			$payment_total = $this->common_model->get_data_row(CBL_PAYMENT, array('payment_id != '=>$this->input->post('payment_id')), 'sum(payment_total) as payment_tot');
 			
-			//print_r($payment_total);
 			$insert_array = array();
 			$insert_array = $this->input->post();
 			
@@ -65,6 +63,46 @@ class payment extends CI_Controller{
 			
 			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot']));
 			redirect(base_url('cable'));
+		}
+	}
+	
+	public function delete_payment(){
+		if($this->input->post()){
+			/* echo "<pre>";
+			print_r($this->input->post()); die;
+			 */
+			$payment_data = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$this->input->post('customer_id'), 'payment_id !='=>$this->input->post('payment_id')), 'sum(payment_total) as payment_tot, sum(billing_total) as billing_tot');
+			
+			$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id'), 'status'=>1));
+			
+			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot'], 'billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' - 30 days'))));
+			
+			$this->common_model->tbl_record_del(CBL_PAYMENT, array('payment_id'=>$this->input->post('payment_id')));
+			
+			// getting updated payment info
+			$data = array();
+			$result = array();
+			if($this->input->post()){
+				$customer_id = $this->input->post('customer_id');
+				$year = $this->input->post('year');
+				$joins = array();
+				$joins[0] = array(
+					'table'=>STAFF,
+					'condition'=>STAFF.'.staff_id = '.CBL_PAYMENT.'.staff_id',
+					'jointype'=>'left'
+				);
+				
+				$data['payment_info'] = $this->common_model->get_data_array(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.CBL_PAYMENT.'.billing_date)'=>$year, 'type'=>2), '', $joins);
+				
+				$data['payment_total_info'] = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.CBL_PAYMENT.'.billing_date)'=>$year, 'type'=>2), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
+				$result['q'] = $this->db->last_query();
+				$data['customer_info'] = $this->common_model->get_data_row(CBL_CUSTOMERS,array('customer_id'=>$customer_id));
+				
+				$result['template'] = $this->load->view('cable/ajax/customer_payment_info', $data, true);
+			} else{
+				$result['error']['message'] = "Please select a month";
+			}
+			echo json_encode($result);
 		}
 	}
 }

@@ -90,27 +90,7 @@ class Customers extends CI_Controller {
 				$insert_array['payment_date'] = date('Y-m-d',strtotime($this->input->post('billing_date')));
 				$insert_array['staff_id'] = $this->input->post('staff_id');
 				$insert_array['type'] = 2;
-				//$insert_array['installation_charge'] = $this->input->post('installation_amount');
 				$this->common_model->tbl_insert(PAYMENT,$insert_array);
-				/* if($this->input->post('deposite_amount')!=0){
-					//insert into payment table for add payment
-					$insert_array=array();
-					$insert_array['package_id'] = $this->input->post('package_id');
-					$insert_array['customer_id'] = $id;
-					$insert_array['pack_amount'] = $package['tot_amount'];
-					$insert_array['payment_date'] = $this->input->post('connection_date');
-					$insert_array['installation_charge'] = $this->input->post('installation_amount');
-					$insert_array['type'] = 1;
-					$insert_array['payment_total'] = $this->input->post('deposite_amount');
-					
-					$insert_array['outstanding'] = 0; // Previous due is zero..
-					
-					$insert_array['net_due'] = ($this->input->post('installation_amount')+$package['tot_amount'])-$this->input->post('deposite_amount'); // After getting payment.
-					$this->common_model->tbl_insert(PAYMENT,$insert_array);
-					/* echo $this->db->last_query();
-					echo "<pre>";
-					print_r($insert_array);die; 
-				} */
 			}
 			if($this->input->post('ip_address')){
 				$this->common_model->tbl_record_del(CUSTOMER_TO_IP,array('customer_id'=>$id));
@@ -128,8 +108,6 @@ class Customers extends CI_Controller {
 		if(@$id){
 			$data['details'] = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$id));
 			$data['details']['ip'] = $this->common_model->get_data_array(CUSTOMER_TO_IP,array('customer_id'=>$id));
-			/* echo "<pre>";
-			print_r($data['details']);die; */
 		}
 		$data['package'] = $this->common_model->get_data_array(PACKAGE,'','','','','','','pakname ASC');
 		$data['lco'] = $this->common_model->get_data_array(LCO,'','','','','','','lconame ASC');
@@ -164,9 +142,6 @@ class Customers extends CI_Controller {
 		}else if($status['status']==2){
 			$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$id),array('status'=>1));
 		}
-		/* echo "<pre>";
-		print_r($status);
-		echo $this->db->last_query();die; */
 		$this->utilitylib->setMsg(SUCCESS_ICON.'Successfully changed status.','SUCCESS');
 		redirect(base_url('internet/customers'));
 	}
@@ -327,13 +302,10 @@ class Customers extends CI_Controller {
 		$insert_array['sub_total'] = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
 		$insert_array['net_due']=$insert_array['payment_total'];
 		$insert_array['outstanding']=$userdata['balance'];
-		/* echo "<pre>";
-		print_r($insert_array);die; */
 		//insert in to payment table.
 		$id = $this->common_model->tbl_insert(PAYMENT,$insert_array);
 		
 		//update user table.
-		
 		$insert_array=array();
 		$insert_array['payment_status'] = 1;//unpaid
 		$insert_array['package_id']=	$this->input->post('package_id');
@@ -367,8 +339,6 @@ class Customers extends CI_Controller {
 		);
 		$data['userdata'] = $this->common_model->get_data_row(PAYMENT,array(PAYMENT.'.payment_id'=>$id),'*,'.PAYMENT.'.discount_total as p_discount',$joins);
 		$data['last_payment'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$data['userdata']['customer_id'], 'type'=>1),'','','payment_id');
-		/* echo "<pre>";
-		print_r($data['userdata']);die; */
 		$data['pageTitle'] = "SCN | Internet | Bill Print";
 		$data['header_links'] = $this->load->view('internet/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('internet/includes/topbar',$data,true);
@@ -438,7 +408,6 @@ class Customers extends CI_Controller {
 		$total_payment = $this->common_model->get_data_row(PAYMENT,array('customer_id'=>$customer_id,'type'=>1),'sum(payment.payment_total) as total');// payment
 		$bill = $this->common_model->get_data_row(PAYMENT,array('customer_id'=>$customer_id,'type'=>2),'sum(payment.payment_total) as total');// bill
 		$bill1 = $this->common_model->get_data_row(PAYMENT,array('customer_id'=>$customer_id,'type'=>2),'sum(payment.outstanding) as total');// bill
-		//echo json_encode(array('q'=>$this->db->last_query()));
 		$billing_table = $this->load->view('internet/ajax/billing',$data,true);
 		echo json_encode(array('status'=>'success','table'=>$billing_table,'payment_total'=>'PAID AMOUNT: '.$total_payment['total'],'bill'=>'BILL AMOUNT: '. ($bill['total']-$bill1['total'])));
 	}
@@ -462,7 +431,6 @@ class Customers extends CI_Controller {
 			'jointype'=>'left'
 		);
 		$data['billing'] = $this->common_model->get_data_array(CUSTOMERS,array(PAYMENT.'.customer_id'=>$customer_id,'type'=>1),'*,'.PAYMENT.'.discount_total as dis,'.PAYMENT.'.payment_total as p_tot',$joins,'','','','payment_id desc');
-		//echo json_encode(array('q'=>$this->db->last_query()));
 		$billing_table = $this->load->view('internet/ajax/ledger',$data,true);
 		echo json_encode(array('status'=>'success','table'=>$billing_table));
 	}
@@ -592,17 +560,12 @@ class Customers extends CI_Controller {
 			$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$userdata['customer_id']),$update_array);
 			
 		}
-		//echo $this->db->last_query();
 		$this->common_model->tbl_record_del(PAYMENT,array('payment_id'=>$bill_id));
-		
-		/* echo "<pre>";
-		print_r($update_array);die; */
 		$this->utilitylib->setMsg(SUCCESS_ICON.' Record successfully deleted.','SUCCESS');
 		redirect(base_url('internet/customers'));
 	}
 	public function get_customer_details(){
 		$customer_id = $this->input->post('customer_id');
-		//$customer_id = 1;
 		$joins = array();
 		$joins[0] = array(
 			'table'=>PACKAGE,

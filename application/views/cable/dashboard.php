@@ -363,6 +363,30 @@
 					}
 				});
 				
+				/* Delete payment */
+				$('body').on('click', '.delete_payment', function(){
+					if(confirm('Are you sure?')){
+						var payment_id = $(this).data('id');
+						var customer_id = $(this).data('customer_id');
+						var year = $('.year').val();
+						$.ajax({
+							method:'post',
+							url: '<?php echo base_url('cable/payment/delete_payment')?>',
+							data:{ payment_id: payment_id, customer_id: customer_id, year: year},
+							dataType:'json',
+							success:function(result){
+								console.log(result);
+								$('.account_info').html(result.template);
+							},
+							error: function(err){
+								console.log(err.responseText);
+							}
+						});
+					}
+				});
+				/* Delete payment */
+				
+				
 				$('body').on('click', '.edit_payment', function(){
 					var payment_id = $(this).data('id');
 					var customer_id = $(this).data('customer_id');
