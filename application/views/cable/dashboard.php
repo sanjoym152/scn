@@ -395,6 +395,7 @@
 					dataType:'json',
 					success:function(result){
 						$('#edit_payment').modal('show');
+						$('.total_due').val(result.customer_data.balance>=0?result.customer_data.balance:0);
 						$('.payment_id').val(payment_id);
 						$('.customer_id').val(customer_id);
 						$('.month_of').val(result.payment_data.month_of);
@@ -466,6 +467,7 @@
 				var discount_total_edit = $('.discount_total').val();
 				var payment_total_edit = $('.payment_total').val();
 				var net_due_edit = 0;
+				console.log(total_due_edit, discount_total_edit, payment_total_edit);
 				net_due_edit = (parseFloat(total_due_edit)-parseFloat(discount_total_edit))-parseFloat(payment_total_edit);
 				$('.net_due').val(net_due_edit);
 			});
@@ -493,7 +495,12 @@
 										<input type="text" name="month_of" class="month_of required form-control" placeholder="Enter description of month.">
 									</div>
 								</div>
-								
+								<div class="col-md-4">
+									<div class="your-mail">
+										<label for="exampleInputEmail1">Outstanding</label>
+										<input class="form-control total_due" type="text" name="outstanding" value="0.00" readonly>
+									</div>
+								</div>
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Payment Date</label>
@@ -526,7 +533,12 @@
 										</select>
 									</div>
 								</div>
-								
+								<div class="col-md-4">	
+									<div class="your-mail">
+										<label for="exampleInputEmail1">Net Due</label>
+										<input class="form-control net_due" id="" type="text" name="net_due" value="0.00" readonly>
+									</div>
+								</div>
 								<div class="col-md-4">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Paid By</label>

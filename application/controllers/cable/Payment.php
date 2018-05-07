@@ -2,7 +2,7 @@
 /*
 * @ class: Payment
 * @ file: Payment.php
-* @ Description: This class is used for payment related purpose.
+* @ Description: This class is used for payment related purpose only.
 * @ created on: 30-apr-2018
 * @ author: Sanjoy Mandal
 */
@@ -49,37 +49,38 @@ class payment extends CI_Controller{
 		redirect(base_url('cable/customers/bill_print/'.$payment_id));
 	}
 	
+	
+	// This function is used for edit a particular payment.
 	public function edit_payment(){
 		if($this->input->post()){
-			/* echo "<pre>";
-			print_r($this->input->post()); */
-			
 			$insert_array = array();
 			$insert_array = $this->input->post();
-			
 			$this->common_model->tbl_update(CBL_PAYMENT,array('payment_id'=>$this->input->post('payment_id')), $insert_array);
 			
 			$payment_data = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$this->input->post('customer_id')), 'sum(payment_total) as payment_tot, sum(billing_total) as billing_tot');
 			
-			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot']));
+			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-($payment_data['payment_tot'])));
 			redirect(base_url('cable'));
 		}
 	}
 	
+	/*
+	@ This function is used for delete a particular payment.
+	@ desc: billing date willbe decrese 30 days.
+	@ there is a problem to delete a payment. billing date cannot be modified right way.
+	*/
 	public function delete_payment(){
 		if($this->input->post()){
-			/* echo "<pre>";
-			print_r($this->input->post()); die;
-			 */
 			$payment_data = $this->common_model->get_data_row(CBL_PAYMENT, array('customer_id'=>$this->input->post('customer_id'), 'payment_id !='=>$this->input->post('payment_id')), 'sum(payment_total) as payment_tot, sum(billing_total) as billing_tot');
 			
 			$customer_data = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id'), 'status'=>1));
 			
 			$this->common_model->tbl_update(CBL_CUSTOMERS, array('customer_id'=>$this->input->post('customer_id')), array('balance'=>$payment_data['billing_tot']-$payment_data['payment_tot'], 'billing_date'=> date('Y-m-d', strtotime($customer_data['billing_date']. ' - 30 days'))));
 			
+			// Delete a row according to payment_id
 			$this->common_model->tbl_record_del(CBL_PAYMENT, array('payment_id'=>$this->input->post('payment_id')));
 			
-			// getting updated payment info
+			// Fetch updated payment info to display.
 			$data = array();
 			$result = array();
 			if($this->input->post()){
