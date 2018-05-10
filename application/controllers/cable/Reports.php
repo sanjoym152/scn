@@ -522,7 +522,7 @@ class Reports extends CI_Controller {
 			{
 				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
 			}
-			$where[CBL_PAYMENT.'.type'] = 1;
+			//$where[CBL_PAYMENT.'.type'] = 1;
 			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'*,'.CBL_CUSTOMERS.'.other_id',$joins);
 			/* echo $this->db->last_query(); 
 			print "<pre>";
@@ -587,7 +587,7 @@ class Reports extends CI_Controller {
 			{
 				$where[CBL_CUSTOMERS.".`lco_id` = '".$this->input->post('lco_id')."'"]=null;
 			}
-			$where[CBL_PAYMENT.'.type'] = 1;
+			//$where[CBL_PAYMENT.'.type'] = 1;
 			$data['daily_collection'] = $this->common_model->get_data_array(CBL_PAYMENT,$where,'*,'.CBL_CUSTOMERS.'.other_id',$joins);
 		}
 		

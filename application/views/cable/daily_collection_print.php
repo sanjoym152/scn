@@ -89,6 +89,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
+							<th>MONTH</th>
 							<th>CUSTOMER CODE</th>
 							<th>OTHER ID</th>
 							<th>STAFF NAME</th>
@@ -100,32 +101,33 @@
 							<th>BALANCE</th>
 							<th>PAYMENT AMOUNT</th>
 							<th>PAY DATE</th>
-							<th>PAY FOR MONTH</th>
+							
 						</tr>
 					</thead>
 					<tbody>
 						<?php 
 							$i=1;
+							@$j = date('m', strtotime($payment_info[0]['billing_date']));
 							if(@$daily_collection){
 								foreach($daily_collection as $row){
 								?>
 								<tr>
-									<td><?php echo @$i++;?></td>
-									<td><?php echo @$row['cust_code'];?></td>
-									<td><?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
-									<td><?php echo @$row['staff_name'];?></td>
-									<td><?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
-									<td><?php echo @$row['address1'];?></td>
-									<td><?php echo @$row['stb_no'];?></td>
-									<td><?php echo @$row['account'];?></td>
-									<td><?php echo @$row['mobile1'];?></td>
-									<td><?php echo @$row['balance'];?></td>
-									<td><?php echo @$row['payment_total'];?></td>
-									<td><?php echo @$row['payment_date'];?></td>
-									<td>
-									<?php $dateObj   = DateTime::createFromFormat('!m', $row['month_of']);
-									$monthName = $dateObj->format('F');
-									echo @$row['month_of']?$monthName.' '.date('Y'):'N/A';?></td>
+									<td> <?php echo @$i++;?></td>
+									<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
+										echo $monthName = $dateObj->format('M'); $j++; ?>
+									</td>
+									<td> <?php echo @$row['cust_code'];?></td>
+									<td> <?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
+									<td> <?php echo @$row['staff_name'];?></td>
+									<td> <?php echo @$row['first_name'].' '.@$row['last_name'];?></td>
+									<td> <?php echo @$row['address1'];?></td>
+									<td> <?php echo @$row['stb_no'];?></td>
+									<td> <?php echo @$row['account'];?></td>
+									<td> <?php echo @$row['mobile1'];?></td>
+									<td> <?php echo @$row['balance'];?></td>
+									<td> <?php echo @$row['payment_total'];?></td>
+									<td> <?php echo @$row['payment_date'];?></td>
+									
 								</tr>
 								<?php 
 								}

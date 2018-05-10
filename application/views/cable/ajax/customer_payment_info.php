@@ -24,10 +24,9 @@ print_r($payment_info); *///die;
 			foreach($payment_info as $row){ ?>
 			<tr>
 				<td>
-				<?php 
-					$dateObj = DateTime::createFromFormat('!m',  $i);
-					echo $monthName = $dateObj->format('M'); $i++;?>
-				<?php //echo date('M', strtotime($row['billing_date'])); ?></td>
+					<?php $dateObj = DateTime::createFromFormat('!m',  $i);
+					echo $monthName = $dateObj->format('M'); $i++; ?>
+				</td>
 				<td><?php echo date('d/m/Y', strtotime($row['billing_date'])); ?></td>
 				<td><?php echo @$row['pack_amount']; ?></td>
 				<td>ALA CA</td>
