@@ -109,6 +109,7 @@
 														<thead>
 															<tr>
 																<th>Sl.No</th>
+																<th>MONTH</th>
 																<th>Other Id/ Collector</th>
 																<th>Name</th>
 																<th>Address</th>
@@ -118,18 +119,21 @@
 																<th>Balance</th>
 																<th>Payment Amount</th>
 																<th>Pay Date</th>
-																<th>Pay For Month</th>
 																
 															</tr>
 														</thead>
 														<tbody>
 															<?php 
 															$i=1;
+															@$j = date('m', strtotime($daily_collection[0]['billing_date']));
 															if(@$daily_collection){
 																foreach($daily_collection as $row){
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
+																	<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
+																		echo $monthName = $dateObj->format('M'); $j++; ?>
+																	</td>
 																	<td>Other ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?>Collector: <?php echo $row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	
@@ -140,8 +144,6 @@
 																	<td><?php echo @$row['payment_total'];?></td>	
 																	<td><?php echo @$row['payment_date'];?></td>
 																	
-																	<td>
-																	<?php echo @$row['month_of'];?></td>
 																</tr>
 																<?php 
 																}

@@ -107,7 +107,7 @@
 					<tbody>
 						<?php 
 							$i=1;
-							@$j = date('m', strtotime($payment_info[0]['billing_date']));
+							@$j = date('m', strtotime($daily_collection[0]['billing_date']));
 							if(@$daily_collection){
 								foreach($daily_collection as $row){
 								?>
