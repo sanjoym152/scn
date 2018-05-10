@@ -109,7 +109,7 @@
 														<thead>
 															<tr>
 																<th>Sl.No</th>
-																<th>MONTH</th>
+																<!--<th>MONTH</th>-->
 																<th>Other Id/ Collector</th>
 																<th>Name</th>
 																<th>Address</th>
@@ -131,9 +131,9 @@
 																?>
 																<tr>
 																	<td><?php echo @$i++;?></td>
-																	<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
+																	<!--<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
 																		echo $monthName = $dateObj->format('M'); $j++; ?>
-																	</td>
+																	</td>-->
 																	<td>Other ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?>Collector: <?php echo $row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	

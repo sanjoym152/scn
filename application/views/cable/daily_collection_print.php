@@ -89,7 +89,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>MONTH</th>
+							<!--<th>MONTH</th>-->
 							<th>CUSTOMER CODE</th>
 							<th>OTHER ID</th>
 							<th>STAFF NAME</th>
@@ -113,9 +113,9 @@
 								?>
 								<tr>
 									<td> <?php echo @$i++;?></td>
-									<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
+									<!--<td> <?php $dateObj = DateTime::createFromFormat('!m',  $j);
 										echo $monthName = $dateObj->format('M'); $j++; ?>
-									</td>
+									</td>-->
 									<td> <?php echo @$row['cust_code'];?></td>
 									<td> <?php echo @$row['area_name'].'-'.@$row['other_id'];?></td>
 									<td> <?php echo @$row['staff_name'];?></td>
