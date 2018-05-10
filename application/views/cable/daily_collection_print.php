@@ -98,7 +98,7 @@
 							<th>STB</th>
 							<th>ACCOUNT</th>
 							<th>MOBILE</th>
-							<th>BALANCE</th>
+							<!--<th>BALANCE</th>-->
 							<th>PAYMENT AMOUNT</th>
 							<th>PAY DATE</th>
 							
@@ -124,7 +124,7 @@
 									<td> <?php echo @$row['stb_no'];?></td>
 									<td> <?php echo @$row['account'];?></td>
 									<td> <?php echo @$row['mobile1'];?></td>
-									<td> <?php echo @$row['balance'];?></td>
+									<!--<td> <?php echo @$row['balance'];?></td>-->
 									<td> <?php echo @$row['payment_total'];?></td>
 									<td> <?php echo @$row['payment_date'];?></td>
 									
