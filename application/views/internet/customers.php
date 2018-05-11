@@ -160,7 +160,7 @@
 																	?></td>
 																	<td>
 																		<a href="javascript:;" data-id="<?php echo @$row['customer_id'];?>" class="topup" data-toggle="tooltip" title="Add Topup"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-																		<a href="javascript:;" data-toggle="tooltip" data-id="<?php echo @$row['customer_id'];?>" title="Pay Now" class="payment"><i class="fa fa-inr" aria-hidden="true"></i></a>
+																		<!--<a href="javascript:;" data-toggle="tooltip" data-id="<?php echo @$row['customer_id'];?>" title="Pay Now" class="payment"><i class="fa fa-inr" aria-hidden="true"></i></a>-->
 																		<a href="<?php echo base_url('internet/customers/add/'.$row['customer_id']);?>" title="Edit" data-toggle="tooltip">   <i class="fa fa-pencil-square-o delet" aria-hidden="true"></i></a>
 																		
 																		<?php 
@@ -463,7 +463,7 @@
 									<div class="col-md-12 customer_payment_info">
 									</div>
 								</div>
-								<div class="col-md-6">
+								<!--<div class="col-md-6">
 									<input type="hidden" name="customer_id" id="customer_id" value="">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Month of</label>
@@ -478,7 +478,7 @@
 										</select>
 										<span class="month_of_error"></span>
 									</div>
-								</div>
+								</div>-->
 								<div class="col-md-6">
 									<div class="your-mail">
 										<label for="exampleInputEmail1">Outstanding</label>
@@ -492,6 +492,8 @@
 										<input class="form-control required" id="pack_amount" type="hidden" name="pack_amount" value="0.00" readonly>
 										<input class="form-control required datepicker" type="text" name="payment_date" value="" readonly>
 										<input class="form-control required" id="package_id" type="hidden" name="package_id" >
+										<input class="form-control required" id="customer_id" type="hidden" name="customer_id" >
+										<input class="form-control required" id="payment_id" type="hidden" name="payment_id" >
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -693,17 +695,19 @@
 				});
 				
 				$('body').on('click','.payment',function(){
-					var customer_id = $(this).data('id');
+					var payment_id='';
+					payment_id = $(this).data('id');
 					$('.loader').show();
 					$('.loader-inner').show();
 					$.ajax({
-						url:'<?php echo base_url('internet/customers/get_customer_data')?>',
+						url:'<?php echo base_url('internet/customers/get_customer_payment_info')?>',
 						method:'post',
 						data:{
-							customer_id:customer_id
+							payment_id:payment_id
 						},
 						dataType:'json',
 						success:function(result){
+							console.log(result);
 							$('.customer_payment_info').html(result.customer_info);
 							$('#total_due').val(result.customer.balance);
 							if(result.customer.payment_status==1){
@@ -711,6 +715,8 @@
 							}
 							$('#package_id').val(result.customer.package_id);
 							$('#customer_id').val(result.customer.customer_id);
+							$('#payment_id').val(result.payment_id);
+							
 							setTimeout(function(){
 								$('.loader').hide();
 								$('.loader-inner').hide();

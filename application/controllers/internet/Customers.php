@@ -213,9 +213,41 @@ class Customers extends CI_Controller {
 		$data['customer_info'] = $this->load->view('internet/ajax/payment_customer_info',$data,true);
 		echo json_encode($data);
 	}
-	
+	public function get_customer_payment_info(){
+		$payment_id = $this->input->post('payment_id');
+		$get_customer_id=$this->common_model->get_data_row(PAYMENT,array('payment_id'=>$payment_id));
+		$joins = array();
+		$joins[0] = array(
+			'table'=>PACKAGE,
+			'condition'=>PACKAGE.'.package_id = '.CUSTOMERS.'.package_id',
+			'jointype'=>'inner'
+		);
+		$joins[1] = array(
+			'table'=>LCO,
+			'condition'=>LCO.'.lco_id = '.CUSTOMERS.'.lco_id',
+			'jointype'=>'inner'
+		);
+		$joins[2] = array(
+			'table'=>ISP,
+			'condition'=>ISP.'.isp_id = '.CUSTOMERS.'.mso_id',
+			'jointype'=>'inner'
+		);
+		$data['customer'] = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$get_customer_id['customer_id']),'',$joins);
+		//echo $this->db->last_query();echo "<pre>"; print_r($data['customer']);
+		$customer_ip = $this->common_model->get_data_array(CUSTOMER_TO_IP,array('customer_id'=>$get_customer_id['customer_id']));
+		$data['ip_data'] = '';
+		foreach($customer_ip as $row){
+			$data['ip_data'] = '<div class="col-md-6">'.$row['ip_address'].'</div>';
+		}
+		$data['last_payment'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$get_customer_id['customer_id'], 'type'=>1),'','','payment_id');
+		$data['customer_info'] = $this->load->view('internet/ajax/payment_customer_info',$data,true);
+		$data['payment_id'] = $payment_id;
+		echo json_encode($data);
+	}
 	public function payment(){
+		
 		$insert_array=array();
+		$payment_id=$this->input->post('payment_id');
 		$customer_data = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
 		$insert_array['customer_id'] = $this->input->post('customer_id');
 		$insert_array['payment_date'] = date('Y-m-d',strtotime($this->input->post('payment_date')));
@@ -229,13 +261,14 @@ class Customers extends CI_Controller {
 		$insert_array['discount_in'] = $this->input->post('discount_in');
 		$insert_array['discount_type'] = $this->input->post('discount_type');
 		$insert_array['discount_total'] = $this->input->post('discount_total');
-		$insert_array['type']=			1;
-		if($this->input->post('month_of')){
+		//$insert_array['type']=			1;
+		/* if($this->input->post('month_of')){
 			$insert_array['month_of'] =$this->input->post('month_of');
-		}
+		} */
 		/* echo "<pre>";
 		print_r($insert_array);die; */
-		$payment_id = $this->common_model->tbl_insert(PAYMENT,$insert_array);
+		$payment_id = $this->common_model->tbl_update(PAYMENT,array('payment_id'=>$payment_id),$insert_array);
+		//echo $this->db->last_query();die;
 		/*
 		@ update customer table
 		*/
@@ -266,7 +299,7 @@ class Customers extends CI_Controller {
 		redirect(base_url('internet/customers/bill_print/'.$payment_id));
 	}
 	
-	public function add_topup(){
+	/* public function add_topup(){
 		$userdata = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
 		$insert_array=array();
 		$insert_array['customer_id']=	$this->input->post('customer_id');
@@ -301,6 +334,56 @@ class Customers extends CI_Controller {
 		$payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
 		$insert_array['sub_total'] = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
 		$insert_array['net_due']=$insert_array['payment_total'];
+		$insert_array['outstanding']=$userdata['balance'];
+		//insert in to payment table.
+		$id = $this->common_model->tbl_insert(PAYMENT,$insert_array);
+		
+		//update user table.
+		$insert_array=array();
+		$insert_array['payment_status'] = 1;//unpaid
+		$insert_array['package_id']=	$this->input->post('package_id');
+		$insert_array['balance'] = $userdata['balance']+$payment_total;
+		$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$insert_array);
+		$this->utilitylib->setMsg(SUCCESS_ICON.' Topup successfully added!','SUCCESS');
+		redirect(base_url('internet/customers/topup_bill_print/'.$id));
+	} */
+	public function add_topup(){
+		$userdata = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')));
+		$insert_array=array();
+		$insert_array['customer_id']=	$this->input->post('customer_id');
+		$insert_array['pack_start_date']=	date('Y-m-d',strtotime($this->input->post('month_of')));
+		$insert_array['pack_end_date']=	date('Y-m-d',strtotime($this->input->post('month_of').'+30 days'));
+		$insert_array['package_id']=	$this->input->post('package_id');
+		$insert_array['other_fees']=	$this->input->post('other_fees');
+		$insert_array['discount_in']=	$this->input->post('discount_in');
+		$insert_array['discount_type']=	$this->input->post('discount_type');
+		$insert_array['remark']=		$this->input->post('remark');
+		//$insert_array['type']=			2;
+		
+		$package_data = $this->common_model->get_data_row(PACKAGE,array('package_id'=>$this->input->post('package_id')));
+		
+		//$insert_array['pack_amount']=	$package_data['tot_amount'];
+		$insert_array['billing_total']=	$package_data['tot_amount'];
+		$total_amount = 0;
+		$other_fees = 0;
+		if(@$this->input->post('other_fees')){
+			$other_fees = $this->input->post('other_fees');
+		}
+		if(@$insert_array['discount_in']){
+			if($this->input->post('discount_type')==1){
+				$insert_array['payment_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100)+$userdata['balance'];
+				$insert_array['discount_total'] = (($package_data['tot_amount']*$insert_array['discount_in'])/100);
+			}else if($this->input->post('discount_type')==2){
+				$insert_array['payment_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in'])+$userdata['balance'];
+				$insert_array['discount_total'] = $insert_array['discount_in'];
+			}
+		}else{
+			$insert_array['payment_total'] = $payment_total = $package_data['tot_amount']+$other_fees+$userdata['balance'];
+			$insert_array['discount_total'] = 0;
+		}
+		$payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
+		//$insert_array['sub_total'] = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
+		//$insert_array['net_due']=$insert_array['payment_total'];
 		$insert_array['outstanding']=$userdata['balance'];
 		//insert in to payment table.
 		$id = $this->common_model->tbl_insert(PAYMENT,$insert_array);
