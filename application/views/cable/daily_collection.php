@@ -140,7 +140,7 @@
 																	<td><?php echo @$row['stb_no'];?></td>	
 																	<td><?php echo @$row['account'];?></td>	
 																	<td><?php echo @$row['mobile1'];?></td>	
-																	<!--<td><?php echo @$row['outstanding'];?></td>	-->
+																	<!--<td><?php echo @$row['outstanding'];?></td>-->
 																	<td><?php echo @$row['payment_total'];?></td>	
 																	<td><?php echo @$row['payment_date'];?></td>
 																	
