@@ -246,7 +246,7 @@
 							console.log(result.error);
 						} else{
 							$('.account_info').html(result.template);
-							console.log($('.account_info').html());
+							console.log(result);
 						}
 					},
 					error:function(err){
