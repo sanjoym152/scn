@@ -2927,3 +2927,37 @@ button.view_btn:hover {
     margin-left: auto !important;
   }
 }
+
+.form-control{
+	text-transform:uppercase !important;
+}
+
+.doc_image_area{
+	padding:5px;
+}
+.search_textbox{
+	height:35px;
+}
+.customer_search_icon{
+	    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: #9a9a9a;
+    font-size: 15px !important;
+}
+.dashboard_btn{
+	width: 200px;
+	margin:10px;
+}
+.keyword_main{
+	position:relative;
+}
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+.due_area{
+	font-weight:600;
+}

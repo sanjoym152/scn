@@ -477,11 +477,80 @@
 				});
 				$('#payment_form').validate({
 					submitHandler: function (form) {
+						var customer_id2 = $('#customer_id').val();
+						//window.open("<?php echo base_url('cable/customers/bill_print/');?>"+customer_id2);
 						form.submit();
 					}
 				});
 				
-				
+				/* $('body').on('click','#make_payment',function(){
+					var error=true;
+					if($('.month_of').val()==''){
+						$('.month_of_error').html('This field is required');
+						$('.month_of_error').css('color','#f00');
+						error=false;
+					}else{
+						$('.month_of_error').html('');
+						error=true;
+					}
+					if($('.collector').val()==''){
+						$('.collector_error').html('This field is required');
+						$('.collector_error').css('color','#f00');
+						error=false;
+					}else{
+						$('.collector_error').html('');
+						error=true;
+					}
+					//alert($('.month_of').val());
+					if(error==true){
+						$('.loader').show();
+						$('.loader-inner').show();
+						$('#payment_form').submit();
+						/* $.ajax({
+							url:'<?php echo base_url('cable/customers/payment')?>',
+							method:'post',
+							data:$('#payment_form').serialize(),
+							dataType:'json',
+							success:function(result){
+								console.log(result);
+								setTimeout(function(){
+									$('#payment').modal('hide');
+									$('.loader').hide();
+									$('.loader-inner').hide();
+									swal("Success!", "Payment successful!", "success");
+								}, 2000);
+								
+							},error:function(error){
+								console.log(error);
+							}
+						}); 
+					}
+				}); */
+				/* $('body').on('click','#print_bill',function(){
+					$('#payment_form').attr('action','<?php echo base_url('cable/customers/bill_print')?>');
+					$('#payment_form').attr('target','_blank');
+					$('#payment_form').submit();
+					$('.loader').show();
+					$('.loader-inner').show();
+					$.ajax({
+						url:'<?php echo base_url('cable/customers/payment')?>',
+						method:'post',
+						data:$('#payment_form').serialize(),
+						dataType:'json',
+						success:function(result){
+							console.log(result);
+							setTimeout(function(){
+								$('#payment').modal('hide');
+								$('.loader').hide();
+								$('.loader-inner').hide();
+								swal("Success!", "Payment successful!", "success");
+							}, 2000);
+						},error:function(error){
+							console.log(error);
+						}
+					});
+					return false;
+				}); */
 				$('body').on('keyup','#discount_amount',function(){
 					if($(this).val()!=""){
 						$('#discount_type').addClass('required');

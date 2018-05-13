@@ -86,8 +86,9 @@ class Customers extends CI_Controller {
 				$insert_array['net_due'] = $package['tot_amount'];
 				$insert_array['is_added_time'] = 1;
 				$insert_array['sub_total'] = $package['tot_amount']+$this->input->post('balance');
-				$insert_array['payment_total'] = $package['tot_amount']+$this->input->post('balance');
-				$insert_array['payment_date'] = date('Y-m-d',strtotime($this->input->post('billing_date')));
+				$insert_array['billing_total'] = $package['tot_amount']+$this->input->post('balance');
+				$insert_array['pack_start_date'] = date('Y-m-d',strtotime($this->input->post('billing_date')));
+				$insert_array['pack_end_date'] = date('Y-m-d',strtotime($this->input->post('billing_date').'+30 days'));
 				$insert_array['staff_id'] = $this->input->post('staff_id');
 				$insert_array['type'] = 2;
 				$this->common_model->tbl_insert(PAYMENT,$insert_array);
@@ -371,14 +372,14 @@ class Customers extends CI_Controller {
 		}
 		if(@$insert_array['discount_in']){
 			if($this->input->post('discount_type')==1){
-				$insert_array['payment_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100)+$userdata['balance'];
+				$insert_array['billing_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100)+$userdata['balance'];
 				$insert_array['discount_total'] = (($package_data['tot_amount']*$insert_array['discount_in'])/100);
 			}else if($this->input->post('discount_type')==2){
-				$insert_array['payment_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in'])+$userdata['balance'];
+				$insert_array['billing_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in'])+$userdata['balance'];
 				$insert_array['discount_total'] = $insert_array['discount_in'];
 			}
 		}else{
-			$insert_array['payment_total'] = $payment_total = $package_data['tot_amount']+$other_fees+$userdata['balance'];
+			$insert_array['billing_total'] = $payment_total = $package_data['tot_amount']+$other_fees+$userdata['balance'];
 			$insert_array['discount_total'] = 0;
 		}
 		$payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
