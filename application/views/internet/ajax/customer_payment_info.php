@@ -38,7 +38,7 @@
 				
 				<a href="javascript:;" class="edit_payment" data-customer_id="<?php echo @$row['customer_id']; ?>" data-id="<?php echo @$row['payment_id']; ?>" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 				
-				<a target="_blank" href="<?php echo base_url('cable/customers/bill_print/'.@$row['payment_id'])?>" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
+				<a target="_blank" href="<?php echo base_url('internet/customers/bill_print/'.@$row['payment_id'])?>" data-toggle="tooltip" title="Print bill"><i class="fa fa-print" aria-hidden="true"></i></a>
 				
 				<a href="javascript:;" class="delete_payment" data-id="<?php echo @$row['payment_id'];?>" data-customer_id="<?php echo @$row['customer_id']; ?>" data-toggle="tooltip" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
 			</td>

@@ -422,8 +422,8 @@ class Customers extends CI_Controller {
 			'jointype'=>'left'
 		);
 		$data['userdata'] = $this->common_model->get_data_row(PAYMENT,array(PAYMENT.'.payment_id'=>$id),'*,'.PAYMENT.'.discount_total as p_discount',$joins);
-		$data['last_payment'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$data['userdata']['customer_id'], 'type'=>1),'','','payment_id');
-		$data['pageTitle'] = "SCN | Internet | Bill Print";
+		$data['last_payment'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$data['userdata']['customer_id'], 'payment_date <>'=>null),'','','payment_date');
+		$data['pageTitle'] = "SCN | INTERNET | Bill Print";
 		$data['header_links'] = $this->load->view('internet/includes/header_links',$data,true);
 		$data['topbar'] = $this->load->view('internet/includes/topbar',$data,true);
 		$data['left_menu'] = $this->load->view('internet/includes/left_menu','',true);

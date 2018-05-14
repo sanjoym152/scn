@@ -131,7 +131,7 @@ class Home extends CI_Controller {
 		echo json_encode($data);
 	}
 	
-	public function get_customer_info(){
+	public function insert_manual(){
 		ini_set('max_execution_time',0);
 		$data= array();
 		$insert=array();
@@ -140,16 +140,10 @@ class Home extends CI_Controller {
 		foreach($get_customer_data as $row){
 			// update to customer table
 			$insert['customer_id']=$row['customer_id'];
-			$insert['package_id']=$row['package_id'];
-			$insert['pack_amount']=$row['pack_amount'];
-			$insert['billing_total']=$row['pack_amount'];
-			$insert['outstanding']=$insert['billing_total'];
-			$insert['billing_date']="2018-01-01";
+			$insert['is_previous_due']=1;
 			$insert['type']=2;
-			
 			$this->common_model->tbl_insert(PAYMENT,$insert);
 			
-			$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$row['customer_id']), array('balance'=>$row['pack_amount'], 'billing_date'=>"2018-01-01"));
 		}
 	}
 }
