@@ -142,8 +142,8 @@ class Home extends CI_Controller {
 			$insert['customer_id']=$row['customer_id'];
 			$insert['is_previous_due']=1;
 			$insert['type']=2;
-			$insert['pack_start_date']='2018-jan-1 12:12:12';
-			$insert['pack_end_date']='2018-jan-30 12:12:12';
+			$insert['pack_start_date']='2018-01-01 12:12:12';
+			$insert['pack_end_date']='2018-01-30 12:12:12';
 			$this->common_model->tbl_insert(PAYMENT,$insert);
 		}
 	}
