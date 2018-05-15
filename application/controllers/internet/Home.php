@@ -84,10 +84,10 @@ class Home extends CI_Controller {
 				'jointype'=>'left'
 			);
 			
-			$data['payment_info'] = $this->common_model->get_data_array(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date)'=>$year), '', $joins);
-			
-			$data['payment_total_info'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date)'=>$year), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
+			$data['payment_info'] = $this->common_model->get_data_array(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date) = '.$year.' or pack_start_date ='.NULL =>null), '', $joins, '','','','is_previous_due desc');
 			$result['q'] = $this->db->last_query();
+			$data['payment_total_info'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date)'=>$year), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
+			
 			$data['customer_info'] = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$customer_id));
 			
 			$result['template'] = $this->load->view('internet/ajax/customer_payment_info', $data, true);
@@ -142,8 +142,9 @@ class Home extends CI_Controller {
 			$insert['customer_id']=$row['customer_id'];
 			$insert['is_previous_due']=1;
 			$insert['type']=2;
+			$insert['pack_start_date']='2018-jan-1';
+			$insert['pack_end_date']='2018-jan-30';
 			$this->common_model->tbl_insert(PAYMENT,$insert);
-			
 		}
 	}
 }
