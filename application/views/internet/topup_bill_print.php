@@ -114,7 +114,7 @@
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp;COLLECTOR: <?php echo @$userdata['staff_name'];?></td>
 									</tr>
 									<tr>
-										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp;ADDED DATE: <?php echo date('d/m/Y',strtotime(@$userdata['payment_date']));?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp;ADDED DATE: <?php echo date('d/m/Y',strtotime(@$userdata['pack_start_date']));?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp;PACKAGE CHARGE: Rs. <?php echo (@$userdata['package_tax_type']==1)?@$userdata['including_amount']:@$userdata['pakren'];?></td>
@@ -152,7 +152,7 @@
 									</tr>
 									<tr>
 										<hr />
-										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['payment_total'];?> &nbsp;&nbsp;&nbsp;</td>
+										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['billing_total'];?> &nbsp;&nbsp;&nbsp;</td>
 									</tr>
 								</table>
 							</td>
@@ -234,13 +234,13 @@
 										</td>
 										<?php } ?>
 										<!--<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['p_discount'];?></td>-->
-										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['payment_total'];?></td>
+										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['billing_total'];?></td>
 									</tr>
 								</table>
 								<br /><br />
 								<table>
 									<tr>
-										<td align="right"><strong>Total: Rs. <?php echo @$userdata['payment_total'];?> &nbsp;</strong></td>
+										<td align="right"><strong>Total: Rs. <?php echo @$userdata['billing_total'];?> &nbsp;</strong></td>
 									</tr>
 								</table>
 							</td>

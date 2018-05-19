@@ -45,7 +45,8 @@
 								<!-- Example Bar Chart Card-->
 								<div class="card mb-3">
 									<div class="card-header">
-										<i class="fa fa-list" aria-hidden="true"></i> Account Information 
+										<i class="fa fa-list" aria-hidden="true"></i> Account Information
+										
 										<div class="pull-right">
 											<select class="form-control search_textbox year">
 												<option value="">--Select Year--</option>
@@ -54,6 +55,9 @@
 												<option value="<?php echo @$i;?>"><?php echo @$i;?></option>
 												<?php } ?>
 											</select>
+										</div>
+										<div class="pull-right col-md-2">
+											<button class="btn btn-primary make_payment">Make Payment</button>
 										</div>
 									</div>
 									<div class="card-body">
@@ -83,7 +87,7 @@
 			<div class="modal-dialog modal-lg">
 				<!-- Modal content-->
 				<div class="modal-content">
-					<form id="payment_form" method="post" action="<?php echo base_url('internet/payment/add_payment')?>">
+					<form id="add_payment_form" method="post" action="<?php echo base_url('internet/payment/add_payment')?>">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title">Bill Payment</h4>
@@ -174,6 +178,8 @@
 		
 		
 		
+		
+		
 		<?php echo @$footer;?>
 		<?php echo @$footer_scripts;?>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -217,6 +223,7 @@
 							$('.loader-inner').hide();
 							//$('.before_select').hide();
 							$('.basic_info').html(result.template);
+							$('.make_payment').attr('data-id', ui.item.value);
 							$('.payment_div').slideDown();
 						}, 
 						error: function(err){
@@ -254,9 +261,46 @@
 					}
 				});
 			});
+			// @ function: make_payment
+			// @ desc: To add a payment 
+			$('body').on('click','.make_payment',function(){
+				var customer_id = $(this).data('id');
+				console.log(customer_id);
+				$('.loader').show();
+				$('.loader-inner').show();
+				$.ajax({
+					url:'<?php echo base_url('internet/customers/get_customer_data')?>',
+					method:'post',
+					data:{
+						customer_id:customer_id
+					},
+					dataType:'json',
+					success:function(result){
+						console.log(result);
+						$('.customer_payment_info').html(result.customer_info);
+						$('#total_due').val(result.customer.balance);
+						if(result.customer.payment_status==1){
+							$('#pack_amount').val(result.customer.tot_amount);
+						}
+						$('#package_id').val(result.customer.package_id);
+						$('#customer_id').val(result.customer.customer_id);
+						//$('#payment_id').val(payment_id);
+						setTimeout(function(){
+							$('.loader').hide();
+							$('.loader-inner').hide();
+							$('#add_payment_form').attr('action','internet/payment/make_payment');
+							$('#payment').modal('show');
+						}, 1000);
+					},
+					error:function(error){
+						console.log(error.responseText);
+					}
+				});
+			});
+			
 			
 			/*
-			* @ This function is used for add payment.
+			* @ This function is used for add payment respect to a perticular billing.
 			*/
 			$('body').on('click','.add_payment',function(){
 				var customer_id = $(this).data('id');
@@ -282,6 +326,7 @@
 						setTimeout(function(){
 							$('.loader').hide();
 							$('.loader-inner').hide();
+							$('#add_payment_form').attr('action','internet/payment/add_payment');
 							$('#payment').modal('show');
 						}, 1000);
 					},

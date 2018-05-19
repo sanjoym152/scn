@@ -22,8 +22,8 @@
 			echo $monthName = $dateObj->format('F');?>
 			</td>-->
 			<td><?php echo @$row['payment_id'];?></td>
-			<td><?php echo @date('d/m/Y',strtotime(@$row['pack_start_date']));?></td>
-			<td><?php echo @date('d/m/Y',strtotime(@$row['pack_end_date']));?></td>
+			<td><?php echo @$row['pack_start_date']?date('d/m/Y',strtotime(@$row['pack_start_date'])):'';?></td>
+			<td><?php echo @$row['pack_end_date']?date('d/m/Y',strtotime(@$row['pack_end_date'])):'';?></td>
 			<td><?php echo @$row['pack_amount'];?></td>
 			<td><?php echo @$row['other_fees'];?></td>
 			<td><?php echo @$row['billing_total'];?></td>

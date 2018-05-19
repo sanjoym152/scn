@@ -84,9 +84,9 @@ class Home extends CI_Controller {
 				'jointype'=>'left'
 			);
 			
-			$data['payment_info'] = $this->common_model->get_data_array(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date) = '.$year.' or pack_start_date ='.NULL =>null), '', $joins, '','','','is_previous_due desc');
+			$data['payment_info'] = $this->common_model->get_data_array(PAYMENT, array('customer_id'=>$customer_id, '(YEAR('.PAYMENT.'.pack_start_date) = '.$year.' OR pack_start_date IS NULL)'=> null ), '', $joins, '','','','is_previous_due desc');
 			$result['q'] = $this->db->last_query();
-			$data['payment_total_info'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$customer_id, 'YEAR('.PAYMENT.'.pack_start_date)'=>$year), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
+			$data['payment_total_info'] = $this->common_model->get_data_row(PAYMENT, array('customer_id'=>$customer_id, '(YEAR('.PAYMENT.'.pack_start_date) = '.$year.' OR pack_start_date IS NULL)'=> null ), '*, sum(billing_total) as billing_tot, sum(payment_total) as payment_tot, sum(discount_total) as discount_tot', $joins);
 			
 			$data['customer_info'] = $this->common_model->get_data_row(CUSTOMERS,array('customer_id'=>$customer_id));
 			

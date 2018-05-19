@@ -363,7 +363,7 @@ class Customers extends CI_Controller {
 		
 		$package_data = $this->common_model->get_data_row(PACKAGE,array('package_id'=>$this->input->post('package_id')));
 		
-		//$insert_array['pack_amount']=	$package_data['tot_amount'];
+		$insert_array['pack_amount']=   $package_data['tot_amount'];
 		$insert_array['billing_total']=	$package_data['tot_amount'];
 		$total_amount = 0;
 		$other_fees = 0;
@@ -372,14 +372,23 @@ class Customers extends CI_Controller {
 		}
 		if(@$insert_array['discount_in']){
 			if($this->input->post('discount_type')==1){
-				$insert_array['billing_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100)+$userdata['balance'];
+				// block reason: calculate billing total without previous due
+				//$insert_array['billing_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100)+$userdata['balance'];
+				
+				$insert_array['billing_total'] = $payment_total = ($other_fees+$package_data['tot_amount']) - (($package_data['tot_amount']*$insert_array['discount_in'])/100);
 				$insert_array['discount_total'] = (($package_data['tot_amount']*$insert_array['discount_in'])/100);
 			}else if($this->input->post('discount_type')==2){
-				$insert_array['billing_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in'])+$userdata['balance'];
+				// block reason: calculate billing total without previous due
+				//$insert_array['billing_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in'])+$userdata['balance'];
+				
+				$insert_array['billing_total'] = $payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_in']);
 				$insert_array['discount_total'] = $insert_array['discount_in'];
 			}
 		}else{
-			$insert_array['billing_total'] = $payment_total = $package_data['tot_amount']+$other_fees+$userdata['balance'];
+			// block reason: calculate billing total without previous due
+			//$insert_array['billing_total'] = $payment_total = $package_data['tot_amount']+$other_fees+$userdata['balance'];
+			
+			$insert_array['billing_total'] = $payment_total = $package_data['tot_amount']+$other_fees;
 			$insert_array['discount_total'] = 0;
 		}
 		$payment_total = (($package_data['tot_amount']+$other_fees)-$insert_array['discount_total']);
@@ -392,7 +401,7 @@ class Customers extends CI_Controller {
 		//update user table.
 		$insert_array=array();
 		$insert_array['payment_status'] = 1;//unpaid
-		$insert_array['package_id']=	$this->input->post('package_id');
+		$insert_array['package_id']= $this->input->post('package_id');
 		$insert_array['balance'] = $userdata['balance']+$payment_total;
 		$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$insert_array);
 		$this->utilitylib->setMsg(SUCCESS_ICON.' Topup successfully added!','SUCCESS');
