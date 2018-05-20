@@ -176,7 +176,7 @@
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; CUSTOMER NAME: <strong style="font-size:10px"><?php echo @$userdata['first_name'];?></strong></td>
-										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; DATE: <?php echo date('d/m/Y',strtotime($userdata['payment_date']));?></td>
+										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; DATE: <?php echo date('d/m/Y',strtotime($userdata['pack_start_date']));?></td>
 									</tr>
 									<tr>
 										<td style="font-size:7px; line-height:12px; padding-left:20px;">&nbsp;&nbsp; ADDRESS: <?php echo @$userdata['address1'];?></td>
