@@ -137,7 +137,7 @@
 																	<td>Other ID: <?php echo @$row['area_name'].'-'.@$row['other_id'];?>Collector: <?php echo $row['staff_name'];?></td>
 																	<td><?php echo @$row['first_name'];?></td>	
 																	<td><?php echo @$row['address1'];?></td>	
-																	<td><?php echo @$row['stb_no'];?></td>	
+																	<td><a target="_blank" href="<?php echo base_url('cable')?>"><?php echo @$row['stb_no'];?></a></td>	
 																	<td><?php echo @$row['account'];?></td>	
 																	<td><?php echo @$row['mobile1'];?></td>	
 																	<!--<td><?php echo @$row['outstanding'];?></td>-->

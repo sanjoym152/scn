@@ -62,6 +62,11 @@ class Home extends CI_Controller {
 			'condition'=>CBL_MSO.'.isp_id = '.CBL_CUSTOMERS.'.mso_id',
 			'jointype'=>'inner'
 		);
+		$joins[4] = array(
+			'table'=>STAFF,
+			'condition'=>STAFF.'.staff_id = '.CBL_CUSTOMERS.'.staff_id',
+			'jointype'=>'inner'
+		);
 		$data['customer_details'] = $this->common_model->get_data_row(CBL_CUSTOMERS, array('customer_id'=>$customer_id),'',$joins);
 		/* echo $this->db->last_query();
 		echo "<pre>";

@@ -20,5 +20,8 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
+	$('.show_bal').click(function(){
+		$('.bal_area').fadeToggle();
+	});
 });
 </script>

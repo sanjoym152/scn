@@ -65,6 +65,12 @@
 			</ul>
 			<div class="clearfix"></div>
 		</div>
+		<div class="col-md-12 text-danger text-center show_bal" style="cursor:pointer"><strong><u>Click here.</u></strong></div>
+		<div class="col-md-12 text-center bal_area" style="display:none">
+			<?php $customers = get_total_cust_internet(); ?>
+			<span class="text-center btn" style="color:#fff">Amount: Rs.<?php echo $customers['tot_balance'];?></span><br><br>
+			<span class="text-center btn" style="color:#fff">Total Customer: <?php echo $customers['tot_customers'];?></span>
+		</div>
 		<div class="clearfix"></div>
 	</div>
 </div>

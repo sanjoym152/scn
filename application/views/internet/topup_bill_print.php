@@ -152,7 +152,7 @@
 									</tr>
 									<tr>
 										<hr />
-										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['billing_total'];?> &nbsp;&nbsp;&nbsp;</td>
+										<td align="right" style="font-size:7px; line-height:12px;">&nbsp;&nbsp;TOTAL: Rs. <?php echo @$userdata['balance'];?> &nbsp;&nbsp;&nbsp;</td>
 									</tr>
 								</table>
 							</td>
@@ -234,13 +234,13 @@
 										</td>
 										<?php } ?>
 										<!--<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['p_discount'];?></td>-->
-										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['billing_total'];?></td>
+										<td height="15px" style="font-size:7px; line-height:10px">Rs. <?php echo @$userdata['balance'];?></td>
 									</tr>
 								</table>
 								<br /><br />
 								<table>
 									<tr>
-										<td align="right"><strong>Total: Rs. <?php echo @$userdata['billing_total'];?> &nbsp;</strong></td>
+										<td align="right"><strong>Total: Rs. <?php echo @$userdata['balance'];?> &nbsp;</strong></td>
 									</tr>
 								</table>
 							</td>

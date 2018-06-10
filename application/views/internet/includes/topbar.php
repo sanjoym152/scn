@@ -2,7 +2,7 @@
 	<!-- LOGO -->
 	<div class="topbar-left">
 		<div class="text-center">
-			<a href="<?php echo base_url();?>" class="logo"><img src="image1/logo.png" width="50" />
+			<a href="<?php echo base_url('internet');?>" class="logo"><img src="image1/logo.png" width="50" />
 				<!--<img src="image1/lgo.png" class="img-responsive" alt=""><!--<span>Moltran </span>-->
 			</a>
 		</div>

@@ -92,15 +92,19 @@
 							<span class="">STB Amount:</span>
 							<span class="pull-right"><?php echo @$customer_details['stb_amount'];?></span>
 						</div>
+						<div class="col-md-6">
+							<span class="">Collector:</span>
+							<span class="pull-right label-warning"><strong><?php echo @$customer_details['staff_name'];?></strong></span>
+						</div>
 						<div class="ip_area">
 							<table class="table table-striped">
 								<tbody>
 								<?php 
 								foreach($customer_details['stb'] as $row){ ?>
 									<tr>
-										<td><strong><?php echo @$row['stb_no']?></strong></td>
+										<td><strong  class="label-warning"><?php echo @$row['stb_no']?></strong></td>
 										<td><?php echo @$row['stb_model_no']?></td>
-										<td><?php echo @$row['account']?></td>
+										<td><strong  class="label-warning"><?php echo @$row['account']?></strong></td>
 									</tr>
 								<?php } ?>
 									
