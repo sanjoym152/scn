@@ -43,10 +43,10 @@ class payment extends CI_Controller{
 		
 		$c_array=array();
 		$c_array['balance'] = $this->input->post('net_due');
-		$c_array['payment_status']=2;
+		$c_array['payment_status'] = 2;
 		$this->common_model->tbl_update(CBL_CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$c_array);
 		$this->utilitylib->setMsg(SUCCESS_ICON.' Payment was success!','SUCCESS');
-		redirect(base_url('cable/customers/bill_print/'.$payment_id));
+		redirect(base_url('cable/customers/bill_print/'.$this->input->post('payment_id')));
 	}
 	
 	
