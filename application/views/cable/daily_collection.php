@@ -142,7 +142,7 @@
 																	<td><?php echo @$row['mobile1'];?></td>	
 																	<!--<td><?php echo @$row['outstanding'];?></td>-->
 																	<td><?php echo @$row['payment_total'];?></td>	
-																	<td><?php echo @$row['payment_date'];?></td>
+																	<td data-toggle="tooltip" title="<?php echo @$row['month_of'];?>"><?php echo @$row['payment_date'];?></td>
 																	
 																</tr>
 																<?php 

@@ -185,7 +185,7 @@ class Reports extends CI_Controller {
 		$this->load->view('cable/all_customers_report', $data);
 	}
 	
-		public function all_customer_report_print(){
+	public function all_customer_report_print(){
 		$data = array();
 		$where=array();
 		if($this->input->post())
