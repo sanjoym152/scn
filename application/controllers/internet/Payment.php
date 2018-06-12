@@ -77,7 +77,7 @@ class payment extends CI_Controller{
 		$c_array['payment_status']=2;
 		$this->common_model->tbl_update(CUSTOMERS,array('customer_id'=>$this->input->post('customer_id')),$c_array);
 		$this->utilitylib->setMsg(SUCCESS_ICON.' Payment was success!','SUCCESS');
-		redirect(base_url('internet/customers/bill_print/'.$payment_id));
+		redirect(base_url('internet/customers/bill_print/'.$this->input->post('payment_id')));
 	}
 	
 	
